@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane style="-fx-background-color: #F5DEB3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.HelloController">
+<BorderPane style="-fx-background-color: #FAEBD7;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.HelloController">
     <!-- Header Section -->
     <top>
         <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #8B0000;">
@@ -33,7 +33,8 @@
             <HBox alignment="CENTER_RIGHT" spacing="20" BorderPane.alignment="CENTER_RIGHT">
                 <Button fx:id="signUpButton" style="-fx-background-color: #0000ff; -fx-text-fill: white;" text="Sign Up" />
             </HBox>
-            <Button style="-fx-background-color: #ffffff; -fx-text-fill: black;" text="Login" />
+            <Button fx:id="logInButton" style="-fx-background-color: #ffffff; -fx-text-fill: black;" text="Login" />
+
         </HBox>
     </top>
 
