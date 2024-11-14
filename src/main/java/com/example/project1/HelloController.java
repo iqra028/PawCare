@@ -1,44 +1,51 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package com.example.project1;
 
-import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import java.io.IOException;
 
 public class HelloController {
+
     @FXML
     private Button signUpButton;
-
-    public HelloController() {
-    }
+    @FXML
+    private Button logInButton;
 
     @FXML
-    private void initialize() {
-        this.signUpButton.setOnAction((event) -> {
-            this.openSignUpPage();
-        });
+    private void initialize()
+    {
+        signUpButton.setOnAction(event -> openSignUpPage());
+
+        logInButton.setOnAction(event -> openLogInPage());
     }
 
     private void openSignUpPage() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("signup-view.fxml"));
-            Scene signUpScene = new Scene((Parent)fxmlLoader.load(), 1466, 800);
-            Stage newStage = new Stage();
-            newStage.setTitle("Sign up");
-            newStage.setScene(signUpScene);
-            newStage.show();
-        } catch (IOException var4) {
-            IOException e = var4;
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/resources/com.example.project1/images/signup-view.fxml"));
+            Parent signUpRoot = fxmlLoader.load();
+            Stage signUpStage = new Stage();
+            signUpStage.setTitle("Sign Up");
+            signUpStage.setScene(new Scene(signUpRoot, 1366, 768));
+            signUpStage.show();
+        } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    private void openLogInPage() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/resources/com.example.project1/images/login-view.fxml"));
+            Parent logInRoot = fxmlLoader.load();
+            Stage logInStage = new Stage();
+            logInStage.setTitle("Login");
+            logInStage.setScene(new Scene(logInRoot, 1366, 768));
+            logInStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
