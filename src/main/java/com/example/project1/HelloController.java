@@ -32,7 +32,7 @@ public class HelloController {
             FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("signup-view.fxml"));
             Scene signUpScene = new Scene((Parent)fxmlLoader.load(), 1466, 800);
             Stage newStage = new Stage();
-            newStage.setTitle("Sign In");
+            newStage.setTitle("Sign up");
             newStage.setScene(signUpScene);
             newStage.show();
         } catch (IOException var4) {
