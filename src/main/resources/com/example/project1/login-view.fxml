@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.0" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.project1.LogInController" style="-fx-background-color: #FAEBD7;">
+<BorderPane prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #FAEBD7;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.LogInController">
 
     <!-- Header Section -->
     <top>
@@ -22,55 +23,44 @@
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
-            <HBox prefHeight="27.0" prefWidth="239.0">
+            <HBox prefHeight="41.0" prefWidth="189.0">
                 <children>
                     <ImageView fitHeight="46.0" fitWidth="87.0">
                         <image>
                             <Image url="@images/Frame.png" />
                         </image>
+                  <HBox.margin>
+                     <Insets top="10.0" />
+                  </HBox.margin>
                     </ImageView>
                     <!-- Label on the left with Pacifico font -->
-                    <Label style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'file:resources/fonts/Pacifico.ttf';" text="PawCare" />
+                    <Label prefHeight="37.0" prefWidth="98.0" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'file:resources/fonts/Pacifico.ttf';" text="PawCare">
+                  <HBox.margin>
+                     <Insets top="15.0" />
+                  </HBox.margin></Label>
                 </children>
             </HBox>
             <!-- Spacer to push buttons to the right -->
-            <HBox prefHeight="46.0" prefWidth="1051.0" style="-fx-hgrow: ALWAYS;" />
+            <HBox prefHeight="75.0" prefWidth="911.0" style="-fx-hgrow: ALWAYS;" />
             <!-- Buttons on the right -->
             <HBox alignment="CENTER_RIGHT" spacing="20" BorderPane.alignment="CENTER_RIGHT">
-                <Button fx:id="signUpButton" style="-fx-background-color: #0000ff; -fx-text-fill: white;" text="Sign Up" />
+                <Button fx:id="signUpButton" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #0000ff; -fx-text-fill: white;" text="Sign Up" />
             </HBox>
-            <Button fx:id="logInButton" style="-fx-background-color: #ffffff; -fx-text-fill: black;" text="Login" />
+            <Button fx:id="logInButton" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-text-fill: black;" text="Login" />
 
         </HBox>
     </top>
 
     <!-- Main Content Section -->
     <center>
-        <HBox alignment="CENTER" spacing="20" style="-fx-padding: 20;">
+        <HBox alignment="CENTER" prefWidth="1154.0" spacing="20" style="-fx-padding: 20;">
             <children>
-                <!-- Left Side Image -->
-                <StackPane style="-fx-background-color: #FAEBD7;">
-                    <children>
-                        <ImageView fitWidth="400.0" preserveRatio="true">
-                            <image>
-                                <Image url="@images/lamb.png" />
-                            </image>
-                        </ImageView>
-                    </children>
-                </StackPane>
 
                 <!-- Right Side Login Form -->
-                <VBox spacing="15" alignment="CENTER_LEFT"
-                      style="-fx-background-color: linear-gradient(
-             from 0% 100% to 0% 0%,
-             #D84C41 20%,
-             #FAD4B4 50%,
-             #FAEBD7 100%);
-             -fx-padding: 30; -fx-border-color: #4682B4; -fx-border-width: 2;
-             -fx-background-radius: 10; -fx-border-radius: 10;">
+                <VBox alignment="CENTER" depthTest="DISABLE" pickOnBounds="false" prefHeight="632.0" prefWidth="449.0" spacing="15.0" style="-fx-background-color: linear-gradient(              from 0% 100% to 0% 0%,              #D84C41 20%,              #FAD4B4 50%,              #FAEBD7 100%); -fx-padding: 30; -fx-border-color: 00000; -fx-border-width: 2; -fx-background-radius: 10; -fx-border-radius: 10;">
                     <children>
-                        <Label text="Login" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: black;" />
-                        <Label text="Fill in the following information to sign up" style="-fx-font-size: 12; -fx-text-fill: black;" />
+                        <Label style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: black;" text="Login" />
+                        <Label style="-fx-font-size: 12; -fx-text-fill: black;" text="Fill in the following information to sign up" />
 
                         <!-- Email Field -->
                         <HBox alignment="CENTER_LEFT" spacing="5">
@@ -80,7 +70,10 @@
                                         <Image url="@images/email.png" />
                                     </image>
                                 </ImageView>
-                                <TextField fx:id="emailField" promptText="Email" style="-fx-background-radius: 20; -fx-padding: 10;" />
+                                <TextField fx:id="emailField" prefHeight="38.0" prefWidth="332.0" promptText="Email" style="-fx-background-radius: 20; -fx-padding: 10;">
+                           <effect>
+                              <DropShadow />
+                           </effect></TextField>
                             </children>
                         </HBox>
 
@@ -92,20 +85,36 @@
                                         <Image url="@images/password.png" />
                                     </image>
                                 </ImageView>
-                                <PasswordField fx:id="passwordField" promptText="Password" style="-fx-background-radius: 20; -fx-padding: 10;" />
+                                <PasswordField fx:id="passwordField" prefHeight="38.0" prefWidth="329.0" promptText="Password" style="-fx-background-radius: 20; -fx-padding: 10;">
+                           <effect>
+                              <DropShadow />
+                           </effect></PasswordField>
                             </children>
                         </HBox>
 
                         <!-- Terms Checkbox -->
-                        <CheckBox text="I have read and confirm the " style="-fx-font-size: 12; -fx-text-fill: black;">
+                        <CheckBox style="-fx-font-size: 12; -fx-text-fill: black;" text="I have read and confirm the ">
                             <graphic>
-                                <Label text="Terms of Agreement" style="-fx-text-fill: blue;" />
+                                <Label style="-fx-text-fill: blue;" text="Terms of Agreement" />
                             </graphic>
                         </CheckBox>
 
                         <!-- Login Button -->
-                        <Button fx:id="loginButton" text="Login" style="-fx-background-color: #0000ff; -fx-text-fill: white; -fx-background-radius: 15; -fx-padding: 10;" />
+                        <Button fx:id="loginButton" prefHeight="38.0" prefWidth="112.0" style="-fx-background-color: #0000ff; -fx-text-fill: white; -fx-background-radius: 15; -fx-padding: 10;" text="Login" />
                     </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <effect>
+                  <Lighting diffuseConstant="1.53" specularConstant="0.48" specularExponent="40.0" surfaceScale="1.78">
+                     <bumpInput>
+                        <Shadow blurType="TWO_PASS_BOX" height="28.02" radius="15.850000000000001" width="37.38" />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
                 </VBox>
             </children>
         </HBox>
