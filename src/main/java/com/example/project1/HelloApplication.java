@@ -15,7 +15,7 @@ public class HelloApplication extends Application {
     public void start(Stage primaryStage) throws IOException {
         instance = this;
         this.stage = primaryStage;
-        changeScene("signup-view.fxml");
+        changeScene("hello-view.fxml");
     }
 
     public static HelloApplication getInstance() {

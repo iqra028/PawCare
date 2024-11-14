@@ -14,6 +14,8 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.effect.Light.Distant?>
 
 <BorderPane prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #FAEBD7;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.LogInController">
 
@@ -29,25 +31,22 @@
                         <image>
                             <Image url="@images/Frame.png" />
                         </image>
-                  <HBox.margin>
-                     <Insets top="10.0" />
-                  </HBox.margin>
+                        <HBox.margin>
+                            <Insets top="10.0" />
+                        </HBox.margin>
                     </ImageView>
-                    <!-- Label on the left with Pacifico font -->
                     <Label prefHeight="37.0" prefWidth="98.0" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'file:resources/fonts/Pacifico.ttf';" text="PawCare">
-                  <HBox.margin>
-                     <Insets top="15.0" />
-                  </HBox.margin></Label>
+                        <HBox.margin>
+                            <Insets top="15.0" />
+                        </HBox.margin>
+                    </Label>
                 </children>
             </HBox>
-            <!-- Spacer to push buttons to the right -->
             <HBox prefHeight="75.0" prefWidth="911.0" style="-fx-hgrow: ALWAYS;" />
-            <!-- Buttons on the right -->
             <HBox alignment="CENTER_RIGHT" spacing="20" BorderPane.alignment="CENTER_RIGHT">
                 <Button fx:id="signUpButton" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #0000ff; -fx-text-fill: white;" text="Sign Up" />
             </HBox>
             <Button fx:id="logInButton" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-text-fill: black;" text="Login" />
-
         </HBox>
     </top>
 
@@ -55,9 +54,7 @@
     <center>
         <HBox alignment="CENTER" prefWidth="1154.0" spacing="20" style="-fx-padding: 20;">
             <children>
-
-                <!-- Right Side Login Form -->
-                <VBox alignment="CENTER" depthTest="DISABLE" pickOnBounds="false" prefHeight="632.0" prefWidth="449.0" spacing="15.0" style="-fx-background-color: linear-gradient(              from 0% 100% to 0% 0%,              #D84C41 20%,              #FAD4B4 50%,              #FAEBD7 100%); -fx-padding: 30; -fx-border-color: 00000; -fx-border-width: 2; -fx-background-radius: 10; -fx-border-radius: 10;">
+                <VBox alignment="CENTER" prefHeight="632.0" prefWidth="449.0" spacing="15.0" style="-fx-background-color: linear-gradient(from 0% 100% to 0% 0%, #D84C41 20%, #FAD4B4 50%, #FAEBD7 100%); -fx-padding: 30; -fx-border-color: #000000; -fx-border-width: 2; -fx-background-radius: 10; -fx-border-radius: 10;">
                     <children>
                         <Label style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: black;" text="Login" />
                         <Label style="-fx-font-size: 12; -fx-text-fill: black;" text="Fill in the following information to sign up" />
@@ -71,9 +68,10 @@
                                     </image>
                                 </ImageView>
                                 <TextField fx:id="emailField" prefHeight="38.0" prefWidth="332.0" promptText="Email" style="-fx-background-radius: 20; -fx-padding: 10;">
-                           <effect>
-                              <DropShadow />
-                           </effect></TextField>
+                                    <effect>
+                                        <DropShadow />
+                                    </effect>
+                                </TextField>
                             </children>
                         </HBox>
 
@@ -86,9 +84,10 @@
                                     </image>
                                 </ImageView>
                                 <PasswordField fx:id="passwordField" prefHeight="38.0" prefWidth="329.0" promptText="Password" style="-fx-background-radius: 20; -fx-padding: 10;">
-                           <effect>
-                              <DropShadow />
-                           </effect></PasswordField>
+                                    <effect>
+                                        <DropShadow />
+                                    </effect>
+                                </PasswordField>
                             </children>
                         </HBox>
 
@@ -102,19 +101,13 @@
                         <!-- Login Button -->
                         <Button fx:id="loginButton" prefHeight="38.0" prefWidth="112.0" style="-fx-background-color: #0000ff; -fx-text-fill: white; -fx-background-radius: 15; -fx-padding: 10;" text="Login" />
                     </children>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-               <effect>
-                  <Lighting diffuseConstant="1.53" specularConstant="0.48" specularExponent="40.0" surfaceScale="1.78">
-                     <bumpInput>
-                        <Shadow blurType="TWO_PASS_BOX" height="28.02" radius="15.850000000000001" width="37.38" />
-                     </bumpInput>
-                     <light>
-                        <Light.Distant />
-                     </light>
-                  </Lighting>
-               </effect>
+                    <effect>
+                        <Lighting>
+                            <light>
+
+                            </light>
+                        </Lighting>
+                    </effect>
                 </VBox>
             </children>
         </HBox>
