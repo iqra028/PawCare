@@ -21,10 +21,18 @@ public class LogInController {
     @FXML
     private Button Finish;
 
+    //these three buttons are for login for user, vet and resue center,
+    // do whatever you wanna with the db storing shiz over here
+
+    @FXML
+    private Button UserLogin;
+    @FXML
+    private Button RescueCenterLogin;
+    @FXML
+    private Button VetLogin;
+
     private HelloApplication helloApplication;
 
-    public void Controller() {
-    }
     public void setHelloApplication(HelloApplication helloApplication) {
         this.helloApplication = helloApplication;
     }
@@ -52,7 +60,6 @@ public class LogInController {
             showAlert("Login Error", "Please enter both username and password.");
         }
     }
-
 
     private void openLogInPage() {
         try {
