@@ -1,58 +1,78 @@
-<?xml version="1.0" encoding="UTF-8"?>
+package com.example.project1;
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 
-<AnchorPane prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.LogInController">
-   <children>
-      <AnchorPane prefHeight="189.0" prefWidth="1390.0" style="-fx-background-color: #8B0000;">
-         <children>
-            <Label layoutX="101.0" layoutY="35.0" prefHeight="64.0" prefWidth="158.0" text="PawCare" textFill="WHITE">
-               <font>
-                  <Font name="Brush Script MT Italic" size="48.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="46.0" fitWidth="87.0" layoutX="14.0" layoutY="12.0">
-               <image>
-                  <Image url="@images/Frame.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="signUpButton" layoutX="1080.0" layoutY="58.0" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #0000ff; -fx-text-fill: white; -fx-background-radius: 20;" text="Sign Up" />
-            <Button fx:id="logInButton" layoutX="1216.0" layoutY="58.0" prefHeight="40.0" prefWidth="109.0" style="-fx-background-color: #ffffff; -fx-text-fill: black; -fx-background-radius: 20;" text="Login" />
-            <Button fx:id="UserLogin" layoutX="495.0" layoutY="102.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" style="-fx-background-radius: 20;" text="User" />
-            <Button fx:id="RescueCenterLogin" layoutX="785.0" layoutY="102.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" style="-fx-background-radius: 20;" text="Rescue Center" />
-            <Button fx:id="VetLogin" layoutX="639.0" layoutY="102.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="131.0" style="-fx-background-radius: 20;" text="Vet" />
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="493.0" layoutY="153.0" prefHeight="571.0" prefWidth="418.0" style="-fx-background-color: EFA449; -fx-background-radius: 10;">
-         <children>
-            <Label layoutX="97.0" layoutY="144.0" style="-fx-font-size: 12; -fx-text-fill: black;" text="Fill in the following information to sign up" underline="true" />
-            <Label layoutX="239.0" layoutY="287.0" style="-fx-text-fill: blue;" text="Terms of Agreement" underline="true" />
-            <Label layoutX="176.0" layoutY="85.0" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: black;" text="Login" />
-            <PasswordField fx:id="passwordField" layoutX="44.0" layoutY="235.0" prefHeight="38.0" prefWidth="329.0" promptText="Password" style="-fx-background-radius: 20; -fx-padding: 10;">
-               <effect>
-                  <DropShadow />
-               </effect>
-            </PasswordField>
-            <Button fx:id="Finish" layoutX="44.0" layoutY="315.0" prefHeight="38.0" prefWidth="330.0" style="-fx-background-color: #0000ff; -fx-text-fill: white; -fx-background-radius: 15; -fx-padding: 10;" text="Login" />
-            <TextField fx:id="emailField" layoutX="43.0" layoutY="178.0" prefHeight="38.0" prefWidth="332.0" promptText="Email" style="-fx-background-radius: 20; -fx-padding: 10;">
-               <effect>
-                  <DropShadow />
-               </effect>
-            </TextField>
-            <CheckBox layoutX="67.0" layoutY="287.0" style="-fx-font-size: 12; -fx-text-fill: black;" text="I have read and confirm the " />
-         </children>
-         <effect>
-            <DropShadow />
-         </effect>
-      </AnchorPane>
-   </children>
-</AnchorPane>
+import java.io.IOException;
+
+public class LogInController {
+    @FXML
+    private TextField emailField;
+    @FXML
+    private PasswordField passwordField;
+    @FXML
+    private Button signUpButton;
+    @FXML
+    private Button logInButton;
+    @FXML
+    private Button Finish;
+    @FXML
+    private Button UserLogin;
+    @FXML
+    private Button RescueCenterLogin;
+    @FXML
+    private Button VetLogin;
+
+    private HelloApplication helloApplication;
+
+    @FXML
+    private void initialize() {
+        signUpButton.setOnAction(event -> openSignUpPage());
+        logInButton.setOnAction(event -> openLogInPage());
+        Finish.setOnAction(event -> openUserHomePage());
+    }
+    private void openUserHomePage() {
+        try {
+            HelloApplication.getInstance().changeScene("UserHomeScreen.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void handleLogin() {
+        String username = emailField.getText();
+        String password = passwordField.getText();
+
+        if (!username.isEmpty() && !password.isEmpty()) {
+            showAlert("Login Success", "Welcome, " + username + "!");
+        } else {
+            showAlert("Login Error", "Please enter both username and password.");
+        }
+    }
+
+    private void openLogInPage() {
+        try {
+            HelloApplication.getInstance().changeScene("login-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void openSignUpPage() {
+        try {
+            HelloApplication.getInstance().changeScene("Select-UserType.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText((String)null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+}
