@@ -66,78 +66,53 @@ public class PawCare {
         return false;
     }
     // Register a User
-    public void registerUser() {
-        Form form = formFactory.createForm("UserRegistration");
-        if (form.enterDetails() && form.submitForm()) {
-            UserRegistrationForm userForm = (UserRegistrationForm) form;
-            String username = userForm.getUserName();
-            String email = userForm.getEmail();
+    public boolean registerUser(String username,String name,String email,String password,String gender) {
 
             // Checking if username or email is already taken
             if (isUsernameOrEmailTaken(username, email)) {
-                System.out.println("Username or Email is already taken. Registration failed.");
-                return;
+                //System.out.println("Username or Email is already taken. Registration failed.");
+                return false;
             }
-            User newUser = new User(userForm.getUserName(), userForm.getName(), userForm.getEmail(), userForm.getPassword(), userForm.getGender());
+            User newUser = new User(username,name,email,password,gender);
             //User newUser = new User(userForm.getUserName(), userForm.getEmail(), userForm.getPassword(),userForm.getGender());
             users.add(newUser);
             dbHandler.addUser(newUser);
-            forms.add(form);
-            System.out.println("User registration successful!");
-        } else {
-            System.out.println("User registration failed.");
+            return true;
+
         }
-    }
+
 
     // Register a Vet
-    public void registerVet() {
-        Form form = formFactory.createForm("VetRegistration");
-        if (form.enterDetails() && form.submitForm()) {
-            VetRegistrationForm vetForm = (VetRegistrationForm) form;
-            String username = vetForm.getUserName();
-            String email = vetForm.getEmail();
+    public boolean registerVet(String username,String name,String email,String password,String location,String phonenumber) {
 
             // Checking if username or email is already taken
             if (isUsernameOrEmailTaken(username, email)) {
-                System.out.println("Username or Email is already taken. Registration failed.");
-                return;
+                //System.out.println("Username or Email is already taken. Registration failed.");
+                return false;
             }
-            Vets newVet = new Vets(vetForm.getUserName(), vetForm.getVetName(), vetForm.getEmail(), vetForm.getPassword(), vetForm.getLocation(), vetForm.getPhoneNumber());
+            Vets newVet = new Vets(username,name,email,password,location,phonenumber);
             //Vets newVet = new Vets(vetForm.getVetName(), vetForm.getPassword(), vetForm.getLocation(),vetForm.getPhoneNumber());
             // Add the new Vet to the list and database
             vets.add(newVet);
             dbHandler.addVet(newVet);
-            // Add the form to the list of submitted forms
-            forms.add(form);
-            System.out.println("Vet registration successful!");
-        } else {
-            System.out.println("Vet registration failed.");
-        }
+            return true;
+
     }
 
     // Register a Rescue Center
-    public void registerRescueCenter() {
-        Form form = formFactory.createForm("RescueCenterRegistration");
-        if (form.enterDetails() && form.submitForm()) {
-            RescueCenterRegForm centerForm = (RescueCenterRegForm) form;
-            String username = centerForm.getUserName();
-            String email = centerForm.getEmail();
-
+    public boolean registerRescueCenter(String username,String name,String email,String password,String location,String phonenumber) {
             // Checking if username or email is already taken
             if (isUsernameOrEmailTaken(username, email)) {
-                System.out.println("Username or Email is already taken. Registration failed.");
-                return;
+                //System.out.println("Username or Email is already taken. Registration failed.");
+                return false;
             }
 
-            RescueCenter newCenter = new RescueCenter(centerForm.getUserName(), centerForm.getCenterName(),  centerForm.getEmail(),centerForm.getPassword(), centerForm.getLocation(), centerForm.getPhoneNumber());
+            RescueCenter newCenter = new RescueCenter(username,name,email,password,location,phonenumber);
             // RescueCenter newCenter = new RescueCenter(centerForm.getCenterName(), centerForm.getPassword(), centerForm.getLocation(),centerForm.getPhoneNumber());
             rescueCenters.add(newCenter);
             dbHandler.addRescueCenter(newCenter);
-            forms.add(form);
-            System.out.println("Rescue center registration successful!");
-        } else {
-            System.out.println("Rescue center registration failed.");
-        }
+           return true;
+
     }
 
     //login function for anyone

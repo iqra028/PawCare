@@ -1,4 +1,5 @@
 package com.example.project1;
+import com.example.project1.BLL.PawCare;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -9,6 +10,8 @@ import javafx.scene.control.Alert.AlertType;
 import java.io.IOException;
 
 public class VetSignUpController {
+
+    private PawCare pawCare;
     @FXML
     private TextField usernameField;
     @FXML
@@ -35,7 +38,7 @@ public class VetSignUpController {
     private void initialize() {
         signUpButton.setOnAction(event -> openSignUpPage());
         logInButton.setOnAction(event -> openLogInPage());
-        Finish.setOnAction(event -> openUserHomePage());
+        Finish.setOnAction(event -> {handleSignUp();openUserHomePage();});
 
     }
     private void openUserHomePage() {
@@ -47,6 +50,8 @@ public class VetSignUpController {
     }
 
     private void handleSignUp() {
+
+        pawCare=new PawCare();
         String username = usernameField.getText();
         String name = nameField.getText();
         String email = emailField.getText();
@@ -54,8 +59,14 @@ public class VetSignUpController {
         String Location = LocationField.getText();
         String PhoneNumber = PhoneField.getText();
 
-        if (!username.isEmpty() && !email.isEmpty() && !password.isEmpty() && !Location.isEmpty() && !PhoneNumber.isEmpty()) {
-            showAlert("Success", "Sign-up successful!");
+        if (!username.isEmpty() && !name.isEmpty() && !email.isEmpty() && !password.isEmpty() && !Location.isEmpty() && !PhoneNumber.isEmpty()) {
+            boolean reg= pawCare.registerVet(username,name,email,password,Location,PhoneNumber);
+            if(reg){
+                showAlert("Success", "Sign-up successful!");
+            }
+            else {
+                showAlert("Failure", "Username or email already used!");
+            }
         } else {
             showAlert("Error", "All fields are required.");
         }

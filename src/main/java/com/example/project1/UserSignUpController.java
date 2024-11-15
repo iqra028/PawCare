@@ -1,6 +1,7 @@
 package com.example.project1;
 
 
+import com.example.project1.BLL.PawCare;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -11,6 +12,8 @@ import javafx.scene.control.Alert.AlertType;
 import java.io.IOException;
 
 public class UserSignUpController {
+
+    private PawCare pawCare;
     @FXML
     private TextField usernameField;
     @FXML
@@ -35,7 +38,7 @@ public class UserSignUpController {
     private void initialize() {
         signUpButton.setOnAction(event -> openSignUpPage());
         logInButton.setOnAction(event -> openLogInPage());
-        Finish.setOnAction(event -> openUserHomePage());
+        Finish.setOnAction(event -> {handleSignUp();openUserHomePage();});
 
     }
     private void openUserHomePage() {
@@ -48,6 +51,7 @@ public class UserSignUpController {
 
     private void handleSignUp()
     {
+        pawCare=new PawCare();
         String username = usernameField.getText();
         String name = nameField.getText();
         String email = emailField.getText();
@@ -55,7 +59,14 @@ public class UserSignUpController {
         String gender = genderField.getText();
 
         if (!username.isEmpty() && !email.isEmpty() && !password.isEmpty() && !gender.isEmpty() && !name.isEmpty()) {
-            showAlert("Success", "Sign-up successful!");
+            boolean reg= pawCare.registerUser(username,name,email,password,gender);
+            if(reg){
+                showAlert("Success", "Sign-up successful!");
+            }
+            else {
+                showAlert("Failure", "Username or email already used!");
+            }
+
         } else {
             showAlert("Error", "All fields are required.");
         }
