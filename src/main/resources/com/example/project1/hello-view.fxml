@@ -70,9 +70,9 @@
                                     <HBox prefHeight="24.0" prefWidth="303.0" />
                                     <HBox prefHeight="46.0" prefWidth="267.0">
                                         <children>
-                                            <Button fx:id="signUpWithEmailButton" prefHeight="30.0" prefWidth="138.0" style="-fx-background-color: #ffffff; -fx-text-fill: black; -fx-background-radius: 10;" text="Sign Up with Email" />
+                                            <Button prefHeight="30.0" prefWidth="138.0" style="-fx-background-color: #ffffff; -fx-text-fill: black; -fx-background-radius: 10;" text="Sign Up with Email" />
                                             <VBox prefHeight="46.0" prefWidth="38.0" />
-                                            <Button fx:id="loginWithEmailButton" prefHeight="30.0" prefWidth="143.0" style="-fx-background-color: #0000ff; -fx-text-fill: white; -fx-background-radius: 10;" text="Login with Email" />
+                                            <Button prefHeight="30.0" prefWidth="143.0" style="-fx-background-color: #0000ff; -fx-text-fill: white; -fx-background-radius: 10;" text="Login with Email" />
                                         </children>
                                     </HBox>
                                 </children>

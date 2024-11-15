@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<AnchorPane prefHeight="1194.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="133.0" prefWidth="1374.0" style="-fx-background-color: #8B0000;">
+         <children>
+            <Circle fill="#efefef" layoutX="1301.0" layoutY="59.0" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+            <Label layoutX="101.0" layoutY="26.0" prefHeight="64.0" prefWidth="158.0" text="PawCare" textFill="WHITE">
+               <font>
+                  <Font name="Brush Script MT Italic" size="48.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="46.0" fitWidth="87.0" layoutX="14.0" layoutY="12.0">
+               <image>
+                  <Image url="@images/Frame.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="280.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Report Injured Animal" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button layoutX="501.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text=" Report Missing Animal" textFill="#ececec">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button layoutX="724.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Adopt" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button layoutX="843.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Volunteer" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button layoutX="975.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Donate" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <Label layoutX="391.0" layoutY="386.0" prefHeight="98.0" prefWidth="225.0" text="PawCare" textAlignment="CENTER">
+         <font>
+            <Font name="Brush Script MT Italic" size="72.0" />
+         </font>
+      </Label>
+      <Label layoutX="391.0" layoutY="496.0" prefHeight="44.0" prefWidth="303.0" style="-fx-font-size: 18; -fx-text-fill: black;" text="Adopt a friend, save a life" textAlignment="CENTER" />
+      <ImageView fitHeight="80.0" fitWidth="119.0" layoutX="267.0" layoutY="353.0">
+         <image>
+            <Image url="@images/Frame.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="564.0" layoutY="462.0" prefHeight="44.0" prefWidth="303.0" text="By Venti Tech" textAlignment="CENTER" />
+      <ImageView fitHeight="369.0" fitWidth="403.0" layoutX="730.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/369b0ef9aa2260837b7e04ecd09868df.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutY="947.0" prefHeight="246.0" prefWidth="1374.0" style="-fx-background-color: #8B0000;">
+         <children>
+            <ImageView fitHeight="142.0" fitWidth="234.0" layoutX="49.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/ezgif-6-100f34c33f.png" />
+               </image>
+               <effect>
+                  <ColorAdjust brightness="1.0" contrast="0.9" />
+               </effect>
+            </ImageView>
+            <Text fill="WHITE" layoutX="450.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="About VentiTech" wrappingWidth="146.40000000000003">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="450.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Meet The Users" wrappingWidth="146.40000000000003">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="450.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Report A Problem" wrappingWidth="146.40000000000003">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Line endX="-100.0" endY="178.5999755859375" layoutX="433.0" layoutY="51.0" startX="-100.0" startY="-19.0" stroke="WHITE" />
+            <Line endX="-100.0" endY="178.5999755859375" layoutX="1070.0" layoutY="48.0" startX="-100.0" startY="-19.0" stroke="WHITE" />
+            <Text fill="WHITE" layoutX="1025.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Check Us Out On: " wrappingWidth="146.40000000000003">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="44.0" fitWidth="60.0" layoutX="1192.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/Instagram.png" />
+               </image>
+               <effect>
+                  <ColorAdjust brightness="1.0" contrast="-1.0" />
+               </effect>
+            </ImageView>
+            <ImageView fitHeight="37.0" fitWidth="38.0" layoutX="1025.0" layoutY="112.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/facebook.png" />
+               </image>
+               <effect>
+                  <ColorAdjust brightness="1.0" contrast="-1.0" />
+               </effect>
+            </ImageView>
+            <ImageView fitHeight="38.0" fitWidth="45.0" layoutX="1112.0" layoutY="112.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/Pinterest.png" />
+               </image>
+               <effect>
+                  <ColorAdjust brightness="1.0" contrast="-1.0" />
+               </effect>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Button layoutX="303.0" layoutY="579.0" mnemonicParsing="false" style="-fx-background-color: D08122;" text="Report Injured Animal" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button layoutX="511.0" layoutY="579.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="146.0" style="-fx-background-color: D08122;" text="Donate" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

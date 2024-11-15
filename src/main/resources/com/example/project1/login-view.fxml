@@ -99,7 +99,7 @@
                         </CheckBox>
 
                         <!-- Login Button -->
-                        <Button fx:id="loginButton" prefHeight="38.0" prefWidth="112.0" style="-fx-background-color: #0000ff; -fx-text-fill: white; -fx-background-radius: 15; -fx-padding: 10;" text="Login" />
+                        <Button fx:id="Finish" prefHeight="38.0" prefWidth="112.0" style="-fx-background-color: #0000ff; -fx-text-fill: white; -fx-background-radius: 15; -fx-padding: 10;" text="Login" />
                     </children>
                     <effect>
                         <Lighting>
