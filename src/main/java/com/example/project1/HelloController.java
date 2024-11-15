@@ -17,13 +17,12 @@ public class HelloController {
     private Button signUpButton;
     @FXML
     private Button logInButton;
-
     public HelloController() {}
 
     @FXML
     private void initialize() {
-        signUpButton.setOnAction(event -> openSignUpPage());
-        logInButton.setOnAction(event -> openLogInPage());
+            signUpButton.setOnAction(event -> openSignUpPage());
+            logInButton.setOnAction(event -> openLogInPage());
     }
 
     private void openSignUpPage() {
