@@ -20,7 +20,7 @@ public class RescueCenterSignUpController {
         @FXML
         private TextField LocationField;
         @FXML
-        private PasswordField NumField;
+        private TextField NumField;
 
         @FXML
         private Button signUpButton;

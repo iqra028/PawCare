@@ -20,7 +20,7 @@ public class VetSignUpController {
     @FXML
     private TextField LocationField;
     @FXML
-    private PasswordField NumField;
+    private TextField PhoneField;
 
     @FXML
     private Button signUpButton;
@@ -52,7 +52,7 @@ public class VetSignUpController {
         String email = emailField.getText();
         String password = passwordField.getText();
         String Location = LocationField.getText();
-        String PhoneNumber = NumField.getText();
+        String PhoneNumber = PhoneField.getText();
 
         if (!username.isEmpty() && !email.isEmpty() && !password.isEmpty() && !Location.isEmpty() && !PhoneNumber.isEmpty()) {
             showAlert("Success", "Sign-up successful!");
