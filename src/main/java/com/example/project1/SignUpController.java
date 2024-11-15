@@ -19,15 +19,24 @@ public class SignUpController {
     private Button signUpButton;
     @FXML
     private Button logInButton;
+    @FXML
+    private Button Finish;
 
     private HelloApplication helloApplication;
-
-
 
     @FXML
     private void initialize() {
         signUpButton.setOnAction(event -> openSignUpPage());
         logInButton.setOnAction(event -> openLogInPage());
+        Finish.setOnAction(event -> openUserHomePage());
+
+    }
+    private void openUserHomePage() {
+        try {
+            HelloApplication.getInstance().changeScene("UserHomeScreen.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void handleSignUp() {
@@ -51,7 +60,7 @@ public class SignUpController {
     }
     private void openSignUpPage() {
         try {
-            HelloApplication.getInstance().changeScene("signup-view.fxml");
+            HelloApplication.getInstance().changeScene("Select-UserType.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }

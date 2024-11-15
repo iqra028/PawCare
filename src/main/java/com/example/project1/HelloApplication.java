@@ -25,7 +25,7 @@ public class HelloApplication extends Application {
     public void changeScene(String fxmlFile) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = fxmlLoader.load();
-        stage.setScene(new Scene(root, 1466, 800));
+        stage.setScene(new Scene(root, 1366, 768));
         stage.show();
     }
 

@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package com.example.project1;
 
 import javafx.fxml.FXML;
@@ -23,7 +18,11 @@ public class LogInController {
     private Button signUpButton;
     @FXML
     private Button logInButton;
+    @FXML
+    private Button Finish;
+
     private HelloApplication helloApplication;
+
     public void Controller() {
     }
     public void setHelloApplication(HelloApplication helloApplication) {
@@ -34,6 +33,14 @@ public class LogInController {
     private void initialize() {
         signUpButton.setOnAction(event -> openSignUpPage());
         logInButton.setOnAction(event -> openLogInPage());
+        Finish.setOnAction(event -> openUserHomePage());
+    }
+    private void openUserHomePage() {
+        try {
+            HelloApplication.getInstance().changeScene("UserHomeScreen.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     private void handleLogin() {
         String username = usernameField.getText();
@@ -56,7 +63,7 @@ public class LogInController {
     }
     private void openSignUpPage() {
         try {
-            HelloApplication.getInstance().changeScene("signup-view.fxml");
+            HelloApplication.getInstance().changeScene("Select-UserType.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }

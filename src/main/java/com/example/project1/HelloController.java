@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package com.example.project1;
 
 import java.io.IOException;
@@ -21,13 +16,13 @@ public class HelloController {
 
     @FXML
     private void initialize() {
-            signUpButton.setOnAction(event -> openSignUpPage());
-            logInButton.setOnAction(event -> openLogInPage());
+        signUpButton.setOnAction(event -> openSignUpPage());
+        logInButton.setOnAction(event -> openLogInPage());
     }
 
     private void openSignUpPage() {
         try {
-            HelloApplication.getInstance().changeScene("signup-view.fxml");
+            HelloApplication.getInstance().changeScene("Select-UserType.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
