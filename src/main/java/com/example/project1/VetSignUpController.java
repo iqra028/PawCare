@@ -15,7 +15,7 @@ public class VetSignUpController {
     @FXML
     private TextField usernameField;
     @FXML
-    private TextField nameField;
+    private TextField namefield;
     @FXML
     private TextField emailField;
     @FXML
@@ -53,7 +53,7 @@ public class VetSignUpController {
 
         pawCare=new PawCare();
         String username = usernameField.getText();
-        String name = nameField.getText();
+        String name = namefield.getText();
         String email = emailField.getText();
         String password = passwordField.getText();
         String Location = LocationField.getText();
