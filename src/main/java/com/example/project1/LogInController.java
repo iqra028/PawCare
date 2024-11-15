@@ -20,10 +20,6 @@ public class LogInController {
     private Button logInButton;
     @FXML
     private Button Finish;
-
-    //these three buttons are for login for user, vet and resue center,
-    // do whatever you wanna with the db storing shiz over here
-
     @FXML
     private Button UserLogin;
     @FXML
@@ -32,10 +28,6 @@ public class LogInController {
     private Button VetLogin;
 
     private HelloApplication helloApplication;
-
-    public void setHelloApplication(HelloApplication helloApplication) {
-        this.helloApplication = helloApplication;
-    }
 
     @FXML
     private void initialize() {

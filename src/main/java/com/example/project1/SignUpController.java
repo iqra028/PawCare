@@ -12,9 +12,16 @@ public class SignUpController {
     @FXML
     private TextField usernameField;
     @FXML
+    private TextField nameField;
+    @FXML
     private TextField emailField;
     @FXML
     private PasswordField passwordField;
+    @FXML
+    private TextField LocationField;
+    @FXML
+    private PasswordField NumField;
+
     @FXML
     private Button signUpButton;
     @FXML
@@ -41,10 +48,13 @@ public class SignUpController {
 
     private void handleSignUp() {
         String username = usernameField.getText();
+        String name = nameField.getText();
         String email = emailField.getText();
         String password = passwordField.getText();
+        String Location = LocationField.getText();
+        String PhoneNumber = NumField.getText();
 
-        if (!username.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
+        if (!username.isEmpty() && !email.isEmpty() && !password.isEmpty() && !Location.isEmpty() && !PhoneNumber.isEmpty()) {
             showAlert("Success", "Sign-up successful!");
         } else {
             showAlert("Error", "All fields are required.");
