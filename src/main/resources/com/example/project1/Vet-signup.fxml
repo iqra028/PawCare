@@ -60,7 +60,7 @@
             <Image url="@images/vetlogin.jpg" />
          </image>
       </ImageView>
-      <TextField fx:id="NumField" layoutX="186.0" layoutY="565.0" prefHeight="38.0" prefWidth="318.0" promptText="Phone Number" style="-fx-background-radius: 20; -fx-padding: 10;">
+      <TextField fx:id="PhoneField" layoutX="186.0" layoutY="565.0" prefHeight="38.0" prefWidth="318.0" promptText="Phone Number" style="-fx-background-radius: 20; -fx-padding: 10;">
          <effect>
             <ColorAdjust brightness="-0.11" />
          </effect>
