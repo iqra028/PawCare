@@ -14,7 +14,7 @@
 
 <AnchorPane prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.SignUpController">
    <children>
-      <TextField fx:id="usernameField1" layoutX="185.0" layoutY="366.0" prefHeight="38.0" prefWidth="324.0" promptText="Name" style="-fx-background-radius: 20; -fx-padding: 10;">
+      <TextField fx:id="namefield" layoutX="185.0" layoutY="366.0" prefHeight="38.0" prefWidth="324.0" promptText="Name" style="-fx-background-radius: 20; -fx-padding: 10;" text="ssssssss">
          <effect>
             <ColorAdjust brightness="-0.11" />
          </effect>
@@ -32,7 +32,7 @@
       </TextField>
       <Label layoutX="158.0" layoutY="169.0" prefHeight="143.0" prefWidth="264.0" style="-fx-font-size: 40; -fx-font-weight: bold;" text="Vet Sign up" />
       <CheckBox layoutX="186.0" layoutY="614.0" text="I have read and confirm the Terms of Agreement" />
-      <PasswordField fx:id="passwordField" layoutX="186.0" layoutY="470.0" prefHeight="38.0" prefWidth="318.0" promptText="Password" style="-fx-background-radius: 20; -fx-padding: 10;">
+      <PasswordField fx:id="passwordField" accessibleRole="TEXT_FIELD" layoutX="186.0" layoutY="470.0" prefHeight="38.0" prefWidth="318.0" promptText="Password" style="-fx-background-radius: 20; -fx-padding: 10;">
          <effect>
             <ColorAdjust brightness="-0.11" />
          </effect>
@@ -54,21 +54,21 @@
          </children>
       </AnchorPane>
       <Button fx:id="Finish" layoutX="403.0" layoutY="647.0" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: #0000ff; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 10;" text="Sign Up" />
-      <PasswordField fx:id="confirmPasswordField1" accessibleRole="TEXT_FIELD" layoutX="186.0" layoutY="567.0" prefHeight="38.0" prefWidth="318.0" promptText="Phone Number" style="-fx-background-radius: 20; -fx-padding: 10;">
-         <effect>
-            <ColorAdjust brightness="-0.11" />
-         </effect>
-      </PasswordField>
       <Line endX="640.0928955078125" endY="712.0" startX="640.0928955078125" startY="169.59999084472656" />
       <ImageView fitHeight="460.0" fitWidth="437.0" layoutX="734.0" layoutY="206.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/vetlogin.jpg" />
          </image>
       </ImageView>
-      <PasswordField fx:id="confirmPasswordField11" accessibleRole="TEXT_FIELD" layoutX="186.0" layoutY="518.0" prefHeight="38.0" prefWidth="318.0" promptText="Vet Center Location" style="-fx-background-radius: 20; -fx-padding: 10;">
+      <TextField fx:id="NumField" layoutX="186.0" layoutY="565.0" prefHeight="38.0" prefWidth="318.0" promptText="Phone Number" style="-fx-background-radius: 20; -fx-padding: 10;">
          <effect>
             <ColorAdjust brightness="-0.11" />
          </effect>
-      </PasswordField>
+      </TextField>
+      <TextField fx:id="LocationField" layoutX="186.0" layoutY="518.0" prefHeight="38.0" prefWidth="318.0" promptText="Vet Center Location" style="-fx-background-radius: 20; -fx-padding: 10;">
+         <effect>
+            <ColorAdjust brightness="-0.11" />
+         </effect>
+      </TextField>
    </children>
 </AnchorPane>

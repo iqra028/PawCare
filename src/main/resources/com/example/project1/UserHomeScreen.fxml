@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<AnchorPane prefHeight="1194.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="1194.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.HomeController">
    <children>
       <AnchorPane prefHeight="133.0" prefWidth="1374.0" style="-fx-background-color: #8B0000;">
          <children>
@@ -25,12 +25,12 @@
                   <Image url="@images/Frame.png" />
                </image>
             </ImageView>
-            <Button layoutX="280.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Report Injured Animal" textFill="WHITE">
+            <Button fx:id="btnReportInjuredAnimalHeader" layoutX="280.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Report Injured Animal" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button layoutX="501.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text=" Report Missing Animal" textFill="#ececec">
+            <Button fx:id="btnReportMissingAnimal" layoutX="501.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text=" Report Missing Animal" textFill="#ececec">
                <font>
                   <Font size="16.0" />
                </font>
@@ -40,12 +40,12 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button layoutX="843.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Volunteer" textFill="WHITE">
+            <Button fx:id="btnVolunteer" layoutX="843.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Volunteer" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button layoutX="975.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Donate" textFill="WHITE">
+            <Button fx:id="btnDonate" layoutX="975.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Donate" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
