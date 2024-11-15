@@ -38,7 +38,11 @@ public class RescueCenterSignUpController {
         private void initialize() {
             signUpButton.setOnAction(event -> openSignUpPage());
             logInButton.setOnAction(event -> openLogInPage());
-            Finish.setOnAction(event -> {handleSignUp();openUserHomePage();});
+            Finish.setOnAction(event ->  {
+                if (handleSignUp()) { // Only proceed if sign-up is successful
+                    openUserHomePage();
+                }
+            });
 
         }
         private void openUserHomePage() {
@@ -49,7 +53,7 @@ public class RescueCenterSignUpController {
             }
         }
 
-        private void handleSignUp() {
+        private boolean handleSignUp() {
             pawcare=new PawCare();
             String username = usernameField.getText();
             String name = nameField.getText();
@@ -69,6 +73,7 @@ public class RescueCenterSignUpController {
             } else {
                 showAlert("Error", "All fields are required.");
             }
+            return false;
         }
 
         private void openLogInPage() {

@@ -14,7 +14,7 @@ public class Main {
         int mainChoice = scanner.nextInt();
         scanner.nextLine();
 
-        switch (mainChoice) {
+       /* switch (mainChoice) {
             case 1:
                 pawCare.login();
                 break;
@@ -28,7 +28,7 @@ public class Main {
                 int registerChoice = scanner.nextInt();
                 scanner.nextLine();
 
-               /* switch (registerChoice) {
+               *//* switch (registerChoice) {
                     case 1:
                         pawCare.registerUser();
                         break;
@@ -45,10 +45,10 @@ public class Main {
 
             default:
                 System.out.println("Invalid choice.");
-        }*/
+        }*//*
                 scanner.close();
 
 
-        }
+        }*/
     }
 }

@@ -38,7 +38,11 @@ public class VetSignUpController {
     private void initialize() {
         signUpButton.setOnAction(event -> openSignUpPage());
         logInButton.setOnAction(event -> openLogInPage());
-        Finish.setOnAction(event -> {handleSignUp();openUserHomePage();});
+        Finish.setOnAction(event ->  {
+            if (handleSignUp()) { // Only proceed if sign-up is successful
+                openUserHomePage();
+            }
+        });
 
     }
     private void openUserHomePage() {
@@ -49,7 +53,7 @@ public class VetSignUpController {
         }
     }
 
-    private void handleSignUp() {
+    private boolean handleSignUp() {
 
         pawCare=new PawCare();
         String username = usernameField.getText();
@@ -63,6 +67,7 @@ public class VetSignUpController {
             boolean reg= pawCare.registerVet(username,name,email,password,Location,PhoneNumber);
             if(reg){
                 showAlert("Success", "Sign-up successful!");
+                return true;
             }
             else {
                 showAlert("Failure", "Username or email already used!");
@@ -70,6 +75,7 @@ public class VetSignUpController {
         } else {
             showAlert("Error", "All fields are required.");
         }
+        return false;
     }
 
     private void openLogInPage() {

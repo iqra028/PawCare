@@ -116,23 +116,15 @@ public class PawCare {
     }
 
     //login function for anyone
-    public void login()
+    public boolean login(String username,String password,String type)
     {
-        Form form= formFactory.createForm("LoginForm");
-        if(form.enterDetails())
-        {
-            LoginForm loginForm = (LoginForm) form;
-            String userName = loginForm.getUserName();
-            String password = loginForm.getPassword();
-            String type = loginForm.getType();
-
-            boolean loginSuccessful = false;
+        boolean loginSuccessful = false;
 
             switch (type.toLowerCase()) {
                 case "user":
                     for (User user : users) {
-                        if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
-                            System.out.println("User successfully logged in!");
+                        if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
+                           // System.out.println("User successfully logged in!");
                             loginSuccessful = true;
                             break;
                         }
@@ -141,7 +133,7 @@ public class PawCare {
 
                 case "vet":
                     for (Vets vet : vets) {
-                        if (vet.getUserName().equals(userName) && vet.getPassword().equals(password)) {
+                        if (vet.getUserName().equals(username) && vet.getPassword().equals(password)) {
                             System.out.println("Vet successfully logged in!");
                             loginSuccessful = true;
                             break;
@@ -151,7 +143,7 @@ public class PawCare {
 
                 case "rescue center":
                     for (RescueCenter center : rescueCenters) {
-                        if (center.getUserName().equals(userName) && center.getPassword().equals(password)) {
+                        if (center.getUserName().equals(username) && center.getPassword().equals(password)) {
                             System.out.println("Rescue Center successfully logged in!");
                             loginSuccessful = true;
                             break;
@@ -165,10 +157,14 @@ public class PawCare {
             }
 
             if (!loginSuccessful) {
-                System.out.println("Invalid username or password.");
+               // System.out.println("Invalid username or password.");
+                return false;
+            }
+            else {
+                return true;
             }
 
-        }
+
     }
 
     public void displayUsers() {
