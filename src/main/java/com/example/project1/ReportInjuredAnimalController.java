@@ -1,5 +1,7 @@
 package com.example.project1;
 
+import com.example.project1.BLL.GeoLocation;
+import com.example.project1.BLL.PawCare;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -9,6 +11,15 @@ import javafx.scene.input.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.IOException;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 public class ReportInjuredAnimalController extends UserMenuController
@@ -21,15 +32,20 @@ public class ReportInjuredAnimalController extends UserMenuController
     private TextField Breed;
     @FXML
     private TextField InjuryDesc;
-
-
+    @FXML
+   private WebView webView;
+    private PawCare pawCare;
     private static final Logger LOGGER = Logger.getLogger(com.example.project1.ReportInjuredAnimalController.class.getName());
 
     @FXML
     public void initialize() {
         super.initialize();
-        btnSubmit.setOnAction(event -> onSubmitClick());
+        pawCare = new PawCare();
+        String mapHtml=pawCare.generatemap();
 
+        WebEngine webEngine = webView.getEngine();
+        webEngine.setJavaScriptEnabled(true);
+        webEngine.loadContent(mapHtml);
     }
     @FXML
     private void NextPage(){

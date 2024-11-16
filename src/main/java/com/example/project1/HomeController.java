@@ -23,6 +23,7 @@ public class HomeController {
 
     @FXML
     public void initialize() {
+
         btnReportInjuredAnimalHeader.setOnAction(event -> handleReportInjuredAnimalHeader());
         btnReportMissingAnimal.setOnAction(event -> handleReportMissingAnimal());
         // btnAdopt.setOnAction(event -> openSignUpPage());
@@ -33,7 +34,10 @@ public class HomeController {
 
     @FXML
     private void handleReportInjuredAnimalHeader() {
+        System.out.println("Initializing WebView and loading content...");
+
         try {
+            System.out.println("Initializing WebView and loading content...");
             HelloApplication.getInstance().changeScene("ReportInjuredAnimal.fxml");
         } catch (IOException e) {
             e.printStackTrace();

@@ -13,6 +13,7 @@ public class PawCare {
     private PersistanceHandler vetHandler;
     private PersistanceHandler centerHandler;
     private FormFactory formFactory;
+    private GeoLocation geoLocation;
 
     // Constructor
     public PawCare() {
@@ -24,10 +25,27 @@ public class PawCare {
         this.vetHandler = new VetRecords();
         this.centerHandler = new RescueCenterRecords();
         this.formFactory=new FormFactory();
+        this.geoLocation=new GeoLocation();
         loadDataFromDatabase();
     }
 
+    public double[] getLocation()
+    {
+        return geoLocation.fetchDynamicLocation();
+    }
+    public String generatemap()
+    {
+        double[] location= getLocation();
+        double latitude = location[0];
+        double longitude = location[1];
+        double radius = 9000; // You can modify the radius if needed
 
+        // Fetch data (shelters, veterinary centers, etc.) - this is done in the GeoLocation class
+        geoLocation.fetchDataFromOverpassAPI(latitude, longitude, radius);
+
+        // Generate the map HTML and load it into the WebView
+         return geoLocation.generateMapHTML(latitude, longitude);
+    }
     public ArrayList<Vets> getVets() {
         return vets;
     }
