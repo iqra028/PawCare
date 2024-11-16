@@ -1,5 +1,5 @@
 package com.example.project1;
-import com.example.project1.BLL.PawCare;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -8,10 +8,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class VetSignUpController {
-
-    private PawCare pawCare;
     @FXML
     private TextField usernameField;
     @FXML
@@ -24,7 +24,6 @@ public class VetSignUpController {
     private TextField LocationField;
     @FXML
     private TextField PhoneField;
-
     @FXML
     private Button signUpButton;
     @FXML
@@ -32,30 +31,24 @@ public class VetSignUpController {
     @FXML
     private Button Finish;
 
-    private HelloApplication helloApplication;
+    private static final Logger LOGGER = Logger.getLogger(VetSignUpController.class.getName());
 
     @FXML
     private void initialize() {
         signUpButton.setOnAction(event -> openSignUpPage());
         logInButton.setOnAction(event -> openLogInPage());
-        Finish.setOnAction(event ->  {
-            if (handleSignUp()) { // Only proceed if sign-up is successful
-                openUserHomePage();
-            }
-        });
+        Finish.setOnAction(event -> openUserHomePage());
 
     }
     private void openUserHomePage() {
         try {
             HelloApplication.getInstance().changeScene("UserHomeScreen.fxml");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to change scene to Select-UserType.fxml", e);
         }
     }
 
-    private boolean handleSignUp() {
-
-        pawCare=new PawCare();
+    private void handleSignUp() {
         String username = usernameField.getText();
         String name = namefield.getText();
         String email = emailField.getText();
@@ -63,33 +56,25 @@ public class VetSignUpController {
         String Location = LocationField.getText();
         String PhoneNumber = PhoneField.getText();
 
-        if (!username.isEmpty() && !name.isEmpty() && !email.isEmpty() && !password.isEmpty() && !Location.isEmpty() && !PhoneNumber.isEmpty()) {
-            boolean reg= pawCare.registerVet(username,name,email,password,Location,PhoneNumber);
-            if(reg){
-                showAlert("Success", "Sign-up successful!");
-                return true;
-            }
-            else {
-                showAlert("Failure", "Username or email already used!");
-            }
+        if (!username.isEmpty() && !email.isEmpty() && !password.isEmpty() && !Location.isEmpty() && !PhoneNumber.isEmpty()) {
+            showAlert("Success", "Sign-up successful!");
         } else {
             showAlert("Error", "All fields are required.");
         }
-        return false;
     }
 
     private void openLogInPage() {
         try {
             HelloApplication.getInstance().changeScene("login-view.fxml");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to change scene to Select-UserType.fxml", e);
         }
     }
     private void openSignUpPage() {
         try {
             HelloApplication.getInstance().changeScene("Select-UserType.fxml");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to change scene to Select-UserType.fxml", e);
         }
     }
 

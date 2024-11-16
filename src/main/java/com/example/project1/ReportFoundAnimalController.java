@@ -1,23 +1,25 @@
 package com.example.project1;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ReportMissingAnimalController extends UserMenuController {
+public class ReportFoundAnimalController extends UserMenuController{
 
     @FXML
     private Button Found;
     @FXML
     private Button Missing;
     @FXML
-    private Button submitButton;
-    @FXML
     private TextField animalTypeField;
+    @FXML
+    private TextField nameField;
     @FXML
     private TextField breedField;
     @FXML
@@ -25,9 +27,9 @@ public class ReportMissingAnimalController extends UserMenuController {
     @FXML
     private TextField genderField;
     @FXML
-    private TextField nameField;
+    private Button submitButton;
 
-    private static final Logger LOGGER = Logger.getLogger(ReportMissingAnimalController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ReportFoundAnimalController.class.getName());
 
     @FXML
     public void initialize() {
@@ -55,14 +57,14 @@ public class ReportMissingAnimalController extends UserMenuController {
     }
 
     @FXML
-    void handleSubmit(ActionEvent event) {
-        String animalType = animalTypeField.getText();
-        String name = nameField.getText();
-        String breed = breedField.getText();
-        String color = colorField.getText();
-        String gender = genderField.getText();
-
-
+    private void handleSubmitButtonAction() {
+        System.out.println("Submit button clicked");
+        System.out.println("Animal Type: " + animalTypeField.getText());
+        System.out.println("Name: " + nameField.getText());
+        System.out.println("Breed: " + breedField.getText());
+        System.out.println("Color: " + colorField.getText());
+        System.out.println("Gender: " + genderField.getText());
     }
-
 }
+
+

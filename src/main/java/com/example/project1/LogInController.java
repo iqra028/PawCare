@@ -1,18 +1,14 @@
 package com.example.project1;
 
-import com.example.project1.BLL.PawCare;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.io.IOException;
 
 public class LogInController {
-
-    private PawCare pawCare;
     @FXML
     private TextField emailField;
     @FXML
@@ -23,101 +19,35 @@ public class LogInController {
     private Button logInButton;
     @FXML
     private Button Finish;
-    @FXML
-    private Button UserLogin;
-    @FXML
-    private Button RescueCenterLogin;
-    @FXML
-    private Button VetLogin;
+//    @FXML
+//    private Button UserLogin;
+//    @FXML
+//    private Button RescueCenterLogin;
+//    @FXML
+//    private Button VetLogin;
 
-    private HelloApplication helloApplication;
-    private boolean loginSuccessful = false; // Tracks if login was successful
-    private String homePage = "";
+    private static final Logger LOGGER = Logger.getLogger(LogInController.class.getName());
 
     @FXML
     private void initialize() {
-        pawCare=new PawCare();
         signUpButton.setOnAction(event -> openSignUpPage());
         logInButton.setOnAction(event -> openLogInPage());
-        UserLogin.setOnAction(event -> handleUserLogin());
-        VetLogin.setOnAction(event -> handleVetLogin());
-        RescueCenterLogin.setOnAction(event -> handleRescueCenterLogin());
-        Finish.setOnAction(event -> handleFinish());
+        Finish.setOnAction(event -> openUserHomePage());
     }
-   /* private void openUserHomePage() {
+    private void openUserHomePage() {
         try {
             HelloApplication.getInstance().changeScene("UserHomeScreen.fxml");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to change scene to Select-UserType.fxml", e);
         }
-    }*/
-    private void handleUserLogin() {
+    }
+
+    private void handleLogin() {
         String username = emailField.getText();
         String password = passwordField.getText();
 
-        if (!username.isEmpty() && !password.isEmpty()) {
-            if (pawCare.login(username, password,"user")) {
-                loginSuccessful = true;
-                homePage = "UserHomeScreen.fxml";
-                showAlert("Login Success", "User logged in successfully! Press Login to continue.");
-            } else {
-                loginSuccessful = false;
-                showAlert("Login Error", "Invalid username or password.");
-            }
-        } else {
-            showAlert("Login Error", "Please enter both username and password.");
-        }
-    }
-
-    private void handleVetLogin() {
-        String username = emailField.getText();
-        String password = passwordField.getText();
-
-        if (!username.isEmpty() && !password.isEmpty()) {
-            if (pawCare.login(username, password,"vet")) {
-                loginSuccessful = true;
-                homePage = "UserHomeScreen.fxml";
-                showAlert("Login Success", "Vet logged in successfully! Press Login to continue.");
-            } else {
-                loginSuccessful = false;
-                showAlert("Login Error", "Invalid username or password.");
-            }
-        } else {
-            showAlert("Login Error", "Please enter both username and password.");
-        }
-    }
-
-    private void handleRescueCenterLogin() {
-        String username = emailField.getText();
-        String password = passwordField.getText();
-
-        if (!username.isEmpty() && !password.isEmpty()) {
-            if (pawCare.login(username, password,"rescue center")) {
-                loginSuccessful = true;
-                homePage = "UserHomeScreen.fxml";
-                showAlert("Login Success", "Rescue Center logged in successfully! Press Login to continue.");
-            } else {
-                loginSuccessful = false;
-                showAlert("Login Error", "Invalid username or password.");
-            }
-        } else {
-            showAlert("Login Error", "Please enter both username and password.");
-        }
-    }
-
-    private void handleFinish() {
-        if (loginSuccessful && !homePage.isEmpty()) {
-            openHomePage(homePage);
-        } else {
-            showAlert("Error", "Login not successful or no user type selected.");
-        }
-    }
-
-    private void openHomePage(String fxmlFile) {
-        try {
-            HelloApplication.getInstance().changeScene(fxmlFile);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (username.isEmpty() && password.isEmpty()) {
+            LOGGER.log(Level.SEVERE, "Failed to change scene to Select-UserType.fxml", (Throwable) null);
         }
     }
 
@@ -125,22 +55,15 @@ public class LogInController {
         try {
             HelloApplication.getInstance().changeScene("login-view.fxml");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to change scene to Select-UserType.fxml", e);
         }
     }
     private void openSignUpPage() {
         try {
             HelloApplication.getInstance().changeScene("Select-UserType.fxml");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to change scene to Select-UserType.fxml", e);
         }
     }
 
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText((String)null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 }

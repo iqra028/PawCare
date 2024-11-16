@@ -5,10 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
+
 public class HelloApplication extends Application {
-    private static HelloApplication instance;
+    public static HelloApplication instance;
     private Stage stage;
 
     @Override

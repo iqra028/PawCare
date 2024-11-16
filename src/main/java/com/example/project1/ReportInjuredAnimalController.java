@@ -1,36 +1,28 @@
 package com.example.project1;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
-import com.example.project1.HomeController;
 
-
-public class ReportInjuredAnimalController extends HomeController
+public class ReportInjuredAnimalController extends UserMenuController
 {
     @FXML
     private Button btnSubmit;
-
     @FXML
     private TextField txtAnimalType;
-
     @FXML
     private TextField txtAnimalName;
-
     @FXML
     private TextField txtBreed;
-
     @FXML
     private TextField txtColor;
-
     @FXML
     private TextField txtGender;
-
     @FXML
     private TextField txtLocation;
-
     @FXML
     public void initialize() {
         super.initialize();
@@ -38,7 +30,6 @@ public class ReportInjuredAnimalController extends HomeController
 
     @FXML
     private void onSubmitClick(MouseEvent event) {
-        // Retrieve values from the text fields
         String animalType = txtAnimalType.getText();
         String animalName = txtAnimalName.getText();
         String breed = txtBreed.getText();
