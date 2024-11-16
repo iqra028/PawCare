@@ -13,14 +13,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1200.0" prefWidth="1374.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.example.project1.HomeController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1200.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.DonateController">
    <content>
-      <AnchorPane prefHeight="1194.0" prefWidth="1374.0" style="-fx-background-color: E4C7A2;">
+      <AnchorPane prefHeight="1194.0" prefWidth="1374.0" style="-fx-background-color: #E4C7A2;">
          <children>
             <AnchorPane prefHeight="243.0" prefWidth="1374.0" style="-fx-background-color: #8B0000;">
                <children>
                   <Circle fill="#efefef" layoutX="1307.0" layoutY="53.0" radius="24.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Label layoutX="118.0" layoutY="27.0" prefHeight="43.0" prefWidth="98.0" style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'file:resources/fonts/Pacifico.ttf';" text="PawCare">
+                  <Label fx:id="PawCare" layoutX="118.0" layoutY="27.0" prefHeight="43.0" prefWidth="98.0" style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'file:resources/fonts/Pacifico.ttf';" text="PawCare">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -40,7 +40,7 @@
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button layoutX="724.0" layoutY="58.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Adopt" textFill="WHITE">
+                  <Button fx:id="btnAdopt" layoutX="724.0" layoutY="58.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Adopt" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -57,10 +57,10 @@
                   </Button>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="265.0" layoutY="168.0" prefHeight="971.0" prefWidth="808.0" style="-fx-background-color: ffffffff;">
+            <AnchorPane layoutX="265.0" layoutY="168.0" prefHeight="971.0" prefWidth="808.0" style="-fx-background-color: #ffffff;">
                <children>
                   <Line endX="627.5999755859375" layoutX="140.0" layoutY="163.0" startX="-100.0" stroke="#9c8585" />
-                  <TextField layoutX="61.0" layoutY="241.0" prefHeight="34.0" prefWidth="682.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="foundation" layoutX="61.0" layoutY="241.0" prefHeight="34.0" prefWidth="682.0" style="-fx-background-color: 8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
@@ -80,7 +80,7 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Button layoutX="643.0" layoutY="911.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: 4177FF;" text="Submit ">
+                  <Button fx:id="submitbutton" layoutX="643.0" layoutY="911.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: 4177FF;" text="Submit ">
                      <effect>
                         <ColorAdjust brightness="-0.36" contrast="0.22" hue="-0.71" saturation="0.32" />
                      </effect>
@@ -91,7 +91,7 @@
                         <Font size="20.0" />
                      </font>
                   </Text>
-                  <TextField layoutX="61.0" layoutY="497.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="firstname" layoutX="61.0" layoutY="497.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
@@ -116,32 +116,32 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <TextField layoutX="61.0" layoutY="398.0" prefHeight="34.0" prefWidth="682.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="cardnumber" layoutX="61.0" layoutY="398.0" prefHeight="34.0" prefWidth="682.0" style="-fx-background-color: 8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
                   </TextField>
-                  <TextField layoutX="438.0" layoutY="582.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="pin" layoutX="438.0" layoutY="582.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
                   </TextField>
-                  <TextField layoutX="438.0" layoutY="497.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="lastname" layoutX="438.0" layoutY="497.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
                   </TextField>
-                  <TextField layoutX="61.0" layoutY="660.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="country" layoutX="61.0" layoutY="660.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
                   </TextField>
-                  <TextField layoutX="61.0" layoutY="582.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="expirationdate" layoutX="61.0" layoutY="582.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
                   </TextField>
-                  <TextField layoutX="438.0" layoutY="660.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="billingaddress" layoutX="438.0" layoutY="660.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
@@ -151,7 +151,7 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <TextField layoutX="63.0" layoutY="757.0" prefHeight="34.0" prefWidth="682.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="postalcode" layoutX="63.0" layoutY="757.0" prefHeight="34.0" prefWidth="682.0" style="-fx-background-color: 8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>

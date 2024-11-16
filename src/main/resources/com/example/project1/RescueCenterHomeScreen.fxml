@@ -4,18 +4,58 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.effect.ColorAdjust?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1374.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.HelloController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.RescueCentreHSController">
    <content>
-      <AnchorPane prefHeight="1194.0" prefWidth="1374.0">
+      <AnchorPane fx:id="PawCare" prefHeight="1194.0" prefWidth="1374.0">
          <children>
+            <AnchorPane prefHeight="133.0" prefWidth="1374.0" style="-fx-background-color: #8B0000;">
+               <children>
+                  <Circle fill="#efefef" layoutX="1301.0" layoutY="59.0" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label fx:id="PawCare" layoutX="101.0" layoutY="26.0" prefHeight="64.0" prefWidth="158.0" text="PawCare" textFill="WHITE">
+                     <font>
+                        <Font name="Brush Script MT Italic" size="48.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="46.0" fitWidth="87.0" layoutX="14.0" layoutY="12.0">
+                     <image>
+                        <Image url="@images/Frame.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="AlertsReceived" layoutX="302.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Alerts Received" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="AnimalProfiles" layoutX="501.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Animal Profiles" textFill="#ececec">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="AdoptionRequests" layoutX="687.0" layoutY="76.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="177.0" style="-fx-background-color: #8B0000;" text="Adoption Requests" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="ContactVet" layoutX="902.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Contact Vet" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="DonationsMade" layoutX="1055.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Donations made" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
             <Label layoutX="391.0" layoutY="386.0" prefHeight="98.0" prefWidth="225.0" text="PawCare" textAlignment="CENTER">
                <font>
                   <Font name="Brush Script MT Italic" size="72.0" />
@@ -28,9 +68,9 @@
                </image>
             </ImageView>
             <Label layoutX="564.0" layoutY="462.0" prefHeight="44.0" prefWidth="303.0" text="By Venti Tech" textAlignment="CENTER" />
-            <ImageView fitHeight="441.0" fitWidth="449.0" layoutX="730.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="369.0" fitWidth="403.0" layoutX="730.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/cat.png" />
+                  <Image url="@images/369b0ef9aa2260837b7e04ecd09868df.jpg" />
                </image>
             </ImageView>
             <AnchorPane layoutY="947.0" prefHeight="246.0" prefWidth="1374.0" style="-fx-background-color: #8B0000;">
@@ -91,36 +131,14 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="134.0" prefWidth="1390.0" style="-fx-background-color: #8B0000;">
-               <children>
-                  <Label layoutX="101.0" layoutY="35.0" prefHeight="64.0" prefWidth="158.0" text="PawCare" textFill="WHITE">
-                     <font>
-                        <Font name="Brush Script MT Italic" size="48.0" />
-                     </font>
-                  </Label>
-                  <ImageView fitHeight="46.0" fitWidth="87.0" layoutX="14.0" layoutY="12.0">
-                     <image>
-                        <Image url="@images/Frame.png" />
-                     </image>
-                  </ImageView>
-                  <Button fx:id="signUpButton" layoutX="1057.0" layoutY="53.0" prefHeight="40.0" prefWidth="124.0" style="-fx-background-color: #0000ff; -fx-text-fill: white; -fx-background-radius: 20;" text="Sign Up" />
-                  <Button fx:id="logInButton" layoutX="1208.0" layoutY="53.0" prefHeight="40.0" prefWidth="124.0" style="-fx-background-color: #ffffff; -fx-text-fill: black; -fx-background-radius: 20;" text="Login" />
-               </children>
-            </AnchorPane>
-            <Button fx:id="signUpButton1" layoutX="313.0" layoutY="577.0" prefHeight="45.0" prefWidth="137.0" style="-fx-background-color: #0000ff; -fx-text-fill: white; -fx-background-radius: 20;" text="Sign Up">
-               <effect>
-                  <DropShadow blurType="ONE_PASS_BOX" />
-               </effect>
+            <Button fx:id="SeeAlerts" layoutX="347.0" layoutY="578.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="153.0" style="-fx-background-color: D08122;" text="See Alerts" textFill="WHITE">
                <font>
-                  <Font size="18.0" />
+                  <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="logInButton1" layoutX="485.0" layoutY="576.0" prefHeight="48.0" prefWidth="145.0" style="-fx-background-color: #ffffff; -fx-text-fill: black; -fx-background-radius: 20;" text="Login">
-               <effect>
-                  <DropShadow blurType="ONE_PASS_BOX" />
-               </effect>
+            <Button fx:id="ContactVet" layoutX="511.0" layoutY="579.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="146.0" style="-fx-background-color: D08122;" text="Contact Vet" textFill="WHITE">
                <font>
-                  <Font size="18.0" />
+                  <Font size="16.0" />
                </font>
             </Button>
          </children>

@@ -13,14 +13,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1220.0" prefWidth="1374.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.example.project1.HomeController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1220.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.ReportMissingAnimalController">
    <content>
-      <AnchorPane prefHeight="1202.0" prefWidth="1374.0" style="-fx-background-color: E4C7A2;">
+      <AnchorPane prefHeight="1202.0" prefWidth="1374.0" style="-fx-background-color: #E4C7A2;">
          <children>
             <AnchorPane prefHeight="243.0" prefWidth="1374.0" style="-fx-background-color: #8B0000;">
                <children>
                   <Circle fill="#efefef" layoutX="1307.0" layoutY="53.0" radius="24.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Label layoutX="118.0" layoutY="27.0" prefHeight="43.0" prefWidth="98.0" style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'file:resources/fonts/Pacifico.ttf';" text="PawCare">
+                  <Label fx:id="PawCare" layoutX="118.0" layoutY="27.0" prefHeight="43.0" prefWidth="98.0" style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'file:resources/fonts/Pacifico.ttf';" text="PawCare">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -40,7 +40,7 @@
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button layoutX="724.0" layoutY="58.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Adopt" textFill="WHITE">
+                  <Button fx:id="btnAdopt" layoutX="724.0" layoutY="58.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Adopt" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -55,7 +55,7 @@
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button layoutX="480.0" layoutY="150.0" mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-size: 30;" text="Found Missing Animal">
+                  <Button fx:id="Found" layoutX="480.0" layoutY="150.0" mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-size: 30;" text="Found Missing Animal">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -63,7 +63,7 @@
                         <ColorAdjust />
                      </effect>
                   </Button>
-                  <Button layoutX="260.0" layoutY="150.0" mnemonicParsing="false" style="-fx-background-radius: 50;" text="Report Missing Animal">
+                  <Button fx:id="Missing" layoutX="260.0" layoutY="150.0" mnemonicParsing="false" style="-fx-background-radius: 50;" text="Report Missing Animal">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -73,10 +73,10 @@
                   </Button>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="260.0" layoutY="200.0" prefHeight="966.0" prefWidth="808.0" style="-fx-background-color: ffffffff;">
+            <AnchorPane layoutX="260.0" layoutY="200.0" prefHeight="966.0" prefWidth="808.0" style="-fx-background-color: #ffffff;">
                <children>
                   <Line endX="627.5999755859375" layoutX="140.0" layoutY="132.0" startX="-100.0" stroke="#9c8585" />
-                  <TextField layoutX="68.0" layoutY="243.0" prefHeight="34.0" prefWidth="293.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="animalTypeField" layoutX="68.0" layoutY="243.0" prefHeight="34.0" prefWidth="293.0" style="-fx-background-color: 8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
@@ -91,7 +91,7 @@
                         <Font size="36.0" />
                      </font>
                   </Text>
-                  <TextField layoutX="455.0" layoutY="243.0" prefHeight="34.0" prefWidth="293.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="nameField" layoutX="455.0" layoutY="243.0" prefHeight="34.0" prefWidth="293.0" style="-fx-background-color: 8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
@@ -106,7 +106,7 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Button layoutX="649.0" layoutY="869.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: 4177FF;" text="Submit ">
+                  <Button fx:id="submitButton" layoutX="649.0" layoutY="869.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: 4177FF;" text="Submit ">
                      <effect>
                         <ColorAdjust brightness="-0.36" contrast="0.22" hue="-0.71" saturation="0.32" />
                      </effect>
@@ -122,17 +122,17 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <TextField layoutX="68.0" layoutY="351.0" prefHeight="34.0" prefWidth="293.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="breedField" layoutX="68.0" layoutY="351.0" prefHeight="34.0" prefWidth="293.0" style="-fx-background-color: 8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
                   </TextField>
-                  <TextField layoutX="454.0" layoutY="351.0" prefHeight="34.0" prefWidth="293.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="colorField" layoutX="454.0" layoutY="351.0" prefHeight="34.0" prefWidth="293.0" style="-fx-background-color: 8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
                   </TextField>
-                  <TextField layoutX="68.0" layoutY="448.0" prefHeight="34.0" prefWidth="293.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="genderField" layoutX="68.0" layoutY="448.0" prefHeight="34.0" prefWidth="293.0" style="-fx-background-color: 8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
