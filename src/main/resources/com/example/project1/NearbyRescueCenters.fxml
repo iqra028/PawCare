@@ -3,17 +3,18 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1153.0" prefWidth="1373.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.ReportInjuredAnimalController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1"  fx:controller="com.example.project1.NearbyRescueCenterController">
    <content>
       <AnchorPane prefHeight="1142.0" prefWidth="1374.0" style="-fx-background-color: #E4C7A2;">
          <children>
@@ -60,62 +61,34 @@
             <AnchorPane layoutX="283.0" layoutY="192.0" prefHeight="899.0" prefWidth="808.0" style="-fx-background-color: #ffffff;">
                <children>
                   <Line endX="627.5999755859375" layoutX="140.0" layoutY="132.0" startX="-100.0" stroke="#9c8585" />
-                  <TextField fx:id="AnimalType" layoutX="68.0" layoutY="243.0" prefHeight="34.0" prefWidth="293.0" style="-fx-background-color: 8F4646;">
-                     <effect>
-                        <ColorAdjust contrast="-0.15" />
-                     </effect>
-                  </TextField>
-                  <Text layoutX="68.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Animal Type" wrappingWidth="215.44351196289062">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="236.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Injured Animal Form" wrappingWidth="336.5334014892577">
+                  <Text layoutX="47.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nearby Rescue Centers" wrappingWidth="438.9334259033202">
                      <font>
                         <Font size="36.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="Breed" layoutX="455.0" layoutY="243.0" prefHeight="34.0" prefWidth="293.0" style="-fx-background-color: 8F4646;">
-                     <effect>
-                        <ColorAdjust contrast="-0.15" />
-                     </effect>
-                  </TextField>
-                  <Text layoutX="455.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Breed" wrappingWidth="215.44351196289062">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="68.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Injury Description" wrappingWidth="215.44351196289062">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-                  <TextField fx:id="InjuryDesc" layoutX="62.0" layoutY="353.0" prefHeight="34.0" prefWidth="683.0" style="-fx-background-color: 8F4646;">
-                     <effect>
-                        <ColorAdjust contrast="-0.15" />
-                     </effect>
-                  </TextField>
-                  <Text layoutX="68.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Upload Image" wrappingWidth="215.44351196289062">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="68.0" layoutY="592.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Location" wrappingWidth="215.44351196289062">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-                  <Button fx:id="btnSubmit" layoutX="646.0" layoutY="819.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: 4177FF;" text="Submit ">
-                     <effect>
-                        <ColorAdjust brightness="-0.36" contrast="0.22" hue="-0.71" saturation="0.32" />
-                     </effect>
-                  </Button>
                   <Line endX="627.5999755859375" layoutX="140.0" layoutY="791.0" startX="-100.0" stroke="#9c8585" />
                   <Button fx:id="FirstAid" layoutX="64.0" layoutY="818.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="186.0" style="-fx-background-color: fffffffff;" text="* First Aid Options" textFill="#a11515">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
+                  <VBox layoutX="59.0" layoutY="182.0" prefHeight="572.0" prefWidth="686.0">
+                     <children>
+                        <Pane fx:id="btnRescueCenters1" prefHeight="118.0" prefWidth="686.0" style="-fx-background-color: #EEB673;">
+                           <children>
+                              <Label fx:id="PaneLabel" layoutX="25.0" layoutY="18.0" text="Rescue Center 1">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="Panebutton" layoutX="574.0" layoutY="70.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: #D08122;" text="Submit " />
+                           </children>
+                           <effect>
+                              <DropShadow blurType="ONE_PASS_BOX" />
+                           </effect>
+                        </Pane>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
          </children>
