@@ -66,6 +66,7 @@ public class RescueCenterSignUpController {
                 boolean reg= pawcare.registerRescueCenter(username,name,email,password,Location,PhoneNumber);
                 if(reg){
                     showAlert("Success", "Sign-up successful!");
+                    return true;
                 }
                 else {
                     showAlert("Failure", "Username or email already used!");

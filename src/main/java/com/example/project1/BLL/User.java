@@ -3,24 +3,34 @@ package com.example.project1.BLL;
 import java.util.*;
 
 public class User {
+    private String userID;
     private String userName;
     private String name;
     private String email;
     private String password;
-    private String gender;
+    private String phoneNumber;
     private String location;
 
-    public User( String userName,String name, String email, String password, String gender) {
+    public User( String userID,String userName,String name, String email, String password, String location,String phoneNumber) {
 
+        this.userID=userID;
         this.userName = userName;
         this.name=name;
         this.email = email;
         this.password = password;
-        this.gender = gender;
-        this.location="";
+        this.phoneNumber = phoneNumber;
+        this.location=location;
     }
 
     // Getters and Setters
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String id) {
+        this.userID = id;
+    }
 
     public String getUserName() {
         return userName;
@@ -46,12 +56,12 @@ public class User {
         this.email = email;
     }
 
-    public String getGender() {
-        return gender;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getLocation() {

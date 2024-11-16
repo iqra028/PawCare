@@ -9,7 +9,9 @@ public class PawCare {
     private ArrayList<RescueCenter> rescueCenters;
     private ArrayList<User> users;
     private ArrayList<Form> forms;
-    private PersistanceHandler dbHandler;
+    private PersistanceHandler userHandler;
+    private PersistanceHandler vetHandler;
+    private PersistanceHandler centerHandler;
     private FormFactory formFactory;
 
     // Constructor
@@ -18,7 +20,9 @@ public class PawCare {
         this.rescueCenters = new ArrayList<>();
         this.users = new ArrayList<>();
         this.forms = new ArrayList<>();
-        this.dbHandler = new DBhandler();
+        this.userHandler = new UserRecords();
+        this.vetHandler = new VetRecords();
+        this.centerHandler = new RescueCenterRecords();
         this.formFactory=new FormFactory();
         loadDataFromDatabase();
     }
@@ -42,9 +46,26 @@ public class PawCare {
 
     //loading any existing members of system from database
     private void loadDataFromDatabase() {
-        users = dbHandler.getAllUsers();
-        vets = dbHandler.getAllVets();
-        rescueCenters = dbHandler.getAllRescueCenters();
+        users = userHandler.getAllUsers();
+        vets = vetHandler.getAllVets();
+        rescueCenters = centerHandler.getAllRescueCenters();
+    }
+
+    public void printAllIDs() {
+        System.out.println("User IDs:");
+        for (User user : users) {
+            System.out.println(user.getUserID()); // Assuming getID() returns the ID of the user
+        }
+
+        System.out.println("\nVet IDs:");
+        for (Vets vet : vets) {
+            System.out.println(vet.getVetID()); // Assuming getID() returns the ID of the vet
+        }
+
+        System.out.println("\nRescue Center IDs:");
+        for (RescueCenter center : rescueCenters) {
+            System.out.println(center.getRescueCenterID()); // Assuming getID() returns the ID of the rescue center
+        }
     }
 
     private boolean isUsernameOrEmailTaken(String username, String email) {
@@ -66,17 +87,21 @@ public class PawCare {
         return false;
     }
     // Register a User
-    public boolean registerUser(String username,String name,String email,String password,String gender) {
+    public boolean registerUser(String username,String name,String email,String password,String phoneNumber) {
 
             // Checking if username or email is already taken
             if (isUsernameOrEmailTaken(username, email)) {
                 //System.out.println("Username or Email is already taken. Registration failed.");
                 return false;
             }
-            User newUser = new User(username,name,email,password,gender);
+
             //User newUser = new User(userForm.getUserName(), userForm.getEmail(), userForm.getPassword(),userForm.getGender());
+            userHandler.storeRecord(username,name,email,password,"",phoneNumber);
+            String userID = userHandler.getIDByUsername("\"user\"", "userid", "username", username);
+            User newUser = new User(userID,username,name,email,password,"",phoneNumber);
             users.add(newUser);
-            dbHandler.addUser(newUser);
+           // System.out.println(newUser.getUserID());
+
             return true;
 
         }
@@ -90,11 +115,12 @@ public class PawCare {
                 //System.out.println("Username or Email is already taken. Registration failed.");
                 return false;
             }
-            Vets newVet = new Vets(username,name,email,password,location,phonenumber);
-            //Vets newVet = new Vets(vetForm.getVetName(), vetForm.getPassword(), vetForm.getLocation(),vetForm.getPhoneNumber());
-            // Add the new Vet to the list and database
+
+            vetHandler.storeRecord(username,name,email,password,location,phonenumber);
+            String vetID = vetHandler.getIDByUsername("vets", "vetid", "username", username);
+            Vets newVet = new Vets(vetID,username,name,email,password,location,phonenumber);
             vets.add(newVet);
-            dbHandler.addVet(newVet);
+           // System.out.println(newVet.getVetID());
             return true;
 
     }
@@ -107,17 +133,20 @@ public class PawCare {
                 return false;
             }
 
-            RescueCenter newCenter = new RescueCenter(username,name,email,password,location,phonenumber);
-            // RescueCenter newCenter = new RescueCenter(centerForm.getCenterName(), centerForm.getPassword(), centerForm.getLocation(),centerForm.getPhoneNumber());
+            centerHandler.storeRecord(username,name,email,password,location,phonenumber);
+            String rescueCenterID = centerHandler.getIDByUsername("rescuecenter", "rescuecenterid", "username", username);
+
+            RescueCenter newCenter = new RescueCenter(rescueCenterID,username,name,email,password,location,phonenumber);
             rescueCenters.add(newCenter);
-            dbHandler.addRescueCenter(newCenter);
-           return true;
+        //System.out.println(newCenter.getRescueCenterID());
+            return true;
 
     }
 
     //login function for anyone
     public boolean login(String username,String password,String type)
     {
+       // printAllIDs();
         boolean loginSuccessful = false;
 
             switch (type.toLowerCase()) {
@@ -174,7 +203,7 @@ public class PawCare {
             System.out.println("List of Users:");
             for (User user : users) {
                 System.out.println(", Name: " + user.getUserName() +
-                        ", Email: " + user.getEmail() + ", Gender: " + user.getGender());
+                        ", Email: " + user.getEmail() + ", phonenumber: " + user.getPhoneNumber());
             }
         }
     }

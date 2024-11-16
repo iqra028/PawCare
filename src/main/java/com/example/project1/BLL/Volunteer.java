@@ -5,8 +5,8 @@ public class Volunteer extends User{
     private String volunteerID;
     private String userType;
 
-    public Volunteer(String userName, String name, String email, String password, String gender, String volunteerID) {
-        super(userName, name, email, password, gender);
+    public Volunteer(String userID, String userName, String name, String email, String password, String location, String phoneNumber, String volunteerID) {
+        super(userID, userName, name, email, password, location, phoneNumber);
         this.volunteerID = volunteerID;
         this.userType = "Volunteer";
     }

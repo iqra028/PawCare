@@ -2,7 +2,7 @@ package com.example.project1.BLL;
 
 public class Vets {
 
-
+    private String vetID;
     private String userName;
     private String vetName;
     private String password;
@@ -11,7 +11,8 @@ public class Vets {
     private String phoneNumber;
 
     // Updated constructor to include phone number
-    public Vets(String userName, String vetName, String email, String password, String location, String phoneNumber) {
+    public Vets(String vetID,String userName, String vetName, String email, String password, String location, String phoneNumber) {
+        this.vetID=vetID;
         this.userName = userName;
         this.vetName = vetName;
         this.email = email;
@@ -21,6 +22,14 @@ public class Vets {
     }
 
     // Getters and Setters
+    public String getVetID() {
+        return vetID;
+    }
+
+    public void setVetID(String id) {
+        this.vetID = id;
+    }
+
     public String getUserName() {
         return userName;
     }

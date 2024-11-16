@@ -4,7 +4,7 @@ import java.util.*;
 
 public class RescueCenter {
 
-
+    private String rescueCenterID;
     private String userName;
     private String CenterName;
     private String password;
@@ -12,7 +12,8 @@ public class RescueCenter {
     private String location;    // change this to a Location type later
     private String phoneNumber;
 
-    public RescueCenter(String userName, String CenterName, String email, String password, String location, String phoneNumber) {
+    public RescueCenter(String rescueCenterID,String userName, String CenterName, String email, String password, String location, String phoneNumber) {
+        this.rescueCenterID=rescueCenterID;
         this.userName = userName;
         this.CenterName = CenterName;
         this.email = email;
@@ -22,6 +23,14 @@ public class RescueCenter {
     }
 
     // Getters and Setters
+
+    public String getRescueCenterID() {
+        return rescueCenterID;
+    }
+
+    public void setRescueCenterID(String id) {
+        this.rescueCenterID = id;
+    }
 
     public String getUserName() {
         return userName;

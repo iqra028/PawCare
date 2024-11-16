@@ -8,8 +8,8 @@ public class Reporter extends User {
     private String reporterID;
     private String userType;
 
-    public Reporter(String userName, String name, String email, String password, String gender, String reporterID) {
-        super(userName, name, email, password, gender);
+    public Reporter(String userID, String userName, String name, String email, String password, String location, String phoneNumber, String reporterID) {
+        super(userID, userName, name, email, password, location, phoneNumber);
         this.reporterID = reporterID;
         this.userType = "Reporter";
     }
