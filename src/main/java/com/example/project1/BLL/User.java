@@ -8,6 +8,7 @@ public class User {
     private String email;
     private String password;
     private String gender;
+    private String location;
 
     public User( String userName,String name, String email, String password, String gender) {
 
@@ -16,6 +17,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.gender = gender;
+        this.location="";
     }
 
     // Getters and Setters
@@ -50,6 +52,14 @@ public class User {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String Location) {
+        this.location = Location;
     }
 
     public String getPassword() {
