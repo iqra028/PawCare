@@ -6,45 +6,51 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.io.IOException;
+
 
 public class ReportInjuredAnimalController extends UserMenuController
 {
     @FXML
     private Button btnSubmit;
     @FXML
-    private TextField txtAnimalType;
+    private TextField AnimalType;
     @FXML
-    private TextField txtAnimalName;
+    private TextField Breed;
     @FXML
-    private TextField txtBreed;
-    @FXML
-    private TextField txtColor;
-    @FXML
-    private TextField txtGender;
-    @FXML
-    private TextField txtLocation;
+    private TextField InjuryDesc;
+
+
+    private static final Logger LOGGER = Logger.getLogger(com.example.project1.ReportInjuredAnimalController.class.getName());
+
     @FXML
     public void initialize() {
         super.initialize();
+        btnSubmit.setOnAction(event -> onSubmitClick());
+
+    }
+    @FXML
+    private void NextPage(){
+        try {
+            HelloApplication.getInstance().changeScene("NearbyRescueCenters.fxml");
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Failed to change scene to Select-UserType.fxml", e);
+        }
     }
 
     @FXML
-    private void onSubmitClick(MouseEvent event) {
-        String animalType = txtAnimalType.getText();
-        String animalName = txtAnimalName.getText();
-        String breed = txtBreed.getText();
-        String color = txtColor.getText();
-        String gender = txtGender.getText();
-        String location = txtLocation.getText();
+    private void onSubmitClick() {
+        String animalType = AnimalType.getText();
+        String breed = Breed.getText();
+        String InjuryDescription = InjuryDesc.getText();
 
-        // Validate inputs
-        if (animalType.isEmpty() || animalName.isEmpty() || breed.isEmpty() || color.isEmpty() || gender.isEmpty() || location.isEmpty()) {
+
+        if (animalType.isEmpty() || InjuryDescription.isEmpty() || breed.isEmpty()) {
             showAlert("Error", "Missing Fields", "Please fill out all fields before submitting.");
         } else {
-            System.out.println("Submitting Report Missing Animal form");
-            System.out.printf("Animal Type: %s, Name: %s, Breed: %s, Color: %s, Gender: %s, Location: %s%n",
-                    animalType, animalName, breed, color, gender, location);
-            showAlert("Success", "Submission Complete", "Your missing animal report has been submitted successfully.");
+            NextPage();
         }
     }
 
