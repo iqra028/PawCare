@@ -1,25 +1,21 @@
 package com.example.project1;
 
-import com.example.project1.BLL.GeoLocation;
 import com.example.project1.BLL.PawCare;
+import com.example.project1.BLL.SharedData;
+import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.IOException;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 
 public class ReportInjuredAnimalController extends UserMenuController
@@ -32,20 +28,29 @@ public class ReportInjuredAnimalController extends UserMenuController
     private TextField Breed;
     @FXML
     private TextField InjuryDesc;
-    @FXML
-   private WebView webView;
     private PawCare pawCare;
+    @FXML
+    private WebView webView;
+
+
     private static final Logger LOGGER = Logger.getLogger(com.example.project1.ReportInjuredAnimalController.class.getName());
 
     @FXML
     public void initialize() {
         super.initialize();
         pawCare = new PawCare();
-        String mapHtml=pawCare.generatemap();
+        double[] location = pawCare.getLocation(); // Fetch the location dynamically
+        double latitude = location[0];
+        double longitude = location[1];
+        String mapHtml = pawCare.generatemap();
+
 
         WebEngine webEngine = webView.getEngine();
         webEngine.setJavaScriptEnabled(true);
-        webEngine.loadContent(mapHtml);
+         webEngine.loadContent(mapHtml);
+
+        btnSubmit.setOnAction(event -> onSubmitClick());
+
     }
     @FXML
     private void NextPage(){
@@ -66,6 +71,8 @@ public class ReportInjuredAnimalController extends UserMenuController
         if (animalType.isEmpty() || InjuryDescription.isEmpty() || breed.isEmpty()) {
             showAlert("Error", "Missing Fields", "Please fill out all fields before submitting.");
         } else {
+            List<String> shelterInfoList=pawCare.generatenearbycenters();
+            SharedData.getInstance().setRescueCenters(shelterInfoList);
             NextPage();
         }
     }

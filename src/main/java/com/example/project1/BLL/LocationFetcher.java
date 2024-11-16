@@ -8,16 +8,13 @@ import org.json.JSONObject;
 
 public class LocationFetcher {
 
-    // Generates a random valid public IP address
     private static String generateRandomIp() {
-        int first = (int) (Math.random() * (223 - 1 + 1) + 1); // Valid range: 1 to 223
+        int first = (int) (Math.random() * (223 - 1 + 1) + 1);
         int second = (int) (Math.random() * 256);
         int third = (int) (Math.random() * 256);
         int fourth = (int) (Math.random() * 256);
         return first + "." + second + "." + third + "." + fourth;
     }
-
-    // Fetches location data for a given IP
     private static String fetchLocationForIp(String ip) {
         try {
             URL url = new URL("http://ip-api.com/json/" + ip);

@@ -72,7 +72,7 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <VBox layoutX="59.0" layoutY="182.0" prefHeight="572.0" prefWidth="686.0">
+                  <VBox fx:id="rescueCentersContainer" layoutX="59.0" layoutY="182.0" prefHeight="572.0" prefWidth="686.0">
                      <children>
                         <Pane fx:id="btnRescueCenters1" prefHeight="118.0" prefWidth="686.0" style="-fx-background-color: #EEB673;">
                            <children>

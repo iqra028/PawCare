@@ -1,5 +1,12 @@
 package com.example.project1.BLL;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
 import java.util.*;
 public class PawCare {
@@ -31,20 +38,60 @@ public class PawCare {
 
     public double[] getLocation()
     {
-        return geoLocation.fetchDynamicLocation();
+        double[] location=geoLocation.fetchDynamicLocation();
+        geoLocation.setLatitude(location[0]);
+        geoLocation.setLongitude(location[1]);
+        return location;
     }
     public String generatemap()
     {
+
         double[] location= getLocation();
         double latitude = location[0];
         double longitude = location[1];
-        double radius = 9000; // You can modify the radius if needed
+        double radius = 9000;
 
-        // Fetch data (shelters, veterinary centers, etc.) - this is done in the GeoLocation class
-        geoLocation.fetchDataFromOverpassAPI(latitude, longitude, radius);
-
-        // Generate the map HTML and load it into the WebView
          return geoLocation.generateMapHTML(latitude, longitude);
+    }
+    public List<String> generatenearbycenters(){
+
+        String overpassUrl = "https://overpass-api.de/api/interpreter?data=[out:json];" +
+                "node(around:" + geoLocation.getRadius() + "," + geoLocation.getLatitude() + "," + geoLocation.getLongitude() + ")" +
+                "[amenity~\"animal_shelter|veterinary|pet_adoption_center|pet\"];out;";
+
+        try {
+            // Fetch data from Overpass API
+            URL url = new URL(overpassUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // Read the response
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String inputLine;
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+                JSONObject jsonResponse = new JSONObject(response.toString());
+                return geoLocation.parseAndDisplayShelterInfo(jsonResponse);
+            } else {
+                System.out.println("Error fetching data: " + responseCode);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<String> fetchRescueCenters() {
+        // Initialize rescue centers list
+        List<String> rescueCentersList = new ArrayList<>();
+        // Return the list of rescue centers
+        return rescueCentersList;
     }
     public ArrayList<Vets> getVets() {
         return vets;

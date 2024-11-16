@@ -1,10 +1,15 @@
+
 package com.example.project1;
 
+import com.example.project1.BLL.SharedData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+
+import java.util.List;
 
 public class NearbyRescueCenterController extends UserMenuController{
 
@@ -13,8 +18,7 @@ public class NearbyRescueCenterController extends UserMenuController{
     private Button FirstAid;
 
     @FXML
-    private VBox rescueCentersContainer; // all the pane's will stack in this like if u add another
-    // rescue center nearby, it will stack below the first rescue center nearby
+    private VBox rescueCentersContainer;
 
     @FXML
     private Pane btnRescueCenters1;
@@ -28,34 +32,57 @@ public class NearbyRescueCenterController extends UserMenuController{
     @FXML
     public void initialize() {
         super.initialize();
+        List<String> shelterInfoList = SharedData.getInstance().getRescueCenters();
+        for (String info : shelterInfoList) {
+            addRescueCenterPane(info);
+        }
         FirstAid.setOnAction(event -> handleFirstAid());
         Panebutton.setOnAction(event -> handleSubmitRequest());
 
     }
 
     private void handleFirstAid() {
-        // Add your logic here
     }
 
     private void handleSubmitRequest() {
-        // Add your logic here for handling submission
     }
+    private void addRescueCenterPane(String shelterInfo) {
+        String[] lines = shelterInfo.split("\n");
+        String name = lines[0].replace("Name: ", "").trim();
+        String location = lines[1].replace("Location: ", "").trim();
+        String phone = lines[2].replace("Phone: ", "").trim();
+        String website = lines[3].replace("Website: ", "").trim();
+        Pane newPane = new Pane();
+        newPane.setPrefHeight(118);
+        newPane.setPrefWidth(686);
+        newPane.setStyle("-fx-background-color: #EEB673;");
+        newPane.setEffect(new DropShadow());
+        Label nameLabel = new Label(name);
+        nameLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        nameLabel.setLayoutX(25);
+        nameLabel.setLayoutY(18);
+        Label locationLabel = new Label("Location: " + location);
+        locationLabel.setStyle("-fx-font-size: 14px;");
+        locationLabel.setLayoutX(25);
+        locationLabel.setLayoutY(50);
+        Label phoneLabel = new Label("Phone: " + phone);
+        phoneLabel.setStyle("-fx-font-size: 14px;");
+        phoneLabel.setLayoutX(25);
+        phoneLabel.setLayoutY(70);
+        Label websiteLabel = new Label("Website: " + website);
+        websiteLabel.setStyle("-fx-font-size: 14px;");
+        websiteLabel.setLayoutX(25);
+        websiteLabel.setLayoutY(90);
+        Button submitButton = new Button("Submit");
+        submitButton.setStyle("-fx-background-color: #D08122; -fx-text-fill: white; -fx-font-size: 14px;");
+        submitButton.setLayoutX(574);
+        submitButton.setLayoutY(70);
+        submitButton.setPrefSize(98, 34);
 
-    public void addNewRescueCenter(String centerName) 
-    {
-        // Create a new Pane dynamically with a label and button
+        //submitButton.setOnAction(event -> handleSubmitRequest(name));
 
-//        Pane newPane = new Pane();
-//        newPane.setStyle("-fx-background-color: #EEB673;");
-//        Label newLabel = new Label(centerName);
-//        newLabel.setStyle("-fx-font-size: 24px;");
-//        Button newButton = new Button("Submit");
-//        newButton.setStyle("-fx-background-color: #D08122;");
-//
-//        newPane.getChildren().addAll(newLabel, newButton);
-//        rescueCentersContainer.getChildren().add(newPane);
-//
-//        newButton.setOnAction(event -> handleSubmitRequest());
+        newPane.getChildren().addAll(nameLabel, locationLabel, phoneLabel, websiteLabel, submitButton);
+        rescueCentersContainer.getChildren().add(newPane);
     }
 }
 
