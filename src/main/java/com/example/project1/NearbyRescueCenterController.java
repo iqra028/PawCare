@@ -31,14 +31,20 @@ public class NearbyRescueCenterController extends UserMenuController{
 
     @FXML
     public void initialize() {
-        super.initialize();
-        List<String> shelterInfoList = SharedData.getInstance().getRescueCenters();
-        for (String info : shelterInfoList) {
-            addRescueCenterPane(info);
+        try {
+            super.initialize();
+            if (rescueCentersContainer == null) {
+                throw new IllegalStateException("rescueCentersContainer is not injected.");
+            }
+            List<String> shelterInfoList = SharedData.getInstance().getRescueCenters();
+            for (String info : shelterInfoList) {
+                addRescueCenterPane(info);
+            }
+            FirstAid.setOnAction(event -> handleFirstAid());
+            Panebutton.setOnAction(event -> handleSubmitRequest());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        FirstAid.setOnAction(event -> handleFirstAid());
-        Panebutton.setOnAction(event -> handleSubmitRequest());
-
     }
 
     private void handleFirstAid() {
