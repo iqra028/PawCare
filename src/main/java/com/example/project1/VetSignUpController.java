@@ -45,7 +45,7 @@ public class VetSignUpController {
     }
     private void openUserHomePage() {
         try {
-            HelloApplication.getInstance().changeScene("VetMenu.fxml");
+            HelloApplication.getInstance().changeScene("VetHomeScreen.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }

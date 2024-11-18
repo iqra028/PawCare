@@ -157,7 +157,7 @@ public class PawCare {
             }
 
             //User newUser = new User(userForm.getUserName(), userForm.getEmail(), userForm.getPassword(),userForm.getGender());
-            db.storeUserRecord(username,name,email,password,"",phoneNumber);
+            db.storeUserRecord(name,username,email,password,"",phoneNumber);
             String userID = db.getIDByUsername("\"user\"", "userid", "username", username);
             User newUser = new User(userID,username,name,email,password,"",phoneNumber);
             users.add(newUser);
@@ -177,7 +177,7 @@ public class PawCare {
                 return false;
             }
 
-            db.storeVetRecord(username,name,email,password,location,phonenumber);
+            db.storeVetRecord(name,username,email,password,location,phonenumber);
             String vetID = db.getIDByUsername("vets", "vetid", "username", username);
             Vets newVet = new Vets(vetID,username,name,email,password,location,phonenumber);
             vets.add(newVet);
@@ -194,7 +194,7 @@ public class PawCare {
                 return false;
             }
 
-            db.storeCenterRecord(username,name,email,password,location,phonenumber);
+            db.storeCenterRecord(name,username,password,phonenumber,location,email);
             String rescueCenterID = db.getIDByUsername("rescuecenter", "rescuecenterid", "username", username);
 
             RescueCenter newCenter = new RescueCenter(rescueCenterID,username,name,email,password,location,phonenumber);
