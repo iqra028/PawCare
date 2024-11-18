@@ -16,9 +16,7 @@ public class PawCare {
     private ArrayList<RescueCenter> rescueCenters;
     private ArrayList<User> users;
     private ArrayList<Form> forms;
-    private PersistanceHandler userHandler;
-    private PersistanceHandler vetHandler;
-    private PersistanceHandler centerHandler;
+    private DBhandler db;
     private FormFactory formFactory;
     private GeoLocation geoLocation;
 
@@ -28,9 +26,7 @@ public class PawCare {
         this.rescueCenters = new ArrayList<>();
         this.users = new ArrayList<>();
         this.forms = new ArrayList<>();
-        this.userHandler = new UserRecords();
-        this.vetHandler = new VetRecords();
-        this.centerHandler = new RescueCenterRecords();
+        this.db=new DBhandler();
         this.formFactory=new FormFactory();
         this.geoLocation=new GeoLocation();
         loadDataFromDatabase();
@@ -111,9 +107,9 @@ public class PawCare {
 
     //loading any existing members of system from database
     private void loadDataFromDatabase() {
-        users = userHandler.getAllUsers();
-        vets = vetHandler.getAllVets();
-        rescueCenters = centerHandler.getAllRescueCenters();
+        users = db.getAllUsers();
+        vets = db.getAllVets();
+        rescueCenters = db.getAllRescueCenters();
     }
 
     public void printAllIDs() {
@@ -161,8 +157,8 @@ public class PawCare {
             }
 
             //User newUser = new User(userForm.getUserName(), userForm.getEmail(), userForm.getPassword(),userForm.getGender());
-            userHandler.storeRecord(username,name,email,password,"",phoneNumber);
-            String userID = userHandler.getIDByUsername("\"user\"", "userid", "username", username);
+            db.storeUserRecord(username,name,email,password,"",phoneNumber);
+            String userID = db.getIDByUsername("\"user\"", "userid", "username", username);
             User newUser = new User(userID,username,name,email,password,"",phoneNumber);
             users.add(newUser);
            // System.out.println(newUser.getUserID());
@@ -181,8 +177,8 @@ public class PawCare {
                 return false;
             }
 
-            vetHandler.storeRecord(username,name,email,password,location,phonenumber);
-            String vetID = vetHandler.getIDByUsername("vets", "vetid", "username", username);
+            db.storeVetRecord(username,name,email,password,location,phonenumber);
+            String vetID = db.getIDByUsername("vets", "vetid", "username", username);
             Vets newVet = new Vets(vetID,username,name,email,password,location,phonenumber);
             vets.add(newVet);
            // System.out.println(newVet.getVetID());
@@ -198,8 +194,8 @@ public class PawCare {
                 return false;
             }
 
-            centerHandler.storeRecord(username,name,email,password,location,phonenumber);
-            String rescueCenterID = centerHandler.getIDByUsername("rescuecenter", "rescuecenterid", "username", username);
+            db.storeCenterRecord(username,name,email,password,location,phonenumber);
+            String rescueCenterID = db.getIDByUsername("rescuecenter", "rescuecenterid", "username", username);
 
             RescueCenter newCenter = new RescueCenter(rescueCenterID,username,name,email,password,location,phonenumber);
             rescueCenters.add(newCenter);

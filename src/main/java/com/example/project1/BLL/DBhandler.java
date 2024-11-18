@@ -3,7 +3,7 @@ package com.example.project1.BLL;
 import java.sql.*;
 import java.util.*;
 
-public abstract class DBhandler extends PersistanceHandler{
+public  class DBhandler {
 
 
     private String jdbcURL;
@@ -37,9 +37,125 @@ public abstract class DBhandler extends PersistanceHandler{
         return null; // Return null if not found or on error
     }
 
-    public abstract boolean storeRecord(String name, String username, String password, String phoneNumber, String location, String email);
-    public abstract ArrayList<Vets> getAllVets();
-    public abstract ArrayList<RescueCenter> getAllRescueCenters();
-    public abstract ArrayList<User> getAllUsers();
+    public ArrayList<RescueCenter> getAllRescueCenters() {
+        ArrayList<RescueCenter> rescueCenters = new ArrayList<>();
+        try (Connection conn = connect(); Statement stmt = conn.createStatement()) {
+            ResultSet rs = stmt.executeQuery("SELECT * FROM rescuecenter");
+            while (rs.next()) {
+                rescueCenters.add(new RescueCenter(
+                        rs.getString("rescuecenterid"),
+                        rs.getString("username"),
+                        rs.getString("centername"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("location"),
+                        rs.getString("phonenumber")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rescueCenters;
+    }
+    public ArrayList<Vets> getAllVets() {
+        ArrayList<Vets> vets = new ArrayList<>();
+        try (Connection conn = connect(); Statement stmt = conn.createStatement()) {
+            ResultSet rs = stmt.executeQuery("SELECT * FROM vets");
+            while (rs.next()) {
+                vets.add(new Vets(
+                        rs.getString("vetid"),
+                        rs.getString("username"),
+                        rs.getString("vetname"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("location"),
+                        rs.getString("phonenumber")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return vets;
+    }
+
+    public ArrayList<User> getAllUsers() {
+        ArrayList<User> users = new ArrayList<>();
+        try (Connection conn = connect(); Statement stmt = conn.createStatement()) {
+            ResultSet rs = stmt.executeQuery("SELECT * FROM \"user\"");
+            while (rs.next()) {
+                users.add(new User(rs.getString("userid"),rs.getString("username"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getString("location"),rs.getString("phonenumber")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+    public boolean storeUserRecord(String name, String username, String email, String password, String location, String phoneNumber)
+    {
+        String sql = "INSERT INTO \"user\" (name, username, email, password, location, phonenumber) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = connect();
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setString(1, name);
+            statement.setString(2, username);
+            statement.setString(3, email);
+            statement.setString(4, password);
+            statement.setString(5, location);
+            statement.setString(6, phoneNumber);
+
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("A new user was inserted successfully!");
+            }
+            return rowsInserted > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean storeVetRecord(String name, String username, String email, String password, String location, String phoneNumber)
+    {
+        String sql = "INSERT INTO vets (vetname, username, password, phonenumber, location, email) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, name);
+            stmt.setString(2, username);
+            stmt.setString(3, password);
+            stmt.setString(4, phoneNumber);
+            stmt.setString(5, location);
+            stmt.setString(6, email);
+
+            int rowsInserted = stmt.executeUpdate();
+            return rowsInserted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public  boolean storeCenterRecord(String name, String username, String password, String phoneNumber, String location, String email)
+    {
+        String sql = "INSERT INTO rescuecenter (centername, username, password, phonenumber, location, email) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, name);
+            stmt.setString(2, username);
+            stmt.setString(3, password);
+            stmt.setString(4, phoneNumber);
+            stmt.setString(5, location);
+            stmt.setString(6, email);
+
+            int rowsInserted = stmt.executeUpdate();
+            return rowsInserted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
 
