@@ -60,6 +60,16 @@ public class PawCare {
 
         return registeredNearbyCenters;
     }
+    void sendAlert(Alert alert) {
+        System.out.println("successfully sent alert");
+    }
+    public void createAlert(String animalType, String breed, String InjuryDesc, String imagePath, double[] userLocation) {
+
+        Alert alert = new Alert(animalType, breed,InjuryDesc, imagePath, userLocation);
+
+        sendAlert(alert);
+    }
+
     private boolean isPrefixMatch(String registeredLocation, String shelterLocation) {
         return registeredLocation.toLowerCase().startsWith(shelterLocation.toLowerCase());
     }

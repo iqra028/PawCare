@@ -13,11 +13,11 @@ public class LocationFetcher {
 
     private static String generateRandomIp() {
         List<String> ipList = Arrays.asList(
-                "63.116.61.253" ,
+                "63.116.61.253"/* ,
                 "51.140.0.23",
                 "103.205.179.249",
                 "103.23.153.172",
-                "88.190.221.100"
+                "88.190.221.100"*/
         );
         Random random = new Random();
         return ipList.get(random.nextInt(ipList.size()));

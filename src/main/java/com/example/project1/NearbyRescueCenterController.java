@@ -58,7 +58,18 @@ public class NearbyRescueCenterController extends UserMenuController{
     }
 
     private void handleSubmitRequest() {
+        // Get the user's current location (latitude and longitude)
+        double[] userLocation = SharedData.getInstance().getLocation(); // Assuming this returns [latitude, longitude]
+
+        // Capture the animal details from the input fields
+        String animalType = SharedData.getInstance().getAnimalType();
+        String breed = SharedData.getInstance().getBreed();
+        String injuryDesc = SharedData.getInstance().getInjuryDesc();
+        String imagePath = null;
+        System.out.println("heeeeeeeeeeeee");
+        pawCare.createAlert(animalType, breed, injuryDesc, imagePath, userLocation);
     }
+
     private void addRescueCenterPane(String shelterInfo) {
         String[] lines = shelterInfo.split("\n");
         String name = lines[0].replace("Name: ", "").trim();
@@ -92,7 +103,6 @@ public class NearbyRescueCenterController extends UserMenuController{
         submitButton.setLayoutY(70);
         submitButton.setPrefSize(98, 34);
 
-        //submitButton.setOnAction(event -> handleSubmitRequest(name));
 
         newPane.getChildren().addAll(nameLabel, locationLabel, phoneLabel, websiteLabel, submitButton);
         rescueCentersContainer.getChildren().add(newPane);
