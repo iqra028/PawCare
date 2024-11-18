@@ -6,6 +6,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -48,6 +49,27 @@
                         <Font size="36.0" />
                      </font>
                   </Text>
+                  <Pane fx:id="pane1" layoutX="72.0" layoutY="199.0" prefHeight="353.0" prefWidth="323.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <Label fx:id="AnimalNameLbl" layoutX="90.0" layoutY="195.0" text="Animal Name">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="acknowledgebtn" layoutX="84.0" layoutY="298.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #D08122;" text="Acknowledge" />
+                        <Label fx:id="conditionLbl" layoutX="128.0" layoutY="230.0" text="Condition">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="VetImg" fitHeight="187.0" fitWidth="221.0" layoutX="51.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label fx:id="statusLbl" layoutX="143.0" layoutY="257.0" text="Status">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
                </children>
             </AnchorPane>
          </children>

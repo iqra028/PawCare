@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1100.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.AnimalProfilesControllerAvA">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1100.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.AnimalProfilesAAController">
    <content>
       <AnchorPane prefHeight="1108.0" prefWidth="1374.0" style="-fx-background-color: #E4C7A2;">
          <children>
@@ -70,7 +70,7 @@
                         <Font size="18.0" />
                      </font>
                      <effect>
-                        <ColorAdjust />
+                        <ColorAdjust brightness="-0.23" />
                      </effect>
                   </Button>
                   <Button fx:id="AvailableAnimals" layoutX="59.0" layoutY="155.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="180.0" style="-fx-background-radius: 50;" text="Available Animals">
@@ -78,26 +78,53 @@
                         <Font size="18.0" />
                      </font>
                      <effect>
+                        <ColorAdjust />
+                     </effect>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="275.0" layoutY="178.0" prefHeight="866.0" prefWidth="808.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <Line endX="627.5999755859375" layoutX="142.0" layoutY="134.0" startX="-100.0" stroke="#9c8585" />
+                  <Text layoutX="285.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Animal Profile" wrappingWidth="243.20007324218756">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="AdoptionAnimals1" layoutX="258.0" layoutY="155.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="190.0" style="-fx-background-radius: 50; -fx-background-size: 30;" text="Adoption Animals">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <effect>
+                        <ColorAdjust />
+                     </effect>
+                  </Button>
+                  <Button fx:id="AvailableAnimals1" layoutX="59.0" layoutY="155.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="180.0" style="-fx-background-radius: 50;" text="Available Animals">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <effect>
                         <ColorAdjust brightness="-0.23" />
                      </effect>
                   </Button>
-                  <Pane fx:id="pane1" layoutX="67.0" layoutY="225.0" prefHeight="287.0" prefWidth="674.0" style="-fx-background-color: #ffffff;">
+                  <Pane fx:id="pane1" layoutX="67.0" layoutY="225.0" prefHeight="315.0" prefWidth="318.0" style="-fx-background-color: #ffffff;">
                      <children>
                         <Label fx:id="AnimalName" layoutX="90.0" layoutY="195.0" text="Animal Name">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Button fx:id="editbtn" layoutX="499.0" layoutY="29.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #D08122;" text="Edit" />
-                        <Label fx:id="AnimalCondition" layoutX="122.0" layoutY="230.0" text="Condition">
+                        <Label fx:id="specieslabel" layoutX="132.0" layoutY="274.0" text="Species">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
                         <ImageView fx:id="Img" fitHeight="187.0" fitWidth="221.0" layoutX="51.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
-                        <Button fx:id="reportbtn" layoutX="499.0" layoutY="223.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #D08122;" text="Show Injury Report" />
-                        <Button fx:id="adoptionbtn" layoutX="499.0" layoutY="159.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #D08122;" text="Put up for adoption" />
-                        <Button fx:id="deletebtn" layoutX="499.0" layoutY="93.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #D08122;" text="Delete" />
+                        <Label fx:id="breedlabel" layoutX="138.0" layoutY="239.0" text="Breed">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
                      </children>
                   </Pane>
                </children>

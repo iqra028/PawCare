@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -101,18 +102,21 @@
                                 <Font size="18.0" />
                             </font>
                         </Text>
-                        <Text layoutX="68.0" layoutY="592.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Location" wrappingWidth="215.44351196289062">
+                        <Text layoutX="68.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Location" wrappingWidth="215.44351196289062">
                             <font>
                                 <Font size="18.0" />
                             </font>
                         </Text>
-                        <WebView fx:id="webView" layoutX="68.0" layoutY="620.0" prefHeight="200.0" prefWidth="683.0" />
+                        <WebView fx:id="webView" layoutX="93.0" layoutY="585.0" prefHeight="194.0" prefWidth="622.0">
+                     <effect>
+                        <DropShadow />
+                     </effect></WebView>
                         <Button fx:id="btnSubmit" layoutX="646.0" layoutY="819.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: #4177FF;" text="Submit ">
                      <font>
                         <Font size="14.0" />
                      </font>
                         </Button>
-                        <Line endX="627.5999755859375" layoutX="140.0" layoutY="791.0" startX="-100.0" stroke="#9c8585" />
+                        <Line endX="627.5999755859375" layoutX="140.0" layoutY="799.0" startX="-100.0" stroke="#9c8585" />
                         <Button layoutX="64.0" layoutY="818.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="186.0" style="-fx-background-color: #FFFFFFFF;" text="* First Aid Options" textFill="#a11515">
                             <font>
                                 <Font size="18.0" />

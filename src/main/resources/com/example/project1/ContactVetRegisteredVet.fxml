@@ -3,18 +3,17 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1100.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.AdoptionRequestsController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1100.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.ContactVetReGController">
    <content>
       <AnchorPane prefHeight="1108.0" prefWidth="1374.0" style="-fx-background-color: #E4C7A2;">
          <children>
@@ -61,34 +60,43 @@
             <AnchorPane layoutX="265.0" layoutY="168.0" prefHeight="866.0" prefWidth="808.0" style="-fx-background-color: #ffffff;">
                <children>
                   <Line endX="627.5999755859375" layoutX="142.0" layoutY="134.0" startX="-100.0" stroke="#9c8585" />
-                  <Text layoutX="284.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alerts Received" wrappingWidth="243.20007324218756">
+                  <Text layoutX="285.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact a Vet" wrappingWidth="243.20007324218756">
                      <font>
                         <Font size="36.0" />
                      </font>
                   </Text>
-                  <VBox fx:id="container" layoutX="62.0" layoutY="175.0" prefHeight="572.0" prefWidth="686.0">
+                  <Button fx:id="AnimalsVet" layoutX="237.0" layoutY="155.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="190.0" style="-fx-background-radius: 50; -fx-background-size: 30;" text="Animals To Visit Vet">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <effect>
+                        <ColorAdjust />
+                     </effect>
+                  </Button>
+                  <Button fx:id="RegisteredAnimals" layoutX="59.0" layoutY="155.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="162.0" style="-fx-background-radius: 50;" text="Registered Vet">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <effect>
+                        <ColorAdjust brightness="-0.23" />
+                     </effect>
+                  </Button>
+                  <Pane fx:id="pane1" layoutX="59.0" layoutY="239.0" prefHeight="318.0" prefWidth="323.0" style="-fx-background-color: #ffffff;">
                      <children>
-                        <Pane fx:id="pane1" prefHeight="130.0" prefWidth="686.0" style="-fx-background-color: #EEB673;">
-                           <children>
-                              <Label fx:id="InjuredAnimalLabel" layoutX="25.0" layoutY="18.0" text="Injured Animal Found at">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="sendNearbyVolunteers" layoutX="517.0" layoutY="87.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #D08122;" text="Send Nearby Volunteers" />
-                              <Label fx:id="locationLabel" layoutX="25.0" layoutY="57.0" text="Location">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="dispatchteam" layoutX="409.0" layoutY="87.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: #D08122;" text="Dispatch Team" />
-                           </children>
-                           <effect>
-                              <DropShadow blurType="ONE_PASS_BOX" />
-                           </effect>
-                        </Pane>
+                        <Label fx:id="VetName" layoutX="90.0" layoutY="195.0" text="Doctor Name">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="CheckProfile" layoutX="84.0" layoutY="270.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #D08122;" text="Check Profile" />
+                        <Label fx:id="locationLabel" layoutX="128.0" layoutY="230.0" text="Location">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="VetImg" fitHeight="187.0" fitWidth="221.0" layoutX="51.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
-                  </VBox>
+                  </Pane>
                </children>
             </AnchorPane>
          </children>
