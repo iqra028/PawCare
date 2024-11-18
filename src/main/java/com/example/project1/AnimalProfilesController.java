@@ -1,15 +1,11 @@
 package com.example.project1;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 
-public class AdoptController extends UserMenuController{
+public class AnimalProfilesController  extends RescueCenterMenuController{
 
     @FXML
     public void initialize() {
         super.initialize();
     }
-
-
 }

@@ -2,16 +2,13 @@ package com.example.project1;
 
 import com.example.project1.BLL.PawCare;
 import com.example.project1.BLL.SharedData;
-import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +17,7 @@ import java.io.IOException;
 
 public class ReportInjuredAnimalController extends UserMenuController
 {
+    private PawCare pawCare;
     @FXML
     private Button btnSubmit;
     @FXML
@@ -28,7 +26,6 @@ public class ReportInjuredAnimalController extends UserMenuController
     private TextField Breed;
     @FXML
     private TextField InjuryDesc;
-    private PawCare pawCare;
     @FXML
     private WebView webView;
 
@@ -39,7 +36,7 @@ public class ReportInjuredAnimalController extends UserMenuController
     public void initialize() {
         super.initialize();
         pawCare = new PawCare();
-        double[] location = pawCare.getLocation(); // Fetch the location dynamically
+        double[] location = pawCare.getLocation();
         double latitude = location[0];
         double longitude = location[1];
         String mapHtml = pawCare.generatemap();

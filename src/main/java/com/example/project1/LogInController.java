@@ -78,7 +78,7 @@ public class LogInController {
         if (!username.isEmpty() && !password.isEmpty()) {
             if (pawCare.login(username, password,"vet")) {
                 loginSuccessful = true;
-                homePage = "UserHomeScreen.fxml";
+                homePage = "VetHomeScreen.fxml";
                 showAlert("Login Success", "Vet logged in successfully! Press Login to continue.");
             } else {
                 loginSuccessful = false;
