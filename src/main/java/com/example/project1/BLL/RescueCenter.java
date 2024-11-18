@@ -21,6 +21,12 @@ public class RescueCenter {
         this.location = location;
         this.phoneNumber = phoneNumber;
     }
+    public double[] getLocationAsArray() {
+        String[] parts = location.split(",");
+        double latitude = Double.parseDouble(parts[0].trim());
+        double longitude = Double.parseDouble(parts[1].trim());
+        return new double[]{latitude, longitude};
+    }
 
     // Getters and Setters
 

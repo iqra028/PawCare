@@ -1,6 +1,7 @@
 
 package com.example.project1;
 
+import com.example.project1.BLL.PawCare;
 import com.example.project1.BLL.SharedData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -28,6 +29,7 @@ public class NearbyRescueCenterController extends UserMenuController{
 
     @FXML
     private Button Panebutton;
+    PawCare pawCare;
 
     @FXML
     public void initialize() {
@@ -36,16 +38,21 @@ public class NearbyRescueCenterController extends UserMenuController{
             if (rescueCentersContainer == null) {
                 throw new IllegalStateException("rescueCentersContainer is not injected.");
             }
-            List<String> shelterInfoList = SharedData.getInstance().getRescueCenters();
+
+            pawCare = new PawCare(); // Ensure PawCare instance is initialized
+            List<String> shelterInfoList = pawCare.fetchNearbyRegisteredRescueCenters(); // Use the new method
+
             for (String info : shelterInfoList) {
                 addRescueCenterPane(info);
             }
+
             FirstAid.setOnAction(event -> handleFirstAid());
             Panebutton.setOnAction(event -> handleSubmitRequest());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     private void handleFirstAid() {
     }

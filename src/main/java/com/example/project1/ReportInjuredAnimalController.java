@@ -34,6 +34,7 @@ public class ReportInjuredAnimalController extends UserMenuController
 
     @FXML
     public void initialize() {
+
         super.initialize();
         pawCare = new PawCare();
         double[] location = pawCare.getLocation();
@@ -60,6 +61,7 @@ public class ReportInjuredAnimalController extends UserMenuController
 
     @FXML
     private void onSubmitClick() {
+
         String animalType = AnimalType.getText();
         String breed = Breed.getText();
         String InjuryDescription = InjuryDesc.getText();

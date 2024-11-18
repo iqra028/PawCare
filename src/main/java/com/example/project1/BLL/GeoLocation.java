@@ -36,7 +36,7 @@ public class GeoLocation {
     public GeoLocation() {
         this.latitude = 40.712776;
         this.longitude = -74.005974;
-        this.radius = 9000;
+        this.radius = 5000;
     }
     public double[] fetchDynamicLocation() {
 

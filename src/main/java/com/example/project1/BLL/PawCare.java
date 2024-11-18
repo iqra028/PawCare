@@ -31,6 +31,38 @@ public class PawCare {
         this.geoLocation=new GeoLocation();
         loadDataFromDatabase();
     }
+    private String formatLocation(String rawLocation) {
+        return rawLocation
+                .replace("Latitude ", "")
+                .replace("Longitude ", "")
+                .replace(" ", "");
+    }
+    public List<String> fetchNearbyRegisteredRescueCenters() {
+        List<String> nearbyCenters = SharedData.getInstance().getRescueCenters(); // Fetch nearby shelters using the API
+        List<String> registeredNearbyCenters = new ArrayList<>();
+
+        if (nearbyCenters != null) {
+            for (String shelterInfo : nearbyCenters) {
+                String[] details = shelterInfo.split("\n");
+                String shelterName = details[0].replace("Name: ", "").trim();
+                String rawLocation = details[1].replace("Location: ", "").trim();
+                String shelterLocation = formatLocation(rawLocation);
+                for (RescueCenter registeredCenter : rescueCenters) {
+                    String registeredLocation = registeredCenter.getLocation();
+                    if (registeredCenter.getName().equalsIgnoreCase(shelterName) || isPrefixMatch(registeredLocation, shelterLocation)) {
+                        System.out.println("Shelter Location: " + shelterLocation);
+                        System.out.println("Registered Center Location: " + registeredLocation);
+                        registeredNearbyCenters.add(shelterInfo);
+                    }
+                }
+            }
+        }
+
+        return registeredNearbyCenters;
+    }
+    private boolean isPrefixMatch(String registeredLocation, String shelterLocation) {
+        return registeredLocation.toLowerCase().startsWith(shelterLocation.toLowerCase());
+    }
 
     public double[] getLocation()
     {
@@ -41,11 +73,9 @@ public class PawCare {
     }
     public String generatemap()
     {
-
-        double[] location= getLocation();
-        double latitude = location[0];
-        double longitude = location[1];
-        double radius = 9000;
+        double latitude = geoLocation.getLatitude();
+        double longitude = geoLocation.getLongitude();
+        double radius = 5000;
 
          return geoLocation.generateMapHTML(latitude, longitude);
     }
@@ -53,17 +83,16 @@ public class PawCare {
 
         String overpassUrl = "https://overpass-api.de/api/interpreter?data=[out:json];" +
                 "node(around:" + geoLocation.getRadius() + "," + geoLocation.getLatitude() + "," + geoLocation.getLongitude() + ")" +
-                "[amenity~\"animal_shelter|veterinary|pet_adoption_center|pet\"];out;";
+                "[amenity~\"animal_shelter\"];out;";
 
         try {
-            // Fetch data from Overpass API
             URL url = new URL(overpassUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                // Read the response
+
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder response = new StringBuilder();
                 String inputLine;

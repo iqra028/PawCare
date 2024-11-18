@@ -4,17 +4,25 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import org.json.JSONObject;
 
 public class LocationFetcher {
 
     private static String generateRandomIp() {
-        int first = (int) (Math.random() * (223 - 1 + 1) + 1);
-        int second = (int) (Math.random() * 256);
-        int third = (int) (Math.random() * 256);
-        int fourth = (int) (Math.random() * 256);
-        return first + "." + second + "." + third + "." + fourth;
+        List<String> ipList = Arrays.asList(
+                "63.116.61.253" ,
+                "51.140.0.23",
+                "103.205.179.249",
+                "103.23.153.172",
+                "88.190.221.100"
+        );
+        Random random = new Random();
+        return ipList.get(random.nextInt(ipList.size()));
     }
+
     private static String fetchLocationForIp(String ip) {
         try {
             URL url = new URL("http://ip-api.com/json/" + ip);
@@ -38,22 +46,21 @@ public class LocationFetcher {
     }
 
     public static String getValidLocation() {
-        while (true) {
-            String randomIp = generateRandomIp();
-            System.out.println("Trying IP: " + randomIp);
-            String locationJson = fetchLocationForIp(randomIp);
+        String randomIp = generateRandomIp();
+        System.out.println("Trying IP: " + randomIp);
+        String locationJson = fetchLocationForIp(randomIp);
 
-            if (locationJson != null) {
-                JSONObject obj = new JSONObject(locationJson);
-                if (obj.has("lat") && obj.has("lon")) {
-                    System.out.println("Valid location found for IP: " + randomIp);
-                    return locationJson;
-                } else {
-                    System.out.println("Invalid location data for IP: " + randomIp);
-                }
+        if (locationJson != null) {
+            JSONObject obj = new JSONObject(locationJson);
+            if (obj.has("lat") && obj.has("lon")) {
+                System.out.println("Valid location found for IP: " + randomIp);
+                return locationJson;
             } else {
-                System.out.println("Failed to fetch data for IP: " + randomIp);
+                System.out.println("Invalid location data for IP: " + randomIp);
             }
+        } else {
+            System.out.println("Failed to fetch data for IP: " + randomIp);
         }
+        return null;
     }
 }
