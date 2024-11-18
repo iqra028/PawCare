@@ -13,6 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
+
 <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1153.0" prefWidth="1373.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.ReportInjuredAnimalController">
     <content>
         <AnchorPane prefHeight="1142.0" prefWidth="1374.0" style="-fx-background-color: #E4C7A2;">
@@ -60,7 +61,7 @@
                 <AnchorPane layoutX="283.0" layoutY="192.0" prefHeight="899.0" prefWidth="808.0" style="-fx-background-color: #ffffff;">
                     <children>
                         <Line endX="627.5999755859375" layoutX="140.0" layoutY="132.0" startX="-100.0" stroke="#9c8585" />
-                        <TextField fx:id="AnimalType" layoutX="68.0" layoutY="243.0" prefHeight="34.0" prefWidth="293.0" style="-fx-background-color: #8F4646;">
+                        <TextField fx:id="AnimalType" layoutX="68.0" layoutY="243.0" prefHeight="34.0" prefWidth="293.0">
                             <effect>
                                 <ColorAdjust contrast="-0.15" />
                             </effect>
@@ -75,7 +76,7 @@
                                 <Font size="36.0" />
                             </font>
                         </Text>
-                        <TextField fx:id="Breed" layoutX="455.0" layoutY="243.0" prefHeight="34.0" prefWidth="293.0" style="-fx-background-color: #8F4646;">
+                        <TextField fx:id="Breed" layoutX="455.0" layoutY="243.0" prefHeight="34.0" prefWidth="293.0">
                             <effect>
                                 <ColorAdjust contrast="-0.15" />
                             </effect>
@@ -90,7 +91,7 @@
                                 <Font size="18.0" />
                             </font>
                         </Text>
-                        <TextField fx:id="InjuryDesc" layoutX="62.0" layoutY="353.0" prefHeight="34.0" prefWidth="683.0" style="-fx-background-color: #8F4646;">
+                        <TextField fx:id="InjuryDesc" layoutX="62.0" layoutY="353.0" prefHeight="34.0" prefWidth="683.0">
                             <effect>
                                 <ColorAdjust contrast="-0.15" />
                             </effect>
@@ -105,14 +106,14 @@
                                 <Font size="18.0" />
                             </font>
                         </Text>
-                        <WebView fx:id="webView" layoutX="68.0" layoutY="620.0" prefWidth="683.0" prefHeight="200.0" />
+                        <WebView fx:id="webView" layoutX="68.0" layoutY="620.0" prefHeight="200.0" prefWidth="683.0" />
                         <Button fx:id="btnSubmit" layoutX="646.0" layoutY="819.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: #4177FF;" text="Submit ">
-                            <effect>
-                                <ColorAdjust brightness="-0.36" contrast="0.22" hue="-0.71" saturation="0.32" />
-                            </effect>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                         </Button>
                         <Line endX="627.5999755859375" layoutX="140.0" layoutY="791.0" startX="-100.0" stroke="#9c8585" />
-                        <Button fx:id="FirstAid" layoutX="64.0" layoutY="818.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="186.0" style="-fx-background-color: #FFFFFFFF;" text="* First Aid Options" textFill="#a11515">
+                        <Button layoutX="64.0" layoutY="818.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="186.0" style="-fx-background-color: #FFFFFFFF;" text="* First Aid Options" textFill="#a11515">
                             <font>
                                 <Font size="18.0" />
                             </font>

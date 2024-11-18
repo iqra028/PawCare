@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.RescueCentreHSController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.example.project1.VetHomeScreenController">
    <content>
       <AnchorPane prefHeight="1194.0" prefWidth="1374.0">
          <children>
@@ -29,27 +29,12 @@
                         <Image url="@images/Frame.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="AlertsReceived" layoutX="302.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Alerts Received" textFill="WHITE">
+                  <Button fx:id="InjuryReport" layoutX="421.0" layoutY="74.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="208.0" style="-fx-background-color: #8B0000;" text="Generate Injury Report" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="AnimalProfiles" layoutX="501.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Animal Profiles" textFill="#ececec">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="AdoptionRequests" layoutX="687.0" layoutY="76.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="177.0" style="-fx-background-color: #8B0000;" text="Adoption Requests" textFill="WHITE">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="ContactVet" layoutX="902.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Contact Vet" textFill="WHITE">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="DonationsMade" layoutX="1055.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Donations made" textFill="WHITE">
+                  <Button fx:id="Requests" layoutX="702.0" layoutY="75.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Requests From Rescue Center" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -68,7 +53,7 @@
                </image>
             </ImageView>
             <Label layoutX="564.0" layoutY="462.0" prefHeight="44.0" prefWidth="303.0" text="By Venti Tech" textAlignment="CENTER" />
-            <ImageView fitHeight="463.0" fitWidth="480.0" layoutX="730.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="369.0" fitWidth="403.0" layoutX="730.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/dog_and_cat.png" />
                </image>
@@ -131,12 +116,12 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <Button fx:id="SeeAlerts" layoutX="347.0" layoutY="578.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="153.0" style="-fx-background-color: D08122;" text="See Alerts" textFill="WHITE">
+            <Button fx:id="btnGenerateInjuryRep" layoutX="311.0" layoutY="578.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="190.0" style="-fx-background-color: D08122;" text="Generate Injury Report" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="ContactVet1" layoutX="511.0" layoutY="579.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="146.0" style="-fx-background-color: D08122;" text="Contact Vet" textFill="WHITE">
+            <Button fx:id="BtnRequests" layoutX="511.0" layoutY="579.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="146.0" style="-fx-background-color: D08122;" text="Requests" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
