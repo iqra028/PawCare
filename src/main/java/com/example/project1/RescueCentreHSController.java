@@ -34,7 +34,7 @@ public class RescueCentreHSController extends RescueCenterMenuController {
     @FXML
     private void handleContactVet() {
         try {
-            HelloApplication.getInstance().changeScene("ContactVet.fxml");
+            HelloApplication.getInstance().changeScene("ContactVetRegisteredVet.fxml");
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to change scene to Select-UserType.fxml", e);
         }

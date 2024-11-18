@@ -47,7 +47,7 @@ public class RescueCenterSignUpController {
     }
     private void openUserHomePage() {
         try {
-            HelloApplication.getInstance().changeScene("UserHomeScreen.fxml");
+            HelloApplication.getInstance().changeScene("RescueCenterHomeScreen.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }

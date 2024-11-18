@@ -57,7 +57,7 @@ public class RescueCenterMenuController {
     @FXML
     private void handleAnimalProfiles() {
         try {
-            HelloApplication.getInstance().changeScene("AnimalProfile.fxml");
+            HelloApplication.getInstance().changeScene("AnimalProfileAvailableAnimals.fxml");
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to change scene to Select-UserType.fxml", e);
         }
@@ -75,7 +75,7 @@ public class RescueCenterMenuController {
     @FXML
     private void handleContactVet() {
         try {
-            HelloApplication.getInstance().changeScene("ContactVet.fxml");
+            HelloApplication.getInstance().changeScene("ContactVetRegisteredVet.fxml");
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to change scene to Select-UserType.fxml", e);
         }
