@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1200.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.DonateController">
+   <content>
+      <AnchorPane prefHeight="1194.0" prefWidth="1374.0" style="-fx-background-color: #E4C7A2;">
+         <children>
+            <AnchorPane prefHeight="243.0" prefWidth="1374.0" style="-fx-background-color: #8B0000;">
+               <children>
+                  <Circle fill="#efefef" layoutX="1307.0" layoutY="53.0" radius="24.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label fx:id="PawCare" layoutX="118.0" layoutY="27.0" prefHeight="43.0" prefWidth="98.0" style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'file:resources/fonts/Pacifico.ttf';" text="PawCare">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="46.0" fitWidth="87.0" layoutX="14.0" layoutY="12.0">
+                     <image>
+                        <Image url="@images/Frame.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="btnReportInjuredAnimalHeader" layoutX="283.0" layoutY="58.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Report Injured Animal" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnReportMissingAnimal" layoutX="503.0" layoutY="58.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text=" Report Missing Animal" textFill="#ececec">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnAdopt" layoutX="724.0" layoutY="58.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Adopt" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnVolunteer" layoutX="843.0" layoutY="58.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Volunteer" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnDonate" layoutX="975.0" layoutY="58.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Donate" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="265.0" layoutY="168.0" prefHeight="971.0" prefWidth="808.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <Line endX="627.5999755859375" layoutX="140.0" layoutY="163.0" startX="-100.0" stroke="#9c8585" />
+                  <TextField fx:id="foundation" layoutX="61.0" layoutY="241.0" prefHeight="34.0" prefWidth="682.0" style="-fx-background-color: 8F4646;">
+                     <effect>
+                        <ColorAdjust contrast="-0.15" />
+                     </effect>
+                  </TextField>
+                  <Text layoutX="68.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a Foundation" wrappingWidth="234.64352416992188">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="355.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Donate" wrappingWidth="120.7999877929688">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#a61e1e" layoutX="724.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="submitbutton" layoutX="643.0" layoutY="911.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: 4177FF;" text="Submit ">
+                     <effect>
+                        <ColorAdjust brightness="-0.36" contrast="0.22" hue="-0.71" saturation="0.32" />
+                     </effect>
+                  </Button>
+                  <Line endX="627.5999755859375" layoutX="138.0" layoutY="862.0" startX="-100.0" stroke="#9c8585" />
+                  <Text layoutX="68.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Billing Information" underline="true" wrappingWidth="215.44351196289062">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="firstname" layoutX="61.0" layoutY="497.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
+                     <effect>
+                        <ColorAdjust contrast="-0.15" />
+                     </effect>
+                  </TextField>
+                  <Text layoutX="68.0" layoutY="922.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your name and address and location will be used">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#a61e1e" layoutX="56.0" layoutY="908.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="256.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Donate to your choice of centre, for a better cause" wrappingWidth="403.99998779296874">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="68.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card Number" wrappingWidth="234.64352416992188">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="cardnumber" layoutX="61.0" layoutY="398.0" prefHeight="34.0" prefWidth="682.0" style="-fx-background-color: 8F4646;">
+                     <effect>
+                        <ColorAdjust contrast="-0.15" />
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="pin" layoutX="438.0" layoutY="582.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
+                     <effect>
+                        <ColorAdjust contrast="-0.15" />
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="lastname" layoutX="438.0" layoutY="497.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
+                     <effect>
+                        <ColorAdjust contrast="-0.15" />
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="country" layoutX="61.0" layoutY="660.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
+                     <effect>
+                        <ColorAdjust contrast="-0.15" />
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="expirationdate" layoutX="61.0" layoutY="582.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
+                     <effect>
+                        <ColorAdjust contrast="-0.15" />
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="billingaddress" layoutX="438.0" layoutY="660.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
+                     <effect>
+                        <ColorAdjust contrast="-0.15" />
+                     </effect>
+                  </TextField>
+                  <Text layoutX="68.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name" wrappingWidth="234.64352416992188">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="postalcode" layoutX="63.0" layoutY="757.0" prefHeight="34.0" prefWidth="682.0" style="-fx-background-color: 8F4646;">
+                     <effect>
+                        <ColorAdjust contrast="-0.15" />
+                     </effect>
+                  </TextField>
+                  <Text layoutX="68.0" layoutY="744.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Postal Code" wrappingWidth="234.64352416992188">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="438.0" layoutY="648.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Billing Address" wrappingWidth="234.64352416992188">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="438.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pin" wrappingWidth="234.64352416992188">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="438.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name" wrappingWidth="234.64352416992188">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="68.0" layoutY="648.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Country" wrappingWidth="234.64352416992188">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="68.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Expiration Date" wrappingWidth="234.64352416992188">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>

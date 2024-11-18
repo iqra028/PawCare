@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.LogInController">
+   <children>
+      <AnchorPane prefHeight="143.0" prefWidth="1390.0" style="-fx-background-color: #8B0000;">
+         <children>
+            <Label layoutX="101.0" layoutY="35.0" prefHeight="64.0" prefWidth="158.0" text="PawCare" textFill="WHITE">
+               <font>
+                  <Font name="Brush Script MT Italic" size="48.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="46.0" fitWidth="87.0" layoutX="14.0" layoutY="12.0">
+               <image>
+                  <Image url="@images/Frame.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="signUpButton" layoutX="1080.0" layoutY="58.0" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #0000ff; -fx-text-fill: white; -fx-background-radius: 20;" text="Sign Up" />
+            <Button fx:id="logInButton" layoutX="1216.0" layoutY="58.0" prefHeight="40.0" prefWidth="109.0" style="-fx-background-color: #ffffff; -fx-text-fill: black; -fx-background-radius: 20;" text="Login" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="493.0" layoutY="153.0" prefHeight="582.0" prefWidth="424.0" style="-fx-background-color: EFA449; -fx-background-radius: 10;">
+         <children>
+            <Label layoutX="97.0" layoutY="144.0" style="-fx-font-size: 12; -fx-text-fill: black;" text="Fill in the following information to sign up" underline="true" />
+            <Label layoutX="239.0" layoutY="287.0" style="-fx-text-fill: blue;" text="Terms of Agreement" underline="true" />
+            <Label layoutX="176.0" layoutY="85.0" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: black;" text="Login" />
+            <PasswordField fx:id="passwordField" layoutX="44.0" layoutY="235.0" prefHeight="38.0" prefWidth="329.0" promptText="Enter Password" style="-fx-background-radius: 20; -fx-padding: 10;">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </PasswordField>
+            <Button fx:id="Finish" layoutX="42.0" layoutY="397.0" prefHeight="38.0" prefWidth="332.0" style="-fx-background-color: #0000ff; -fx-text-fill: white; -fx-background-radius: 15; -fx-padding: 10;" text="Login" />
+            <TextField fx:id="emailField" layoutX="43.0" layoutY="178.0" prefHeight="38.0" prefWidth="332.0" promptText="Enter Username" style="-fx-background-radius: 20; -fx-padding: 10;">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </TextField>
+            <CheckBox layoutX="67.0" layoutY="287.0" style="-fx-font-size: 12; -fx-text-fill: black;" text="I have read and confirm the " />
+            <Button fx:id="UserLogin" layoutX="44.0" layoutY="325.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="110.0" style="-fx-background-radius: 20;" text="User" />
+            <Button fx:id="RescueCenterLogin" layoutX="273.0" layoutY="325.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="109.0" style="-fx-background-radius: 20;" text="Rescue Center" />
+            <Button fx:id="VetLogin" layoutX="160.0" layoutY="325.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="109.0" style="-fx-background-radius: 20;" text="Vet" />
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </AnchorPane>
+   </children>
+</AnchorPane>

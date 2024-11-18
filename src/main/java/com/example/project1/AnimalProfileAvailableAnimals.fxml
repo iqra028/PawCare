@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1247.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.VolunteerController">
+   <content>
+      <AnchorPane prefHeight="1230.0" prefWidth="1374.0" style="-fx-background-color: #E4C7A2;">
+         <children>
+            <AnchorPane prefHeight="206.0" prefWidth="1374.0" style="-fx-background-color: #8B0000;">
+               <children>
+                  <Circle fill="#efefef" layoutX="1301.0" layoutY="59.0" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label fx:id="PawCare" layoutX="101.0" layoutY="26.0" prefHeight="64.0" prefWidth="158.0" text="PawCare" textFill="WHITE">
+                     <font>
+                        <Font name="Brush Script MT Italic" size="48.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="46.0" fitWidth="87.0" layoutX="14.0" layoutY="12.0">
+                     <image>
+                        <Image url="@images/Frame.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="AlertsReceived" layoutX="302.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Alerts Received" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="AnimalProfiles" layoutX="501.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Animal Profiles" textFill="#ececec">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="AdoptionRequests" layoutX="687.0" layoutY="76.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="177.0" style="-fx-background-color: #8B0000;" text="Adoption Requests" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="ContactVet" layoutX="902.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Contact Vet" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="DonationsMade" layoutX="1055.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Donations made" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="265.0" layoutY="168.0" prefHeight="1030.0" prefWidth="808.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <Line endX="627.5999755859375" layoutX="142.0" layoutY="134.0" startX="-100.0" stroke="#9c8585" />
+                  <Text layoutX="285.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Animal Profiles" wrappingWidth="243.20007324218756">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="Found" layoutX="225.0" layoutY="153.0" mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-size: 30;" text="Adoption Animals">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <effect>
+                        <ColorAdjust />
+                     </effect>
+                  </Button>
+                  <Button fx:id="Missing" layoutX="42.0" layoutY="153.0" mnemonicParsing="false" style="-fx-background-radius: 50;" text="Available Animals">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <effect>
+                        <ColorAdjust brightness="-0.23" />
+                     </effect>
+                  </Button>
+                  <VBox layoutX="63.0" layoutY="237.0" prefHeight="572.0" prefWidth="686.0">
+                     <children>
+                        <Pane fx:id="btnRescueCenters1" prefHeight="182.0" prefWidth="686.0" style="-fx-background-color: #EEB673;">
+                           <children>
+                              <Label fx:id="PaneLabel" layoutX="25.0" layoutY="18.0" text="Rescue Center 1">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="Panebutton" layoutX="574.0" layoutY="134.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: #D08122;" text="Submit " />
+                           </children>
+                           <effect>
+                              <DropShadow blurType="ONE_PASS_BOX" />
+                           </effect>
+                        </Pane>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>
