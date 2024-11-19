@@ -12,7 +12,6 @@ import java.io.IOException;
 public class RescueCenterSignUpController {
 
     private PawCare pawcare;
-
     @FXML
     private TextField usernameField;
     @FXML
@@ -39,13 +38,13 @@ public class RescueCenterSignUpController {
     private void initialize() {
         signUpButton.setOnAction(event -> openSignUpPage());
         logInButton.setOnAction(event -> openLogInPage());
-        Finish.setOnAction(event -> {
+        Finish.setOnAction(event ->  {
             if (handleSignUp()) { // Only proceed if sign-up is successful
                 openUserHomePage();
             }
         });
-    }
 
+    }
     private void openUserHomePage() {
         try {
             HelloApplication.getInstance().changeScene("RescueCenterHomeScreen.fxml");
@@ -55,27 +54,21 @@ public class RescueCenterSignUpController {
     }
 
     private boolean handleSignUp() {
-        pawcare = new PawCare();
+        pawcare=new PawCare();
         String username = usernameField.getText();
         String name = nameField.getText();
         String email = emailField.getText();
         String password = passwordField.getText();
-        String location = LocationField.getText();
-        String phoneNumber = NumField.getText();
+        String Location = LocationField.getText();
+        String PhoneNumber = NumField.getText();
 
-        if (!username.isEmpty() && !name.isEmpty() && !email.isEmpty() && !password.isEmpty() && !location.isEmpty() && !phoneNumber.isEmpty()) {
-
-            // Validate location format (longitude, latitude)
-            if (!location.matches("-?\\d+(\\.\\d+)?,\\s*-?\\d+(\\.\\d+)?")) {
-                showAlert("Error", "Please enter the location in the correct format: longitude,latitude.");
-                return false;
-            }
-
-            boolean reg = pawcare.registerRescueCenter(username, name, email, password, location, phoneNumber);
-            if (reg) {
+        if (!username.isEmpty() && !name.isEmpty() &&  !email.isEmpty() && !password.isEmpty() && !Location.isEmpty() && !PhoneNumber.isEmpty()) {
+            boolean reg= pawcare.registerRescueCenter(username,name,email,password,Location,PhoneNumber);
+            if(reg){
                 showAlert("Success", "Sign-up successful!");
                 return true;
-            } else {
+            }
+            else {
                 showAlert("Failure", "Username or email already used!");
             }
         } else {
@@ -91,7 +84,6 @@ public class RescueCenterSignUpController {
             e.printStackTrace();
         }
     }
-
     private void openSignUpPage() {
         try {
             HelloApplication.getInstance().changeScene("Select-UserType.fxml");
@@ -107,4 +99,5 @@ public class RescueCenterSignUpController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 }

@@ -1,7 +1,6 @@
 
 package com.example.project1;
 
-import com.example.project1.BLL.PawCare;
 import com.example.project1.BLL.SharedData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -29,7 +28,6 @@ public class NearbyRescueCenterController extends UserMenuController{
 
     @FXML
     private Button Panebutton;
-    PawCare pawCare;
 
     @FXML
     public void initialize() {
@@ -38,14 +36,10 @@ public class NearbyRescueCenterController extends UserMenuController{
             if (rescueCentersContainer == null) {
                 throw new IllegalStateException("rescueCentersContainer is not injected.");
             }
-
-            pawCare = new PawCare(); // Ensure PawCare instance is initialized
-            List<String> shelterInfoList = pawCare.fetchNearbyRegisteredRescueCenters(); // Use the new method
-
+            List<String> shelterInfoList = SharedData.getInstance().getRescueCenters();
             for (String info : shelterInfoList) {
                 addRescueCenterPane(info);
             }
-
             FirstAid.setOnAction(event -> handleFirstAid());
             Panebutton.setOnAction(event -> handleSubmitRequest());
         } catch (Exception e) {
@@ -53,23 +47,11 @@ public class NearbyRescueCenterController extends UserMenuController{
         }
     }
 
-
     private void handleFirstAid() {
     }
 
     private void handleSubmitRequest() {
-        // Get the user's current location (latitude and longitude)
-        double[] userLocation = SharedData.getInstance().getLocation(); // Assuming this returns [latitude, longitude]
-
-        // Capture the animal details from the input fields
-        String animalType = SharedData.getInstance().getAnimalType();
-        String breed = SharedData.getInstance().getBreed();
-        String injuryDesc = SharedData.getInstance().getInjuryDesc();
-        String imagePath = null;
-        System.out.println("heeeeeeeeeeeee");
-        pawCare.createAlert(animalType, breed, injuryDesc, imagePath, userLocation);
     }
-
     private void addRescueCenterPane(String shelterInfo) {
         String[] lines = shelterInfo.split("\n");
         String name = lines[0].replace("Name: ", "").trim();
@@ -103,6 +85,7 @@ public class NearbyRescueCenterController extends UserMenuController{
         submitButton.setLayoutY(70);
         submitButton.setPrefSize(98, 34);
 
+        //submitButton.setOnAction(event -> handleSubmitRequest(name));
 
         newPane.getChildren().addAll(nameLabel, locationLabel, phoneLabel, websiteLabel, submitButton);
         rescueCentersContainer.getChildren().add(newPane);
