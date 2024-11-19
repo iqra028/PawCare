@@ -60,7 +60,7 @@
             <AnchorPane layoutX="265.0" layoutY="168.0" prefHeight="971.0" prefWidth="808.0" style="-fx-background-color: #ffffff;">
                <children>
                   <Line endX="627.5999755859375" layoutX="140.0" layoutY="163.0" startX="-100.0" stroke="#9c8585" />
-                  <TextField fx:id="foundation" layoutX="61.0" layoutY="241.0" prefHeight="34.0" prefWidth="682.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="foundation" layoutX="61.0" layoutY="241.0" prefHeight="34.0" prefWidth="682.0" style="-fx-background-color: #8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
@@ -80,18 +80,18 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Button fx:id="submitbutton" layoutX="643.0" layoutY="911.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: 4177FF;" text="Submit ">
+                  <Button fx:id="submitbutton" layoutX="643.0" layoutY="911.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: #4177FF;" text="Submit ">
                      <effect>
                         <ColorAdjust brightness="-0.36" contrast="0.22" hue="-0.71" saturation="0.32" />
                      </effect>
                   </Button>
                   <Line endX="627.5999755859375" layoutX="138.0" layoutY="862.0" startX="-100.0" stroke="#9c8585" />
-                  <Text layoutX="68.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Billing Information" underline="true" wrappingWidth="215.44351196289062">
+                  <Text layoutX="65.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Billing Information" underline="true" wrappingWidth="215.44351196289062">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="firstname" layoutX="61.0" layoutY="497.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="firstname" layoutX="61.0" layoutY="432.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: #8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
@@ -111,47 +111,47 @@
                         <Font size="15.0" />
                      </font>
                   </Text>
-                  <Text layoutX="68.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card Number" wrappingWidth="234.64352416992188">
+                  <Text layoutX="68.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card Number" wrappingWidth="234.64352416992188">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="cardnumber" layoutX="61.0" layoutY="398.0" prefHeight="34.0" prefWidth="682.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="cardnumber" layoutX="61.0" layoutY="354.0" prefHeight="34.0" prefWidth="682.0" style="-fx-background-color: #8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
                   </TextField>
-                  <TextField fx:id="pin" layoutX="438.0" layoutY="582.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="pin" layoutX="438.0" layoutY="522.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: #8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
                   </TextField>
-                  <TextField fx:id="lastname" layoutX="438.0" layoutY="497.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="lastname" layoutX="438.0" layoutY="432.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: #8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
                   </TextField>
-                  <TextField fx:id="country" layoutX="61.0" layoutY="660.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="country" layoutX="61.0" layoutY="611.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: #8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
                   </TextField>
-                  <TextField fx:id="expirationdate" layoutX="61.0" layoutY="582.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="expirationdate" layoutX="61.0" layoutY="522.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: #8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
                   </TextField>
-                  <TextField fx:id="billingaddress" layoutX="438.0" layoutY="660.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="billingaddress" layoutX="438.0" layoutY="611.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: #8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
                   </TextField>
-                  <Text layoutX="68.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name" wrappingWidth="234.64352416992188">
+                  <Text layoutX="68.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name" wrappingWidth="234.64352416992188">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="postalcode" layoutX="63.0" layoutY="757.0" prefHeight="34.0" prefWidth="682.0" style="-fx-background-color: 8F4646;">
+                  <TextField fx:id="postalcode" layoutX="63.0" layoutY="757.0" prefHeight="34.0" prefWidth="682.0" style="-fx-background-color: #8F4646;">
                      <effect>
                         <ColorAdjust contrast="-0.15" />
                      </effect>
@@ -161,33 +161,56 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Text layoutX="438.0" layoutY="648.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Billing Address" wrappingWidth="234.64352416992188">
+                  <Text layoutX="438.0" layoutY="594.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Billing Address" wrappingWidth="234.64352416992188">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Text layoutX="438.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pin" wrappingWidth="234.64352416992188">
+                  <Text layoutX="438.0" layoutY="504.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pin" wrappingWidth="234.64352416992188">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Text layoutX="438.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name" wrappingWidth="234.64352416992188">
+                  <Text layoutX="438.0" layoutY="418.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name" wrappingWidth="234.64352416992188">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Text layoutX="68.0" layoutY="648.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Country" wrappingWidth="234.64352416992188">
+                  <Text layoutX="68.0" layoutY="595.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Country" wrappingWidth="234.64352416992188">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Text layoutX="68.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Expiration Date" wrappingWidth="234.64352416992188">
+                  <Text layoutX="68.0" layoutY="505.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Expiration Date" wrappingWidth="234.64352416992188">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="amount" layoutX="61.0" layoutY="687.0" prefHeight="34.0" prefWidth="304.0" style="-fx-background-color: #8F4646;">
+                     <effect>
+                        <ColorAdjust contrast="-0.15" />
+                     </effect>
+                  </TextField>
+                  <Text layoutX="68.0" layoutY="671.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount" wrappingWidth="234.64352416992188">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
                </children>
             </AnchorPane>
+            <Button fx:id="Found" layoutX="363.0" layoutY="113.0" mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-size: 30;" text="By Easypaisa">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <effect>
+                  <ColorAdjust brightness="-0.23" />
+               </effect>
+            </Button>
+            <Button fx:id="Missing" layoutX="270.0" layoutY="113.0" mnemonicParsing="false" style="-fx-background-radius: 50;" text="By Card">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </content>

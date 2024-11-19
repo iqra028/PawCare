@@ -9,11 +9,10 @@ public class Donation {
     private LocalDate dateCreated;
 
     public double makeDonation(double amount) {
-
+        this.amount = amount;
+        this.dateCreated = LocalDate.now();
         return amount;
     }
-
-    // Method to view donation details
     public String viewDonationDetails() {
         return "Donation Details:\n" +
                 "Donation ID: " + DonationID + "\n" +

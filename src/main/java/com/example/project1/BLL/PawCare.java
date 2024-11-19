@@ -11,7 +11,7 @@ import java.util.*;
 import java.util.*;
 public class PawCare {
 
-
+    private DonationContext donationContext;
     private ArrayList<Vets> vets;
     private ArrayList<RescueCenter> rescueCenters;
     private ArrayList<User> users;
@@ -30,6 +30,23 @@ public class PawCare {
         this.formFactory=new FormFactory();
         this.geoLocation=new GeoLocation();
         loadDataFromDatabase();
+        this.donationContext = new DonationContext();
+    }
+    public void processDonation(String foundation, String firstName, String lastName, String cardNumber, String expirationDate, String pin, String country, String billingAddress, String postalCode,String Amount)
+    {
+
+        PaymentStrategy paymentStrategy = new CardPayment(cardNumber, firstName + " " + lastName, expirationDate, pin);
+        donationContext.setPaymentStrategy(paymentStrategy);
+        double amount = Double.parseDouble(Amount);
+        donationContext.executePayment(amount);
+    }
+    public void processDonation(String phone ,String firstname,String lastname, String donationAmount )
+    {
+        PaymentStrategy paymentStrategy = new EasypaisaPayment(phone,firstname,lastname);
+        donationContext.setPaymentStrategy(paymentStrategy);
+        double amount = Double.parseDouble(donationAmount);
+        donationContext.executePayment(amount);
+
     }
     private String formatLocation(String rawLocation) {
         return rawLocation
