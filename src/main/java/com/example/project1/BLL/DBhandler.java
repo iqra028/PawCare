@@ -1,6 +1,8 @@
 package com.example.project1.BLL;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public  class DBhandler {
@@ -135,6 +137,39 @@ public  class DBhandler {
             return false;
         }
     }
+    public boolean storeDonationRecord(Donation donation) {
+        // Adjust the table and column names to be case-sensitive (if required)
+        String sql = "INSERT INTO donations(amount, dateCreated, userid, rescuecenterid) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = connect(); // Ensure connect() provides a valid connection
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            // Set parameters
+            stmt.setDouble(1, donation.getAmount());
+
+            // If dateCreated is a LocalDate or LocalDateTime, set the correct timestamp
+            if (donation.getDateCreated() instanceof LocalDate) {
+                stmt.setDate(2, java.sql.Date.valueOf(donation.getDateCreated())); // If it's LocalDate
+            }
+
+            // Ensure that the userid and rescuecenterid are UUIDs
+            stmt.setObject(3, UUID.fromString(donation.getUserid())); // Convert to UUID if it's a string
+            stmt.setObject(4, UUID.fromString(donation.getRescuecenterid())); // Convert to UUID if it's a string
+
+            // Execute the statement
+            int rowsInserted = stmt.executeUpdate();
+            return rowsInserted > 0;
+
+        } catch (SQLException e) {
+            // Handle SQL exceptions and log error details
+            System.err.println("Error storing donation record: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
 
     public  boolean storeCenterRecord(String name, String username, String password, String phoneNumber, String location, String email)
     {

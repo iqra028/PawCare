@@ -38,15 +38,20 @@ public class PawCare {
         PaymentStrategy paymentStrategy = new CardPayment(cardNumber, firstName + " " + lastName, expirationDate, pin);
         donationContext.setPaymentStrategy(paymentStrategy);
         double amount = Double.parseDouble(Amount);
-        donationContext.executePayment(amount,Session.getInstance().getLoggedInUser().getUserID(),rescuecenterid);
+        Donation donation= donationContext.executePayment(amount,Session.getInstance().getLoggedInUser().getUserID(),rescuecenterid);
+        addDonationTodatabase(donation);
     }
     public void processDonation(String phone ,String firstname,String lastname, String donationAmount,String rescuecenterid )
     {
         PaymentStrategy paymentStrategy = new EasypaisaPayment(phone,firstname,lastname);
         donationContext.setPaymentStrategy(paymentStrategy);
         double amount = Double.parseDouble(donationAmount);
-        donationContext.executePayment(amount,Session.getInstance().getLoggedInUser().getUserID(),rescuecenterid);
+       Donation donation= donationContext.executePayment(amount,Session.getInstance().getLoggedInUser().getUserID(),rescuecenterid);
+       addDonationTodatabase(donation);
 
+    }
+    public void addDonationTodatabase(Donation donation){
+        db.storeDonationRecord(donation);
     }
     private String formatLocation(String rawLocation) {
         return rawLocation
@@ -147,12 +152,6 @@ public class PawCare {
         return null;
     }
 
-    public List<String> fetchRescueCenters() {
-        // Initialize rescue centers list
-        List<String> rescueCentersList = new ArrayList<>();
-        // Return the list of rescue centers
-        return rescueCentersList;
-    }
     public ArrayList<Vets> getVets() {
         return vets;
     }
