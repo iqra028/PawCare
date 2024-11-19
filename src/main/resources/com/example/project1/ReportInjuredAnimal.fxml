@@ -117,7 +117,7 @@
                      </font>
                         </Button>
                         <Line endX="627.5999755859375" layoutX="140.0" layoutY="799.0" startX="-100.0" stroke="#9c8585" />
-                        <Button layoutX="64.0" layoutY="818.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="186.0" style="-fx-background-color: #FFFFFFFF;" text="* First Aid Options" textFill="#a11515">
+                        <Button fx:id="btnFirstAid" layoutX="64.0" layoutY="818.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="186.0" style="-fx-background-color: #FFFFFFFF;" text="* First Aid Options" textFill="#a11515">
                             <font>
                                 <Font size="18.0" />
                             </font>

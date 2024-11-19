@@ -65,7 +65,7 @@
             <ColorAdjust brightness="-0.11" />
          </effect>
       </TextField>
-      <TextField fx:id="LocationField" layoutX="183.0" layoutY="520.0" prefHeight="38.0" prefWidth="324.0" promptText="Enter location (longitude, latitude)" style="-fx-background-radius: 20; -fx-padding: 10;">
+      <TextField fx:id="LocationField" layoutX="183.0" layoutY="520.0" prefHeight="38.0" prefWidth="324.0" promptText="Center Location" style="-fx-background-radius: 20; -fx-padding: 10;">
          <effect>
             <ColorAdjust brightness="-0.11" />
          </effect>
