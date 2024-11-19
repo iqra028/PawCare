@@ -69,13 +69,18 @@
                      <children>
                         <Pane fx:id="pane1" prefHeight="130.0" prefWidth="686.0" style="-fx-background-color: #ffffff;">
                            <children>
-                              <Label fx:id="amount" layoutX="25.0" layoutY="18.0" text="Amount">
+                              <Label fx:id="amount" layoutX="570.0" layoutY="41.0" text="Amount">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
                               </Label>
                               <Line endX="100.0" layoutX="343.0" layoutY="107.0" startX="-100.0" />
-                              <Label fx:id="donater" layoutX="33.0" layoutY="59.0" text="Name of person">
+                              <Label fx:id="donater" layoutX="32.0" layoutY="28.0" text="Name of person">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="donater1" layoutX="39.0" layoutY="59.0" text="Date">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
