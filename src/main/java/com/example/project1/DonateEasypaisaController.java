@@ -1,11 +1,17 @@
 package com.example.project1;
 
 import com.example.project1.BLL.PawCare;
+import com.example.project1.BLL.RescueCenter;
+import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DonateEasypaisaController extends UserMenuController {
@@ -27,8 +33,10 @@ public class DonateEasypaisaController extends UserMenuController {
     @FXML
     private Button Missing; // By Card button
     @FXML
+    private ComboBox<String> rescueCenterDropdown;
+    @FXML
     private Button Found;
-    private com.example.project1.BLL.PawCare pawCare; // Reference to PawCare instance
+    private PawCare pawCare; // Reference to PawCare instance
 
     @Override
     public void initialize() {
@@ -36,6 +44,7 @@ public class DonateEasypaisaController extends UserMenuController {
 
         // Initialize PawCare instance
         pawCare = new PawCare();
+        populateRescueCenters();
         Missing.setOnAction(event -> openCardPage());
         Found.setOnAction(event -> openEasypaisaPage());
         submitbutton.setOnAction(event -> handleSubmit());
@@ -54,6 +63,18 @@ public class DonateEasypaisaController extends UserMenuController {
             e.printStackTrace();
         }
     }
+    private void populateRescueCenters() {
+        // Assuming PawCare has a method to fetch rescue center names
+        ArrayList<RescueCenter> rescueCenters = pawCare.getRescueCenters();
+        List<String> rescueCenterNames = new ArrayList<>();
+        for (RescueCenter rescueCenter : rescueCenters) {
+            rescueCenterNames.add(rescueCenter.getName());
+        }
+
+        // Convert list to ObservableList and populate ComboBox
+        ObservableList<String> centerOptions = FXCollections.observableArrayList(rescueCenterNames);
+        rescueCenterDropdown.setItems(centerOptions);
+    }
 
     @FXML
     void handleSubmit() {
@@ -61,11 +82,18 @@ public class DonateEasypaisaController extends UserMenuController {
             System.out.println("Please fill in all required fields.");
             return;
         }
+
         String phone = phoneNumber.getText();
         String firstname = firstName.getText();
         String lastname = lastName.getText();
         String donationAmount = amount.getText();
-        pawCare.processDonation(phone,firstname,lastname,donationAmount);
+        String selectedRescueCenter = rescueCenterDropdown.getValue();
+
+        if (selectedRescueCenter == null) {
+            System.out.println("Please select a rescue center.");
+            return;
+        }
+        pawCare.processDonation(phone,firstname,lastname,donationAmount,pawCare.getRescueCenterIDByName(selectedRescueCenter));
 
 
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -60,11 +61,7 @@
             <AnchorPane layoutX="265.0" layoutY="168.0" prefHeight="971.0" prefWidth="808.0" style="-fx-background-color: #ffffff;">
                <children>
                   <Line endX="627.5999755859375" layoutX="140.0" layoutY="163.0" startX="-100.0" stroke="#9c8585" />
-                  <TextField fx:id="foundation" layoutX="61.0" layoutY="241.0" prefHeight="34.0" prefWidth="682.0" style="-fx-background-color: #8F4646;">
-                     <effect>
-                        <ColorAdjust contrast="-0.15" />
-                     </effect>
-                  </TextField>
+                  <ComboBox fx:id="rescueCenterDropdown" layoutX="62.0" layoutY="235.0" prefHeight="34.0" prefWidth="682.0" style="-fx-background-color: #8F4646;" />
                   <Text layoutX="68.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a Foundation" wrappingWidth="234.64352416992188">
                      <font>
                         <Font size="18.0" />

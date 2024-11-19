@@ -32,20 +32,20 @@ public class PawCare {
         loadDataFromDatabase();
         this.donationContext = new DonationContext();
     }
-    public void processDonation(String foundation, String firstName, String lastName, String cardNumber, String expirationDate, String pin, String country, String billingAddress, String postalCode,String Amount)
+    public void processDonation(String foundation, String firstName, String lastName, String cardNumber, String expirationDate, String pin, String country, String billingAddress, String postalCode,String Amount,String rescuecenterid)
     {
 
         PaymentStrategy paymentStrategy = new CardPayment(cardNumber, firstName + " " + lastName, expirationDate, pin);
         donationContext.setPaymentStrategy(paymentStrategy);
         double amount = Double.parseDouble(Amount);
-        donationContext.executePayment(amount);
+        donationContext.executePayment(amount,Session.getInstance().getLoggedInUser().getUserID(),rescuecenterid);
     }
-    public void processDonation(String phone ,String firstname,String lastname, String donationAmount )
+    public void processDonation(String phone ,String firstname,String lastname, String donationAmount,String rescuecenterid )
     {
         PaymentStrategy paymentStrategy = new EasypaisaPayment(phone,firstname,lastname);
         donationContext.setPaymentStrategy(paymentStrategy);
         double amount = Double.parseDouble(donationAmount);
-        donationContext.executePayment(amount);
+        donationContext.executePayment(amount,Session.getInstance().getLoggedInUser().getUserID(),rescuecenterid);
 
     }
     private String formatLocation(String rawLocation) {
@@ -76,6 +76,14 @@ public class PawCare {
         }
 
         return registeredNearbyCenters;
+    }
+    public String getRescueCenterIDByName(String name) {
+        for (RescueCenter center : rescueCenters) {
+            if (center.getName().equalsIgnoreCase(name)) {
+                return center.getRescueCenterID();
+            }
+        }
+        return null; // Return null if no matching rescue center is found
     }
     void sendAlert(Alert alert) {
         System.out.println("successfully sent alert");
@@ -272,6 +280,7 @@ public class PawCare {
                         if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
                            // System.out.println("User successfully logged in!");
                             loginSuccessful = true;
+                            Session.getInstance().setLoggedInUser(user);
                             break;
                         }
                     }
@@ -282,6 +291,7 @@ public class PawCare {
                         if (vet.getUserName().equals(username) && vet.getPassword().equals(password)) {
                             System.out.println("Vet successfully logged in!");
                             loginSuccessful = true;
+                            Session.getInstance().setLoggedInVets(vet);
                             break;
                         }
                     }
@@ -292,6 +302,7 @@ public class PawCare {
                         if (center.getUserName().equals(username) && center.getPassword().equals(password)) {
                             System.out.println("Rescue Center successfully logged in!");
                             loginSuccessful = true;
+                            Session.getInstance().setLoggedInRescueCenter(center);
                             break;
                         }
                     }
