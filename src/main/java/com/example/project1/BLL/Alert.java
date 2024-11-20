@@ -1,48 +1,77 @@
 package com.example.project1.BLL;
 
-import java.util.*;
-import java.time.LocalDate;
+import javafx.scene.image.Image;
+
 import java.time.LocalDate;
 
 public class Alert {
 
-    private String alertId;
     private String type;
     private String message;
     private String breed;
-    private String image;
+    private Image image;
     private double[] location;
     private LocalDate dateCreated;
-    public Alert(String animalType, String breed, String InjuryDesc,  String imagePath, double[] userLocation) {
-        this.alertId = generateAlertId();
+    private String userid;
+    private String rescuecenterid;
+    public Alert(String animalType, String breed, String InjuryDesc,  Image image, double[] userLocation,String userid,String rescuecenterid) {
         this.type = animalType;
         this.breed = breed;
         this.message = InjuryDesc;
-        this.image = imagePath;
+        this.image =  image;
         this.location = userLocation;
         this.dateCreated = LocalDate.now();
+        this.userid = userid;
+        this.rescuecenterid = rescuecenterid;
     }
-    private String generateAlertId() {
-        return "ALERT-" + System.currentTimeMillis();
-    }
+    public Alert()
+    {
 
-    public Alert sendAlert() {
-        System.out.println("Alert sent: " + this.message);
-        return this;
     }
-    public String getAlertId() {
-        return alertId;
+    public String getBreed() {
+        return breed ;
+    }
+    public String getUserid(){
+        return userid;
+    }
+    public String getRescuecenterid(){
+        return rescuecenterid;
     }
 
     public String getType() {
         return type;
+    }
+    public void setBreed(String breed) {
+        this.breed = breed;
+    }
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+    public void setRescuecenterid(String rescuecenterid) {
+        this.rescuecenterid = rescuecenterid;
+    }
+    public void setType(String type) {
+        this.type = type;
+    }
+    public void setImage(Image image) {
+        this.image = image;
+    }
+    public void setLocation(double[] location) {
+        this.location = location;
+    }
+    public void setDateCreated(LocalDate dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getMessage() {
         return message;
     }
 
-    public String getImage() {
+    public Image getImage() {
         return image;
     }
 

@@ -19,6 +19,7 @@
     <content>
         <AnchorPane prefHeight="1142.0" prefWidth="1374.0" style="-fx-background-color: #E4C7A2;">
             <children>
+                <!-- Header Section -->
                 <AnchorPane prefHeight="243.0" prefWidth="1374.0" style="-fx-background-color: #8B0000;">
                     <children>
                         <Circle fill="#efefef" layoutX="1307.0" layoutY="53.0" radius="24.0" stroke="BLACK" strokeType="INSIDE" />
@@ -59,9 +60,14 @@
                         </Button>
                     </children>
                 </AnchorPane>
+
+                <!-- Form Section -->
                 <AnchorPane layoutX="283.0" layoutY="192.0" prefHeight="899.0" prefWidth="808.0" style="-fx-background-color: #ffffff;">
                     <children>
+                        <!-- Form line separator -->
                         <Line endX="627.5999755859375" layoutX="140.0" layoutY="132.0" startX="-100.0" stroke="#9c8585" />
+
+                        <!-- Animal Type TextField -->
                         <TextField fx:id="AnimalType" layoutX="68.0" layoutY="243.0" prefHeight="34.0" prefWidth="293.0">
                             <effect>
                                 <ColorAdjust contrast="-0.15" />
@@ -72,21 +78,8 @@
                                 <Font size="18.0" />
                             </font>
                         </Text>
-                        <Text layoutX="236.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Injured Animal Form" wrappingWidth="336.5334014892577">
-                            <font>
-                                <Font size="36.0" />
-                            </font>
-                        </Text>
-                        <TextField fx:id="Breed" layoutX="455.0" layoutY="243.0" prefHeight="34.0" prefWidth="293.0">
-                            <effect>
-                                <ColorAdjust contrast="-0.15" />
-                            </effect>
-                        </TextField>
-                        <Text layoutX="455.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Breed" wrappingWidth="215.44351196289062">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                        </Text>
+
+                        <!-- Injury Description TextField -->
                         <Text layoutX="68.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Injury Description" wrappingWidth="215.44351196289062">
                             <font>
                                 <Font size="18.0" />
@@ -97,31 +90,64 @@
                                 <ColorAdjust contrast="-0.15" />
                             </effect>
                         </TextField>
+
+                        <!-- Breed TextField -->
+                        <TextField fx:id="Breed" layoutX="455.0" layoutY="243.0" prefHeight="34.0" prefWidth="293.0">
+                            <effect>
+                                <ColorAdjust contrast="-0.15" />
+                            </effect>
+                        </TextField>
+                        <Text layoutX="455.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Breed" wrappingWidth="215.44351196289062">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Text>
+
+                        <!-- Upload Image Section -->
                         <Text layoutX="68.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Upload Image" wrappingWidth="215.44351196289062">
                             <font>
                                 <Font size="18.0" />
                             </font>
                         </Text>
+
+                        <!-- ImageView to display uploaded image -->
+                        <ImageView fx:id="imageView" fitHeight="100.0" fitWidth="100.0" layoutX="331.0" layoutY="448.0" />
+
+                        <!-- Button to trigger image upload -->
+                        <Button fx:id="btnUploadImage" layoutX="234.0" layoutY="463.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: #4177FF;" text="Upload Image">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+
+                        <!-- Location Section with WebView -->
                         <Text layoutX="68.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Location" wrappingWidth="215.44351196289062">
                             <font>
                                 <Font size="18.0" />
                             </font>
                         </Text>
                         <WebView fx:id="webView" layoutX="93.0" layoutY="585.0" prefHeight="194.0" prefWidth="622.0">
-                     <effect>
-                        <DropShadow />
-                     </effect></WebView>
-                        <Button fx:id="btnSubmit" layoutX="646.0" layoutY="819.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: #4177FF;" text="Submit ">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
+                            <effect>
+                                <DropShadow />
+                            </effect>
+                        </WebView>
+
+                        <!-- Submit Button -->
+                        <Button fx:id="btnSubmit" layoutX="646.0" layoutY="819.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: #4177FF;" text="Submit">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
                         </Button>
-                        <Line endX="627.5999755859375" layoutX="140.0" layoutY="799.0" startX="-100.0" stroke="#9c8585" />
+
+                        <!-- First Aid Button -->
                         <Button fx:id="btnFirstAid" layoutX="64.0" layoutY="818.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="186.0" style="-fx-background-color: #FFFFFFFF;" text="* First Aid Options" textFill="#a11515">
                             <font>
                                 <Font size="18.0" />
                             </font>
                         </Button>
+
+                        <!-- Form line separator -->
+                        <Line endX="627.5999755859375" layoutX="140.0" layoutY="799.0" startX="-100.0" stroke="#9c8585" />
                     </children>
                 </AnchorPane>
             </children>

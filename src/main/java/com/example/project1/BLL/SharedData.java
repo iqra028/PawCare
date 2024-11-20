@@ -1,5 +1,7 @@
 package com.example.project1.BLL;
 
+import javafx.scene.image.Image;
+
 import java.util.List;
 
 public class SharedData {
@@ -11,15 +13,28 @@ public class SharedData {
     private String animalType;
     private String breed;
     private String injuryDesc;
+    private Image image;
 
     // Private constructor to enforce singleton pattern
     private SharedData() {}
+    public void show(){
+        System.out.println(latitude+","+longitude);
+        System.out.println(animalType);
+        System.out.println(breed);
+        System.out.println(injuryDesc);
 
+    }
     public static SharedData getInstance() {
         if (instance == null) {
             instance = new SharedData();
         }
         return instance;
+    }
+    public void setImage(Image image) {
+        this.image = image;
+    }
+    public Image getImage() {
+        return image;
     }
 
     // Rescue centers

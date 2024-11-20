@@ -1,6 +1,6 @@
 package com.example.project1.BLL;
 
-import org.json.JSONArray;
+import javafx.scene.image.Image;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
-import java.util.*;
+
 public class PawCare {
 
     private DonationContext donationContext;
@@ -72,22 +72,21 @@ public class PawCare {
                 .replace("Longitude ", "")
                 .replace(" ", "");
     }
-    public List<String> fetchNearbyRegisteredRescueCenters() {
+    public List<RescueCenter> fetchNearbyRegisteredRescueCenters() {
         List<String> nearbyCenters = SharedData.getInstance().getRescueCenters(); // Fetch nearby shelters using the API
-        List<String> registeredNearbyCenters = new ArrayList<>();
+        List<RescueCenter> registeredNearbyCenters = new ArrayList<>();
 
         if (nearbyCenters != null) {
             for (String shelterInfo : nearbyCenters) {
                 String[] details = shelterInfo.split("\n");
                 String shelterName = details[0].replace("Name: ", "").trim();
                 String rawLocation = details[1].replace("Location: ", "").trim();
-                String shelterLocation = formatLocation(rawLocation);
+                String shelterLocation = formatLocation(rawLocation); // Assuming formatLocation formats the location string
+
                 for (RescueCenter registeredCenter : rescueCenters) {
                     String registeredLocation = registeredCenter.getLocation();
                     if (registeredCenter.getName().equalsIgnoreCase(shelterName) || isPrefixMatch(registeredLocation, shelterLocation)) {
-                        System.out.println("Shelter Location: " + shelterLocation);
-                        System.out.println("Registered Center Location: " + registeredLocation);
-                        registeredNearbyCenters.add(shelterInfo);
+                        registeredNearbyCenters.add(registeredCenter);
                     }
                 }
             }
@@ -95,28 +94,33 @@ public class PawCare {
 
         return registeredNearbyCenters;
     }
+
     public String getRescueCenterIDByName(String name) {
         for (RescueCenter center : rescueCenters) {
             if (center.getName().equalsIgnoreCase(name)) {
                 return center.getRescueCenterID();
             }
         }
-        return null; // Return null if no matching rescue center is found
+        return null;
     }
     void sendAlert(Alert alert) {
         System.out.println("successfully sent alert");
     }
-    public void createAlert(String animalType, String breed, String InjuryDesc, String imagePath, double[] userLocation) {
+    public void createAlert(String animalType, String breed, String InjuryDesc, Image imagePath,
+                            double[] userLocation,String uerid, String rescuecenterid) {
 
-        Alert alert = new Alert(animalType, breed,InjuryDesc, imagePath, userLocation);
 
-        sendAlert(alert);
+        Alert alert = new Alert(animalType, breed,InjuryDesc, imagePath, userLocation,uerid,rescuecenterid);
+        db.storeAlertRecord(alert);
     }
+
 
     private boolean isPrefixMatch(String registeredLocation, String shelterLocation) {
         return registeredLocation.toLowerCase().startsWith(shelterLocation.toLowerCase());
     }
-
+    public List<Alert> getAlertsFromDatabase(){
+    return db.getAlertsByRescueCenter();
+    }
     public double[] getLocation()
     {
         double[] location=geoLocation.fetchDynamicLocation();

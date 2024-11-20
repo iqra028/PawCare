@@ -1,9 +1,19 @@
 package com.example.project1.BLL;
 
+import javafx.scene.image.Image;
+
+import java.io.*;
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.UUID;
+
+import javax.imageio.ImageIO;
 
 public  class DBhandler {
 
@@ -167,21 +177,126 @@ public  class DBhandler {
             return false;
         }
     }
+    private byte[] imageToByteArray(Image image) {
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
+            // Using ImageIO to write the Image to ByteArrayOutputStream
+            // JavaFX Image needs to be saved in a format (e.g., PNG or JPEG)
+            ImageIO.write(javafx.embed.swing.SwingFXUtils.fromFXImage(image, null), "PNG", byteArrayOutputStream);
+            return byteArrayOutputStream.toByteArray();
+        } catch (IOException e) {
+            System.err.println("Error converting image to byte array: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public boolean storeAlertRecord(Alert alert) {
+        System.out.println("Entering storeAlertRecord method");
+
+        String sql = "INSERT INTO alert(type, message, breed, image, location, date_created, userid, rescuecenterid) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, alert.getType());
+            stmt.setString(2, alert.getMessage());
+            stmt.setString(3, alert.getBreed());
+            if (alert.getImage() != null) {
+                byte[] imageBytes = imageToByteArray(alert.getImage());
+                stmt.setBytes(4, imageBytes);
+            } else {
+                stmt.setBytes(4, null);
+            }
+            if (alert.getLocation() != null) {
+                String locationString = alert.getLocation()[0] + "," + alert.getLocation()[1];
+                stmt.setString(5, locationString);
+            } else {
+                stmt.setString(5, null);
+            }
+
+            stmt.setDate(6, java.sql.Date.valueOf(LocalDate.now()));
+
+            try {
+                stmt.setObject(7, UUID.fromString(alert.getUserid()));
+                stmt.setObject(8, UUID.fromString(alert.getRescuecenterid()));
+            } catch (IllegalArgumentException e) {
+                System.err.println("Invalid UUID format for user or rescuecenterid: " + e.getMessage());
+                return false;
+            }
+            int rowsInserted = stmt.executeUpdate();
+            System.out.println("Number of rows inserted: " + rowsInserted);
+            return rowsInserted > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Error storing alert record: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public List<Alert> getAlertsByRescueCenter() {
+
+        List<Alert> alerts = new ArrayList<>();
+        String sql = "SELECT alertid, type, message, breed, image, location, date_created, userid, rescuecenterid " +
+                "FROM alert WHERE rescuecenterid = CAST(? AS UUID)";
+
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            String rescueCenterId = Session.getInstance().getLoggedInRescueCenter().getRescueCenterID();
+            UUID uuid = UUID.fromString(rescueCenterId);
+            stmt.setObject(1, uuid);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Alert alert = new Alert();
+                alert.setType(rs.getString("type"));
+                alert.setMessage(rs.getString("message"));
+                alert.setBreed(rs.getString("breed"));
+
+                byte[] imageBytes = rs.getBytes("image");
+                if (imageBytes != null) {
+                    InputStream imageStream = new ByteArrayInputStream(imageBytes);
+                    Image image = new Image(imageStream);
+                    alert.setImage(image);  // Set image (JavaFX Image)
+                }
+                alert.setLocation(parseLocation(rs.getString("location")));  // Assuming parseLocation is implemented
+                alert.setDateCreated(rs.getDate("date_created").toLocalDate());
+                alert.setUserid(rs.getString("userid"));
+                alert.setRescuecenterid(rs.getString("rescuecenterid"));
+
+                alerts.add(alert);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error retrieving alert records: " + e.getMessage());
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            System.err.println("Invalid UUID format for rescuecenterid: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return alerts;
+    }
+
+    private double[] parseLocation(String locationString) {
+        if (locationString == null || locationString.isEmpty()) {
+            return null;
+        }
+        String[] parts = locationString.split(",");
+        double[] location = new double[parts.length];
+        for (int i = 0; i < parts.length; i++) {
+            location[i] = Double.parseDouble(parts[i]);
+        }
+        return location;
+    }
 
     public List<Donation> displayDonationRecords() {
-
-        // SQL query to fetch all donations for the specified rescue center
         String sql = "SELECT * FROM donations WHERE rescuecenterid = ?";
         List<Donation> donations = new ArrayList<>();
 
-        try (Connection conn = connect(); // Ensure connect() provides a valid connection
+        try (Connection conn = connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            // Set the rescuecenterid parameter
             stmt.setObject(1, UUID.fromString(Session.getInstance().getLoggedInRescueCenter().getRescueCenterID())); // Convert to UUID if necessary
 
             try (ResultSet rs = stmt.executeQuery()) {
-                // Iterate through the result set and populate the donations list
                 while (rs.next()) {
                     Donation donation = new Donation();
                     donation.setAmount(rs.getDouble("amount"));
@@ -194,12 +309,11 @@ public  class DBhandler {
             }
 
         } catch (SQLException e) {
-            // Handle SQL exceptions and log error details
             System.err.println("Error retrieving donation records: " + e.getMessage());
             e.printStackTrace();
         }
 
-        return donations; // Return the list of donations
+        return donations;
     }
 
 

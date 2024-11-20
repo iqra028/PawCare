@@ -1,6 +1,8 @@
-
 package com.example.project1;
 
+import com.example.project1.BLL.PawCare;
+import com.example.project1.BLL.RescueCenter;
+import com.example.project1.BLL.Session;
 import com.example.project1.BLL.SharedData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,8 +13,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-public class NearbyRescueCenterController extends UserMenuController{
-
+public class NearbyRescueCenterController extends UserMenuController {
 
     @FXML
     private Button FirstAid;
@@ -20,24 +21,24 @@ public class NearbyRescueCenterController extends UserMenuController{
     @FXML
     private VBox rescueCentersContainer;
 
-    @FXML
-    private Pane btnRescueCenters1;
-
-    @FXML
-    private Label PaneLabel;
 
     @FXML
     private Button Panebutton;
+
+    private PawCare pawCare;
 
     @FXML
     public void initialize() {
         try {
             super.initialize();
+            pawCare=   new PawCare();
+
             if (rescueCentersContainer == null) {
                 throw new IllegalStateException("rescueCentersContainer is not injected.");
             }
-            List<String> shelterInfoList = SharedData.getInstance().getRescueCenters();
-            for (String info : shelterInfoList) {
+            List<RescueCenter> shelterInfoList = pawCare.fetchNearbyRegisteredRescueCenters();
+
+            for (RescueCenter info : shelterInfoList) {
                 addRescueCenterPane(info);
             }
             FirstAid.setOnAction(event -> handleFirstAid());
@@ -51,45 +52,55 @@ public class NearbyRescueCenterController extends UserMenuController{
     }
 
     private void handleSubmitRequest() {
+
     }
-    private void addRescueCenterPane(String shelterInfo) {
-        String[] lines = shelterInfo.split("\n");
-        String name = lines[0].replace("Name: ", "").trim();
-        String location = lines[1].replace("Location: ", "").trim();
-        String phone = lines[2].replace("Phone: ", "").trim();
-        String website = lines[3].replace("Website: ", "").trim();
+
+    private void addRescueCenterPane(RescueCenter rescueCenter) {
         Pane newPane = new Pane();
         newPane.setPrefHeight(118);
         newPane.setPrefWidth(686);
         newPane.setStyle("-fx-background-color: #EEB673;");
         newPane.setEffect(new DropShadow());
-        Label nameLabel = new Label(name);
+
+        Label nameLabel = new Label(rescueCenter.getName());
         nameLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
         nameLabel.setLayoutX(25);
         nameLabel.setLayoutY(18);
-        Label locationLabel = new Label("Location: " + location);
+
+        Label locationLabel = new Label("Location: " + rescueCenter.getLocation());
         locationLabel.setStyle("-fx-font-size: 14px;");
         locationLabel.setLayoutX(25);
         locationLabel.setLayoutY(50);
-        Label phoneLabel = new Label("Phone: " + phone);
+
+        Label phoneLabel = new Label("Phone: " + rescueCenter.getPhoneNumber());
         phoneLabel.setStyle("-fx-font-size: 14px;");
         phoneLabel.setLayoutX(25);
         phoneLabel.setLayoutY(70);
-        Label websiteLabel = new Label("Website: " + website);
+
+        Label websiteLabel = new Label("Website: " + rescueCenter.getEmail());
         websiteLabel.setStyle("-fx-font-size: 14px;");
         websiteLabel.setLayoutX(25);
         websiteLabel.setLayoutY(90);
+
         Button submitButton = new Button("Submit");
         submitButton.setStyle("-fx-background-color: #D08122; -fx-text-fill: white; -fx-font-size: 14px;");
         submitButton.setLayoutX(574);
         submitButton.setLayoutY(70);
         submitButton.setPrefSize(98, 34);
 
-        //submitButton.setOnAction(event -> handleSubmitRequest(name));
-
+        submitButton.setUserData(rescueCenter.getRescueCenterID());
         newPane.getChildren().addAll(nameLabel, locationLabel, phoneLabel, websiteLabel, submitButton);
         rescueCentersContainer.getChildren().add(newPane);
+        submitButton.setOnAction(event -> handleSubmitRequest(submitButton));
     }
+
+    private void handleSubmitRequest(Button submitButton) {
+        String rescueCenterId = (String) submitButton.getUserData();
+        pawCare.createAlert(SharedData.getInstance().getAnimalType(),SharedData.getInstance().getBreed(),
+                SharedData.getInstance().getInjuryDesc(),SharedData.getInstance().getImage(), SharedData.getInstance().getLocation(),
+                Session.getInstance().getLoggedInUser().getUserID(),rescueCenterId);
+        System.out.println("Clicked Rescue Center ID: " + rescueCenterId);
+
+    }
+
 }
-
-
