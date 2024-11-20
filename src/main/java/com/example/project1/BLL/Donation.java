@@ -32,6 +32,7 @@ public class Donation {
     public void setRescuecenterid(String rescuecenterid) {
         this.rescuecenterid = rescuecenterid;
     }
+
     public double makeDonation(double amount, String userid,String rescuecenterid) {
         this.amount = amount;
         this.dateCreated = LocalDate.now();

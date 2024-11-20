@@ -53,6 +53,19 @@ public class PawCare {
     public void addDonationTodatabase(Donation donation){
         db.storeDonationRecord(donation);
     }
+    public List<Donation> DisplayDonationRecords(){
+        return db.displayDonationRecords();
+    }
+    public String getUserNameByUserid(String id)
+    {
+        for(User user : users)
+        {
+            if(user.getUserID().equals(id))
+                return user.getName();
+        }
+        return "";
+
+    }
     private String formatLocation(String rawLocation) {
         return rawLocation
                 .replace("Latitude ", "")

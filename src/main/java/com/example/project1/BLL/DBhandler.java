@@ -168,6 +168,40 @@ public  class DBhandler {
         }
     }
 
+    public List<Donation> displayDonationRecords() {
+
+        // SQL query to fetch all donations for the specified rescue center
+        String sql = "SELECT * FROM donations WHERE rescuecenterid = ?";
+        List<Donation> donations = new ArrayList<>();
+
+        try (Connection conn = connect(); // Ensure connect() provides a valid connection
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            // Set the rescuecenterid parameter
+            stmt.setObject(1, UUID.fromString(Session.getInstance().getLoggedInRescueCenter().getRescueCenterID())); // Convert to UUID if necessary
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                // Iterate through the result set and populate the donations list
+                while (rs.next()) {
+                    Donation donation = new Donation();
+                    donation.setAmount(rs.getDouble("amount"));
+                    donation.setDateCreated(rs.getDate("dateCreated").toLocalDate());
+                    donation.setUserid(rs.getString("userid"));
+                    donation.setRescuecenterid(rs.getString("rescuecenterid"));
+
+                    donations.add(donation);
+                }
+            }
+
+        } catch (SQLException e) {
+            // Handle SQL exceptions and log error details
+            System.err.println("Error retrieving donation records: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return donations; // Return the list of donations
+    }
+
 
 
 
