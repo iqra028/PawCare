@@ -14,6 +14,7 @@ public class PawCare {
     private DonationContext donationContext;
     private ArrayList<Vets> vets;
     private ArrayList<RescueCenter> rescueCenters;
+    private ArrayList<Volunteer> volunteers;
     private ArrayList<User> users;
     private ArrayList<Form> forms;
     private DBhandler db;
@@ -24,6 +25,7 @@ public class PawCare {
     // Constructor
     public PawCare() {
         this.vets = new ArrayList<>();
+        this.volunteers= new ArrayList<>();
         this.rescueCenters = new ArrayList<>();
         this.users = new ArrayList<>();
         this.forms = new ArrayList<>();
@@ -34,6 +36,14 @@ public class PawCare {
         this.donationContext = new DonationContext();
         this.profileFactory = new ProfileFactory();
     }
+    public void create_volunteer( String userId, String cnic, String vehicleType, Image vehicleImage, String vehicleModel)
+    {
+        Volunteer v=new Volunteer( userId, cnic, vehicleType,  vehicleImage, vehicleModel,false);
+        volunteers.add(v);
+        db.storeVolunteerRecord(userId, cnic, vehicleType,  vehicleImage, vehicleModel,false);
+
+    }
+
     public void processDonation(String foundation, String firstName, String lastName, String cardNumber, String expirationDate, String pin, String country, String billingAddress, String postalCode,String Amount,String rescuecenterid)
     {
 

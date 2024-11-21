@@ -114,7 +114,7 @@
                   <Text fill="#A61E1E" layoutX="177.0" layoutY="374.0" text="*" />
 
                   <!-- Add this Label to show the selected vehicle type -->
-                  <Label fx:id="selectedVehicleLabel" layoutX="64.0" layoutY="495.0" text="Selected Vehicle Type: None" style="-fx-font-size: 16px; -fx-text-fill: black;" />
+                  <Label fx:id="selectedVehicleLabel" layoutX="64.0" layoutY="495.0" style="-fx-font-size: 16px; -fx-text-fill: black;" text="Selected Vehicle Type: None" />
 
                   <!-- Model Field -->
                   <Text layoutX="67.0" layoutY="565.0" text="Model" wrappingWidth="215.4">
@@ -128,6 +128,16 @@
                      </effect>
                   </TextField>
                   <Text fill="#A61E1E" layoutX="722.0" layoutY="569.0" text="*" />
+
+                  <!-- ImageView to display uploaded image -->
+                  <ImageView fx:id="imageView" fitHeight="114.0" fitWidth="146.0" layoutX="594.0" layoutY="173.0" />
+
+                  <!-- Button to trigger image upload -->
+                  <Button fx:id="btnUploadImage" layoutX="592.0" layoutY="310.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="146.0" style="-fx-background-color: #4177FF;" text="Upload Image">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
 
                   <!-- Submit Button -->
                   <Button fx:id="submitButton" layoutX="642.0" layoutY="706.0" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: #4177FF;" text="Submit">

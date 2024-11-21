@@ -102,6 +102,33 @@ public  class DBhandler {
         }
         return users;
     }
+    public boolean storeVolunteerRecord(String userId, String cnic, String vehicleType, Image vehicleImage, String vehicleModel,Boolean availability) {
+        String sql = "INSERT INTO volunteer ( userid, cnic, vehicle_type, vehicle_image, vehicle_model,availability) " +
+                "VALUES ( ?, ?, ?, ?, ?,?)";
+
+        try (Connection conn = connect();  // Make sure to use your database connection method
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+
+            // Set the parameters for the prepared statement
+            statement.setObject(1, UUID.fromString(userId));  // Set userId as UUID
+            statement.setString(2, cnic);    // Set CNIC
+            statement.setString(3, vehicleType); // Set vehicle type
+            statement.setBytes(4, imageToByteArray(vehicleImage)); // Set vehicle image (binary data)
+            statement.setString(5, vehicleModel); // Set vehicle model
+            statement.setBoolean(6, availability); // Set vehicle model
+
+            // Execute the insert operation
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("A new volunteer record was inserted successfully!");
+            }
+            return rowsInserted > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     public boolean storeUserRecord(String name, String username, String email, String password, String location, String phoneNumber)
     {
         String sql = "INSERT INTO \"user\" (name, username, email, password, location, phonenumber) VALUES (?, ?, ?, ?, ?, ?)";

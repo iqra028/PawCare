@@ -10,8 +10,16 @@ public class User {
     private String password;
     private String phoneNumber;
     private String location;
+    private boolean volunteer;
 
-    public User( String userID,String userName,String name, String email, String password, String location,String phoneNumber) {
+    public void setVolunteer(boolean volunteer) {
+        this.volunteer = volunteer;
+    }
+    public boolean getVolunteer() {
+        return volunteer;
+    }
+
+    public User(String userID, String userName, String name, String email, String password, String location, String phoneNumber) {
 
         this.userID=userID;
         this.userName = userName;
@@ -20,6 +28,7 @@ public class User {
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.location=location;
+        this.volunteer=false;
     }
 
     // Getters and Setters
