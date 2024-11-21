@@ -19,6 +19,7 @@ public class PawCare {
     private DBhandler db;
     private FormFactory formFactory;
     private GeoLocation geoLocation;
+    private ProfileFactory profileFactory;
 
     // Constructor
     public PawCare() {
@@ -31,6 +32,7 @@ public class PawCare {
         this.geoLocation=new GeoLocation();
         loadDataFromDatabase();
         this.donationContext = new DonationContext();
+        this.profileFactory = new ProfileFactory();
     }
     public void processDonation(String foundation, String firstName, String lastName, String cardNumber, String expirationDate, String pin, String country, String billingAddress, String postalCode,String Amount,String rescuecenterid)
     {
@@ -135,6 +137,25 @@ public class PawCare {
         double radius = 5000;
 
          return geoLocation.generateMapHTML(latitude, longitude);
+    }
+    public boolean addAnimalProf(String name,String type,String breed,String color,Image image,double temperature, int heartRate, int respiratoryRate,
+                                 int capillaryRefillTime, int bloodOxygenLevel,
+                                 int bloodGlucoseLevel, double weight)
+    {
+        HealthDescription hd= new HealthDescription(temperature, heartRate,respiratoryRate, capillaryRefillTime,bloodOxygenLevel, bloodGlucoseLevel,weight);
+        Animal animal=new Animal("",name,type,breed,color,hd,false,false,false,false,false,image);
+        Profile animalProfile = profileFactory.createProfile("animal", animal);
+        Session.getInstance().getLoggedInRescueCenter().addAnimalProfile(animalProfile);
+        String rescueCenterID=Session.getInstance().getLoggedInRescueCenter().getRescueCenterID();
+        String id = db.addAnimal(animal,rescueCenterID);
+        if(id!=null)
+        {
+            animal.setAnimalID(id);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
     public List<String> generatenearbycenters(){
 

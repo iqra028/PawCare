@@ -100,6 +100,11 @@
                         <Button fx:id="deletebtn" layoutX="499.0" layoutY="93.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #D08122;" text="Delete" />
                      </children>
                   </Pane>
+                  <Button fx:id="addAnimalBtn" layoutX="463.0" layoutY="155.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="166.0" style="-fx-background-radius: 50; -fx-background-size: 30;" text=" Add Animal">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </children>

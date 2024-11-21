@@ -9,6 +9,18 @@ public class HealthDescription {
     private int bloodGlucoseLevel;
     private double weight;
 
+    public HealthDescription(double temperature, int heartRate, int respiratoryRate,
+                             int capillaryRefillTime, int bloodOxygenLevel,
+                             int bloodGlucoseLevel, double weight) {
+        this.temperature = temperature;
+        this.heartRate = heartRate;
+        this.respiratoryRate = respiratoryRate;
+        this.capillaryRefillTime = capillaryRefillTime;
+        this.bloodOxygenLevel = bloodOxygenLevel;
+        this.bloodGlucoseLevel = bloodGlucoseLevel;
+        this.weight = weight;
+    }
+
     public double getTemperature() {
         return temperature;
     }

@@ -12,6 +12,9 @@ public class RescueCenter {
     private String location;    // change this to a Location type later
     private String phoneNumber;
 
+    private ArrayList<Profile> animalProfiles;
+    private ArrayList<Profile> adoptionProfiles;
+
     public RescueCenter(String rescueCenterID,String userName, String CenterName, String email, String password, String location, String phoneNumber) {
         this.rescueCenterID=rescueCenterID;
         this.userName = userName;
@@ -20,12 +23,20 @@ public class RescueCenter {
         this.password = password;
         this.location = location;
         this.phoneNumber = phoneNumber;
+
+        this.animalProfiles = new ArrayList<>();
+        this.adoptionProfiles = new ArrayList<>();
+
     }
     public double[] getLocationAsArray() {
         String[] parts = location.split(",");
         double latitude = Double.parseDouble(parts[0].trim());
         double longitude = Double.parseDouble(parts[1].trim());
         return new double[]{latitude, longitude};
+    }
+
+    public void addAnimalProfile(Profile pf) {
+        animalProfiles.add(pf);
     }
 
     // Getters and Setters

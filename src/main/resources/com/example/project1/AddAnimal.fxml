@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1100.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.AddAnimalController">
+    <content>
+        <AnchorPane prefHeight="1108.0" prefWidth="1374.0" style="-fx-background-color: #E4C7A2;">
+            <children>
+                <AnchorPane prefHeight="206.0" prefWidth="1374.0" style="-fx-background-color: #8B0000;">
+                    <children>
+                        <Circle fill="#efefef" layoutX="1301.0" layoutY="59.0" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Label fx:id="PawCare" layoutX="101.0" layoutY="26.0" prefHeight="64.0" prefWidth="158.0" text="PawCare" textFill="WHITE">
+                            <font>
+                                <Font name="Brush Script MT Italic" size="48.0" />
+                            </font>
+                        </Label>
+                        <ImageView fitHeight="46.0" fitWidth="87.0" layoutX="14.0" layoutY="12.0">
+                            <image>
+                                <Image url="@images/Frame.png" />
+                            </image>
+                        </ImageView>
+                        <Button fx:id="AlertsReceived" layoutX="302.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Alerts Received" textFill="WHITE">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="AnimalProfiles" layoutX="501.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Animal Profiles" textFill="#ececec">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="AdoptionRequests" layoutX="687.0" layoutY="76.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="177.0" style="-fx-background-color: #8B0000;" text="Adoption Requests" textFill="WHITE">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="ContactVet" layoutX="902.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Contact Vet" textFill="WHITE">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="DonationsMade" layoutX="1055.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Donations made" textFill="WHITE">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </AnchorPane>
+                <AnchorPane layoutX="258.0" layoutY="166.0" prefHeight="908.0" prefWidth="808.0" style="-fx-background-color: #ffffff;">
+                    <children>
+
+                        <!-- Name Field -->
+                        <Text layoutX="90.0" layoutY="145.0" text="Name:" />
+                        <TextField fx:id="nameField" layoutX="219.0" layoutY="132.0" prefHeight="34.0" prefWidth="500.0">
+                            <effect>
+                                <ColorAdjust contrast="-0.15" />
+                            </effect>
+                        </TextField>
+
+                        <!-- Type Field -->
+                        <Text layoutX="89.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type" wrappingWidth="120.0" />
+                        <TextField fx:id="typeField" layoutX="219.0" layoutY="192.0" prefHeight="34.0" prefWidth="500.0">
+                            <effect>
+                                <ColorAdjust contrast="-0.15" />
+                            </effect>
+                        </TextField>
+
+                        <!-- Upload Picture Option -->
+                        <Button fx:id="uploadButton" layoutX="480.0" layoutY="830.0" prefHeight="38.0" prefWidth="118.0" style="-fx-background-color: #4177FF;" text="Upload Picture">
+                            <effect>
+                                <ColorAdjust brightness="-0.3" contrast="0.22" hue="-0.71" saturation="0.32" />
+                            </effect>
+                        </Button>
+                        <Label fx:id="uploadLabel" layoutX="389.0" layoutY="260.0" prefHeight="20.0" prefWidth="330.0" style="-fx-text-fill: #666666;" text="No file selected" />
+
+                        <!-- Breed Field -->
+                        <Text layoutX="90.0" layoutY="275.0" text="Breed:" />
+                        <TextField fx:id="breedField" layoutX="219.0" layoutY="256.0" prefHeight="34.0" prefWidth="500.0">
+                            <effect>
+                                <ColorAdjust contrast="-0.15" />
+                            </effect>
+                        </TextField>
+
+                        <!-- Color Field -->
+                        <Text layoutX="90.0" layoutY="333.0" text="Color:" />
+                        <TextField fx:id="colorField" layoutX="219.0" layoutY="316.0" prefHeight="34.0" prefWidth="500.0">
+                            <effect>
+                                <ColorAdjust contrast="-0.15" />
+                            </effect>
+                        </TextField>
+
+                        <!-- Temperature Field -->
+                        <Text layoutX="90.0" layoutY="391.0" text="Temperature:" />
+                        <TextField fx:id="temperatureField" layoutX="219.0" layoutY="378.0" prefHeight="34.0" prefWidth="500.0">
+                            <effect>
+                                <ColorAdjust contrast="-0.15" />
+                            </effect>
+                        </TextField>
+
+                        <!-- Heart Rate Field -->
+                        <Text layoutX="90.0" layoutY="457.0" text="Heart Rate:" />
+                        <TextField fx:id="heartRateField" layoutX="219.0" layoutY="438.0" prefHeight="34.0" prefWidth="500.0">
+                            <effect>
+                                <ColorAdjust contrast="-0.15" />
+                            </effect>
+                        </TextField>
+
+                        <!-- Respiratory Rate Field -->
+                        <Text layoutX="90.0" layoutY="517.0" text="Respiratory Rate:" />
+                        <TextField fx:id="respiratoryRateField" layoutX="219.0" layoutY="500.0" prefHeight="34.0" prefWidth="500.0">
+                            <effect>
+                                <ColorAdjust contrast="-0.15" />
+                            </effect>
+                        </TextField>
+
+                        <!-- Capillary Refill Time Field -->
+                        <Text layoutX="90.0" layoutY="576.0" text="Capillary Refill Time:" />
+                        <TextField fx:id="capillaryRefillTimeField" layoutX="219.0" layoutY="560.0" prefHeight="34.0" prefWidth="500.0">
+                            <effect>
+                                <ColorAdjust contrast="-0.15" />
+                            </effect>
+                        </TextField>
+
+                        <!-- Blood Oxygen Level Field -->
+                        <Text layoutX="90.0" layoutY="634.0" text="Blood Oxygen Level:" />
+                        <TextField fx:id="bloodOxygenLevelField" layoutX="219.0" layoutY="618.0" prefHeight="34.0" prefWidth="500.0">
+                            <effect>
+                                <ColorAdjust contrast="-0.15" />
+                            </effect>
+                        </TextField>
+
+                        <!-- Blood Glucose Level Field -->
+                        <Text layoutX="90.0" layoutY="698.0" text="Blood Glucose Level:" />
+                        <TextField fx:id="bloodGlucoseLevelField" layoutX="219.0" layoutY="679.0" prefHeight="34.0" prefWidth="500.0">
+                            <effect>
+                                <ColorAdjust contrast="-0.15" />
+                            </effect>
+                        </TextField>
+
+                        <!-- Weight Field -->
+                        <Text layoutX="90.0" layoutY="760.0" text="Weight:" />
+                        <TextField fx:id="weightField" layoutX="219.0" layoutY="737.0" prefHeight="34.0" prefWidth="500.0">
+                            <effect>
+                                <ColorAdjust contrast="-0.15" />
+                            </effect>
+                        </TextField>
+
+                        <!-- Submit Button -->
+                        <Button fx:id="submitButton" layoutX="615.0" layoutY="830.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="104.0" style="-fx-background-color: #4177FF;" text="Submit">
+                            <effect>
+                                <ColorAdjust brightness="-0.36" contrast="0.22" hue="-0.71" saturation="0.32" />
+                            </effect>
+                        </Button>
+                        <Text layoutX="293.0" layoutY="76.0" text="Animal Profile">
+                            <font>
+                                <Font size="36.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+    </content>
+</ScrollPane>

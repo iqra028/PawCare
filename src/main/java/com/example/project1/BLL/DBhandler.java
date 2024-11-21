@@ -340,5 +340,83 @@ public  class DBhandler {
         }
     }
 
+    public String addAnimal(Animal animal, String rescueCenterId) {
+        String insertHealthQuery = """
+        INSERT INTO health_description (id, temperature, heart_rate, respiratory_rate,
+                                        capillary_refill_time, blood_oxygen_level, 
+                                        blood_glucose_level, weight)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    """;
+
+        String insertAnimalQuery = """
+        INSERT INTO animals (animal_id, name, type, breed, color, health_id,
+                             health_status, visited_vet, with_vet, 
+                             up_for_adoption, adopted, rescue_center_id, image)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        RETURNING animal_id
+    """;
+
+        try (Connection conn = connect()) {
+            conn.setAutoCommit(false);
+
+            // Generate UUID for healthId
+            UUID healthId = UUID.randomUUID();
+
+            // Insert into health_description
+            try (PreparedStatement healthStmt = conn.prepareStatement(insertHealthQuery)) {
+                healthStmt.setObject(1, healthId);  // Pass UUID to health_id
+                healthStmt.setDouble(2, animal.getHealth().getTemperature());
+                healthStmt.setInt(3, animal.getHealth().getHeartRate());
+                healthStmt.setInt(4, animal.getHealth().getRespiratoryRate());
+                healthStmt.setInt(5, animal.getHealth().getCapillaryRefillTime());
+                healthStmt.setInt(6, animal.getHealth().getBloodOxygenLevel());
+                healthStmt.setInt(7, animal.getHealth().getBloodGlucoseLevel());
+                healthStmt.setDouble(8, animal.getHealth().getWeight());
+                healthStmt.executeUpdate();
+            }
+
+            // Generate UUID for animalId
+            UUID animalId = UUID.randomUUID();
+
+            // Convert rescueCenterId to UUID
+            UUID rescueCenterUUID = UUID.fromString(rescueCenterId);  // Convert String to UUID
+
+            // Insert into animals table
+            try (PreparedStatement animalStmt = conn.prepareStatement(insertAnimalQuery)) {
+                animalStmt.setObject(1, animalId);  // Pass UUID to animal_id
+                animalStmt.setString(2, animal.getName());
+                animalStmt.setString(3, animal.getType());
+                animalStmt.setString(4, animal.getBreed());
+                animalStmt.setString(5, animal.getColor());
+                animalStmt.setObject(6, healthId);  // Pass UUID to health_id
+                animalStmt.setBoolean(7, animal.isHealthStatus());
+                animalStmt.setBoolean(8, animal.isVisitedVet());
+                animalStmt.setBoolean(9, animal.isWithVet());
+                animalStmt.setBoolean(10, animal.isUpForAdoption());
+                animalStmt.setBoolean(11, animal.isAdopted());
+                animalStmt.setObject(12, rescueCenterUUID);  // Pass UUID to rescue_center_id
+                animalStmt.setBytes(13, imageToByteArray(animal.getImage())); // Convert image to byte[]
+
+                try (ResultSet rs = animalStmt.executeQuery()) {
+                    if (rs.next()) {
+                        animalId = UUID.fromString(rs.getString("animal_id"));
+                    }
+                }
+            }
+
+            conn.commit();
+            return animalId.toString();  // Return the UUID as a String
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+
+
+
+
 }
 
