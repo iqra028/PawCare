@@ -32,9 +32,10 @@ public class PawCare {
         this.db=new DBhandler();
         this.formFactory=new FormFactory();
         this.geoLocation=new GeoLocation();
+        this.profileFactory = new ProfileFactory();
         loadDataFromDatabase();
         this.donationContext = new DonationContext();
-        this.profileFactory = new ProfileFactory();
+
     }
     public void create_volunteer( String userId, String cnic, String vehicleType, Image vehicleImage, String vehicleModel)
     {
@@ -221,6 +222,23 @@ public class PawCare {
         users = db.getAllUsers();
         vets = db.getAllVets();
         rescueCenters = db.getAllRescueCenters();
+        for (RescueCenter rescueCenter : rescueCenters) {
+            loadAnimals(rescueCenter);
+
+        }
+    }
+    public void loadAnimals(RescueCenter rescueCenter) {
+        List<Animal> animals = db.getAnimalsByRescueCenter(rescueCenter.getRescueCenterID());
+        for (Animal animal : animals) {
+            Profile profile;
+            if (animal.isUpForAdoption()) {
+                profile = profileFactory.createProfile("adoption", animal);
+                rescueCenter.addAdoptionProfile(profile);
+            } else {
+                profile = profileFactory.createProfile("animal", animal);
+                rescueCenter.addAnimalProfile(profile);
+            }
+        }
     }
 
     public void printAllIDs() {

@@ -38,6 +38,10 @@ public class RescueCenter {
     public void addAnimalProfile(Profile pf) {
         animalProfiles.add(pf);
     }
+    public void addAdoptionProfile(Profile pf) {
+        adoptionProfiles.add(pf);
+    }
+
 
     // Getters and Setters
 
@@ -92,5 +96,87 @@ public class RescueCenter {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+    public ArrayList<Profile> getAnimalProfiles() {
+        return animalProfiles;
+    }
+
+    public ArrayList<Profile> getAdoptionProfiles() {
+        return adoptionProfiles;
+    }
+
+    public void displayAnimalProfiles() {
+        if (animalProfiles.isEmpty()) {
+            System.out.println("No animal profiles found.");
+            return;
+        }
+
+        for (Profile profile : animalProfiles) {
+            Animal animal = profile.getAnimal();
+            System.out.println("Animal Profile:");
+            System.out.println("Animal ID: " + animal.getAnimalID());
+            System.out.println("Name: " + animal.getName());
+            System.out.println("Type: " + animal.getType());
+            System.out.println("Breed: " + animal.getBreed());
+            System.out.println("Color: " + animal.getColor());
+            System.out.println("Health Status: " + animal.isHealthStatus());
+            System.out.println("Visited Vet: " + animal.isVisitedVet());
+            System.out.println("With Vet: " + animal.isWithVet());
+            System.out.println("Up For Adoption: " + animal.isUpForAdoption());
+            System.out.println("Adopted: " + animal.isAdopted());
+            System.out.println("Image: " + (animal.getImage() != null ? animal.getImage().getUrl() : "No image"));
+
+            // Display the health description if available
+            if (animal.getHealth() != null) {
+                HealthDescription healthDescription = animal.getHealth();
+                System.out.println("Health Description:");
+                System.out.println("Temperature: " + healthDescription.getTemperature());
+                System.out.println("Heart Rate: " + healthDescription.getHeartRate());
+                System.out.println("Respiratory Rate: " + healthDescription.getRespiratoryRate());
+                System.out.println("Capillary Refill Time: " + healthDescription.getCapillaryRefillTime());
+                System.out.println("Blood Oxygen Level: " + healthDescription.getBloodOxygenLevel());
+                System.out.println("Blood Glucose Level: " + healthDescription.getBloodGlucoseLevel());
+                System.out.println("Weight: " + healthDescription.getWeight());
+            }
+            System.out.println("------------------------");
+        }
+    }
+
+    // Method to display adoption profiles
+    public void displayAdoptionProfiles() {
+        if (adoptionProfiles.isEmpty()) {
+            System.out.println("No adoption profiles found.");
+            return;
+        }
+
+        for (Profile profile : adoptionProfiles) {
+            Animal animal = profile.getAnimal();
+            System.out.println("Adoption Profile:");
+            System.out.println("Animal ID: " + animal.getAnimalID());
+            System.out.println("Name: " + animal.getName());
+            System.out.println("Type: " + animal.getType());
+            System.out.println("Breed: " + animal.getBreed());
+            System.out.println("Color: " + animal.getColor());
+            System.out.println("Health Status: " + animal.isHealthStatus());
+            System.out.println("Visited Vet: " + animal.isVisitedVet());
+            System.out.println("With Vet: " + animal.isWithVet());
+            System.out.println("Up For Adoption: " + animal.isUpForAdoption());
+            System.out.println("Adopted: " + animal.isAdopted());
+            System.out.println("Image: " + (animal.getImage() != null ? animal.getImage().getUrl() : "No image"));
+
+            // Display the health description if available
+            if (animal.getHealth() != null) {
+                HealthDescription healthDescription = animal.getHealth();
+                System.out.println("Health Description:");
+                System.out.println("Temperature: " + healthDescription.getTemperature());
+                System.out.println("Heart Rate: " + healthDescription.getHeartRate());
+                System.out.println("Respiratory Rate: " + healthDescription.getRespiratoryRate());
+                System.out.println("Capillary Refill Time: " + healthDescription.getCapillaryRefillTime());
+                System.out.println("Blood Oxygen Level: " + healthDescription.getBloodOxygenLevel());
+                System.out.println("Blood Glucose Level: " + healthDescription.getBloodGlucoseLevel());
+                System.out.println("Weight: " + healthDescription.getWeight());
+            }
+            System.out.println("------------------------");
+        }
     }
 }

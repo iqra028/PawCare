@@ -7,7 +7,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -81,25 +81,7 @@
                         <ColorAdjust brightness="-0.23" />
                      </effect>
                   </Button>
-                  <Pane fx:id="pane1" layoutX="67.0" layoutY="225.0" prefHeight="287.0" prefWidth="674.0" style="-fx-background-color: #ffffff;">
-                     <children>
-                        <Label fx:id="AnimalName" layoutX="90.0" layoutY="195.0" text="Animal Name">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="editbtn" layoutX="499.0" layoutY="29.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #D08122;" text="Edit" />
-                        <Label fx:id="AnimalCondition" layoutX="122.0" layoutY="230.0" text="Condition">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="Img" fitHeight="187.0" fitWidth="221.0" layoutX="51.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
-                        <Button fx:id="reportbtn" layoutX="499.0" layoutY="223.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #D08122;" text="Show Injury Report" />
-                        <Button fx:id="adoptionbtn" layoutX="499.0" layoutY="159.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #D08122;" text="Put up for adoption" />
-                        <Button fx:id="deletebtn" layoutX="499.0" layoutY="93.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #D08122;" text="Delete" />
-                     </children>
-                  </Pane>
+                  <VBox fx:id="animalContainer" layoutX="67.0" layoutY="225.0" prefWidth="674.0" style="-fx-background-color: #ffffff;" spacing="10.0" />
                   <Button fx:id="addAnimalBtn" layoutX="463.0" layoutY="155.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="166.0" style="-fx-background-radius: 50; -fx-background-size: 30;" text=" Add Animal">
                      <font>
                         <Font size="18.0" />

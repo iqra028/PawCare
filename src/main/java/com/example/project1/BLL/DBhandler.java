@@ -386,7 +386,7 @@ public  class DBhandler {
         try (Connection conn = connect()) {
             conn.setAutoCommit(false);
 
-            // Generate UUID for healthId
+
             UUID healthId = UUID.randomUUID();
 
             // Insert into health_description
@@ -438,12 +438,57 @@ public  class DBhandler {
             return null;
         }
     }
+    public List<Animal> getAnimalsByRescueCenter(String rescueCenterID) {
+        List<Animal> animals = new ArrayList<>();
+        String query = "SELECT a.*, h.* FROM animals a " +
+                "JOIN health_description h ON a.health_id = h.id " +
+                "WHERE a.rescue_center_id = CAST(? AS UUID)";
+
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, rescueCenterID);  // Setting the rescueCenterID as String (will be cast to UUID in SQL)
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    UUID animalID = UUID.fromString(rs.getString("animal_id"));
+                    String type = rs.getString("type");
+                    String breed = rs.getString("breed");
+                    String color = rs.getString("color");
+                    String healthID = rs.getString("health_id");
+                    boolean healthStatus = rs.getBoolean("health_status");
+                    boolean visitedVet = rs.getBoolean("visited_vet");
+                    boolean withVet = rs.getBoolean("with_vet");
+                    boolean upForAdoption = rs.getBoolean("up_for_adoption");
+                    boolean adopted = rs.getBoolean("adopted");
+                    String name = rs.getString("name");
+
+                    byte[] imageBytes = rs.getBytes("image");
+                    Image image = imageBytes != null ? new Image(new ByteArrayInputStream(imageBytes)) : null;
 
 
+                    double temperature = rs.getDouble("temperature");
+                    int heartRate = rs.getInt("heart_rate");
+                    int respiratoryRate = rs.getInt("respiratory_rate");
+                    int capillaryRefillTime = rs.getInt("capillary_refill_time");
+                    int bloodOxygenLevel = rs.getInt("blood_oxygen_level");
+                    int bloodGlucoseLevel = rs.getInt("blood_glucose_level");
+                    double weight = rs.getDouble("weight");
 
+                    HealthDescription healthDescription = new HealthDescription(temperature, heartRate, respiratoryRate,
+                            capillaryRefillTime, bloodOxygenLevel, bloodGlucoseLevel, weight);
 
+                    Animal animal = new Animal(animalID.toString(), name, type, breed, color, healthDescription,
+                            healthStatus, visitedVet, withVet, upForAdoption, adopted, image);
 
-
+                    animals.add(animal);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return animals;
+    }
 
 }
 
