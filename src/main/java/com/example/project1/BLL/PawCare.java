@@ -275,6 +275,7 @@ public class PawCare {
         for (RescueCenter rescueCenter : rescueCenters) {
             loadAnimals(rescueCenter);
             loadAlerts(rescueCenter);
+            loadAdoptionRequests(rescueCenter);
         }
     }
     public Vets getVetfromUsername(String username){
@@ -289,6 +290,11 @@ public class PawCare {
     public void loadvetsrequests(Vets vet) {
         db.loadanimalsinvet(vet);
     }
+    public void loadAdoptionRequests(RescueCenter rescueCenter)
+    {
+
+    }
+
     public void loadVitals() {
         try {
             vitals = db.getVitals();
@@ -315,9 +321,11 @@ public class PawCare {
             Profile profile;
             if (animal.isUpForAdoption()) {
                 profile = profileFactory.createProfile("adoption", animal);
+                profile.setRescueCenterId(rescueCenter.getRescueCenterID());
                 rescueCenter.addAdoptionProfile(profile);
             } else {
                 profile = profileFactory.createProfile("animal", animal);
+                profile.setRescueCenterId(rescueCenter.getRescueCenterID());
                 rescueCenter.addAnimalProfile(profile);
             }
         }

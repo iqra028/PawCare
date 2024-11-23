@@ -15,6 +15,7 @@ public class RescueCenter {
     private ArrayList<Profile> animalProfiles;
     private ArrayList<Profile> adoptionProfiles;
     private ArrayList<Alert> alerts;
+    private ArrayList<AdoptionRequest> requests;
 
     public RescueCenter(String rescueCenterID,String userName, String CenterName, String email, String password, String location, String phoneNumber) {
         this.rescueCenterID=rescueCenterID;
@@ -27,6 +28,7 @@ public class RescueCenter {
         this.alerts=new ArrayList<>();
         this.animalProfiles = new ArrayList<>();
         this.adoptionProfiles = new ArrayList<>();
+        this.requests=new ArrayList<>();
 
     }
     public void addalert(Alert alert) {
@@ -42,6 +44,8 @@ public class RescueCenter {
         return new double[]{latitude, longitude};
     }
 
+    public void addAdoptionRequest( AdoptionRequest adoptionRequest) {requests.add(adoptionRequest);}
+    public void removeAdoptionRequest( AdoptionRequest adoptionRequest) {requests.remove(adoptionRequest);}
     public void addAnimalProfile(Profile pf) {
         animalProfiles.add(pf);
     }
@@ -51,7 +55,6 @@ public class RescueCenter {
     public void removeAnimalProfile(Profile pf) {
         animalProfiles.remove(pf);
     }
-
     public void removeAdoptionProfile(Profile pf) {
         adoptionProfiles.remove(pf);
     }

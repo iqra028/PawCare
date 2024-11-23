@@ -3,12 +3,21 @@ package com.example.project1.BLL;
 public abstract class Profile {
     private String profileType;
     protected Animal animal;
+    protected String rescueCenterId;
 
     public Profile(String profileType, Animal animal) {
         this.profileType = profileType;
         this.animal = animal;
+        rescueCenterId="";
     }
 
+    public String getRescueCenterId() {
+        return rescueCenterId;
+    }
+
+    public void setRescueCenterId(String rescueCenterId) {
+        this.rescueCenterId = rescueCenterId;
+    }
     public String getProfileType() {
         return profileType;
     }
