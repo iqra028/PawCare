@@ -20,7 +20,7 @@ public class HealthDescription {
         this.bloodGlucoseLevel = bloodGlucoseLevel;
         this.weight = weight;
     }
-
+    public HealthDescription(){}
     public double getTemperature() {
         return temperature;
     }

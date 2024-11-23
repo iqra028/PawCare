@@ -43,6 +43,7 @@ public class ContactVetANVCOntroller extends RescueCenterMenuController implemen
     }
 
 
+
     private void displayAnimalProfiles() {
         animalContainer.getChildren().clear(); // Clear any existing profiles
 

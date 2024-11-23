@@ -31,6 +31,7 @@ public class Animal {
         this.adopted = adopted;
         this.image = image;
     }
+    public Animal(){}
 
 
 

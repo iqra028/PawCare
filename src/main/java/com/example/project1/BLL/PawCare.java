@@ -267,10 +267,27 @@ public class PawCare {
         vets = db.getAllVets();
         rescueCenters = db.getAllRescueCenters();
         loadVitals();
+        for(Vets v: vets)
+        {
+            loadvetsrequests(v);
+            System.out.println("Started laoding vet animals");
+        }
         for (RescueCenter rescueCenter : rescueCenters) {
             loadAnimals(rescueCenter);
             loadAlerts(rescueCenter);
         }
+    }
+    public Vets getVetfromUsername(String username){
+        for(Vets v: vets)
+        {
+            if(v.getUserName().equals(username))
+                return v;
+
+        }
+        return null;
+    }
+    public void loadvetsrequests(Vets vet) {
+        db.loadanimalsinvet(vet);
     }
     public void loadVitals() {
         try {

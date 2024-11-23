@@ -32,6 +32,13 @@ public class Vets {
             System.out.println(a.getAnimal().getName()+" "+a.getAnimal().getAnimalID());
         }
     }
+    public void setAnimals(List<Animal> animals){
+        for(Animal a:animals)
+        {
+            Profile f=new AnimalProfile(a);
+            currentlybeingchecked.add(f);
+        }
+    }
     public List<Profile> getCurrentlybeingchecked() {
         return currentlybeingchecked;
     }

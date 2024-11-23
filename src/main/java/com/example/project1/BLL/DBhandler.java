@@ -458,6 +458,61 @@ public  class DBhandler {
 
 
 
+    public void loadanimalsinvet(Vets vet) {
+        String fetchAnimalsQuery = "SELECT a.animal_id, a.name, a.type, a.breed, a.color, " +
+                "a.health_id, a.health_status, a.visited_vet, a.with_vet, " +
+                "a.up_for_adoption, a.adopted, a.image " +  // Fetch image as bytea
+                "FROM animals a " +
+                "JOIN vet_animals va ON a.animal_id = va.animalid " +
+                "WHERE va.vetid = CAST(? AS UUID)";
+
+        try (Connection connection = connect()) {
+            if (connection != null && !connection.isClosed()) {
+                System.out.println("Connection to the database was successful.");
+            }
+
+            try (PreparedStatement fetchAnimalsStmt = connection.prepareStatement(fetchAnimalsQuery)) {
+                fetchAnimalsStmt.setString(1, vet.getVetID()); // Pass as a string, explicitly cast in the query
+
+                List<Animal> animalList = new ArrayList<>();
+
+                try (ResultSet animalResultSet = fetchAnimalsStmt.executeQuery()) {
+                    while (animalResultSet.next()) {
+                        Animal animal = new Animal();
+                        animal.setAnimalID(animalResultSet.getString("animal_id"));
+                        animal.setName(animalResultSet.getString("name"));
+                        animal.setType(animalResultSet.getString("type"));
+                        animal.setBreed(animalResultSet.getString("breed"));
+                        animal.setColor(animalResultSet.getString("color"));
+                        animal.setHealthStatus(animalResultSet.getBoolean("health_status"));
+                        animal.setVisitedVet(animalResultSet.getBoolean("visited_vet"));
+                        animal.setWithVet(animalResultSet.getBoolean("with_vet"));
+                        animal.setUpForAdoption(animalResultSet.getBoolean("up_for_adoption"));
+                        animal.setAdopted(animalResultSet.getBoolean("adopted"));
+
+                        // Retrieve the image as byte array
+                        byte[] imageBytes = animalResultSet.getBytes("image");
+                        if (imageBytes != null) {
+                            animal.setImage(byteArrayToImage(imageBytes));  // Set image as byte array
+                        }
+
+                        animalList.add(animal);
+                    }
+                }
+
+                vet.setAnimals(animalList);  // Assuming this method exists to set the animal list for the vet
+                System.out.println("Loaded " + animalList.size() + " animals for vet " + vet.getVetID());
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error loading animals for vet: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 
 
 
