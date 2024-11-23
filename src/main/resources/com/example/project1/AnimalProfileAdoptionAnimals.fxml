@@ -7,7 +7,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -70,7 +70,7 @@
                         <Font size="18.0" />
                      </font>
                      <effect>
-                        <ColorAdjust brightness="-0.23" />
+                        <ColorAdjust />
                      </effect>
                   </Button>
                   <Button fx:id="AvailableAnimals" layoutX="59.0" layoutY="155.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="180.0" style="-fx-background-radius: 50;" text="Available Animals">
@@ -78,55 +78,15 @@
                         <Font size="18.0" />
                      </font>
                      <effect>
-                        <ColorAdjust />
-                     </effect>
-                  </Button>
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutX="275.0" layoutY="178.0" prefHeight="866.0" prefWidth="808.0" style="-fx-background-color: #ffffff;">
-               <children>
-                  <Line endX="627.5999755859375" layoutX="142.0" layoutY="134.0" startX="-100.0" stroke="#9c8585" />
-                  <Text layoutX="285.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Animal Profile" wrappingWidth="243.20007324218756">
-                     <font>
-                        <Font size="36.0" />
-                     </font>
-                  </Text>
-                  <Button fx:id="AdoptionAnimals1" layoutX="258.0" layoutY="155.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="190.0" style="-fx-background-radius: 50; -fx-background-size: 30;" text="Adoption Animals">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <effect>
-                        <ColorAdjust />
-                     </effect>
-                  </Button>
-                  <Button fx:id="AvailableAnimals1" layoutX="59.0" layoutY="155.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="180.0" style="-fx-background-radius: 50;" text="Available Animals">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <effect>
                         <ColorAdjust brightness="-0.23" />
                      </effect>
                   </Button>
-                  <Pane fx:id="pane1" layoutX="67.0" layoutY="225.0" prefHeight="315.0" prefWidth="318.0" style="-fx-background-color: #ffffff;">
-                     <children>
-                        <Label fx:id="AnimalName" layoutX="90.0" layoutY="195.0" text="Animal Name">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="specieslabel" layoutX="132.0" layoutY="274.0" text="Species">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="Img" fitHeight="187.0" fitWidth="221.0" layoutX="51.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label fx:id="breedlabel" layoutX="138.0" layoutY="239.0" text="Breed">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </Pane>
+                  <VBox fx:id="animalContainer" layoutX="67.0" layoutY="225.0" prefWidth="674.0" style="-fx-background-color: #ffffff;" spacing="10.0" />
+                  <Button fx:id="addAnimalBtn" layoutX="463.0" layoutY="155.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="166.0" style="-fx-background-radius: 50; -fx-background-size: 30;" text=" Add Animal">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </children>

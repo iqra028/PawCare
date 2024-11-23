@@ -19,6 +19,8 @@ import java.io.IOException;
 public class AnimalProfilesControllerAvA  extends RescueCenterMenuController implements RequiresSharedData{
 
     @FXML
+    private Button AdoptionAnimals;
+    @FXML
     private Button addAnimalBtn;
     @FXML
     private VBox animalContainer;
@@ -34,6 +36,7 @@ public class AnimalProfilesControllerAvA  extends RescueCenterMenuController imp
     public void start(){
         addAnimalBtn.setOnAction(event -> openAddAnimalPage());
         animalProfiles = getAnimalsFromRescueCenter();
+        AdoptionAnimals.setOnAction(event->openAdoptionProfiles());
         displayAnimalProfiles();
     }
     public void setSharedData(PawCare pawCare, LoginClassCredentials loginCredentials) {
@@ -174,6 +177,15 @@ public class AnimalProfilesControllerAvA  extends RescueCenterMenuController imp
         animalProfile =rc.getAnimalProfiles();
         return animalProfile;
 
+    }
+
+    public void  openAdoptionProfiles()
+    {
+        try {
+            HelloApplication.getInstance().changeScene("AnimalProfileAdoptionAnimals.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     private void openAddAnimalPage() {
         try {
