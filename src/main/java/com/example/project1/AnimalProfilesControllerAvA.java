@@ -157,6 +157,23 @@ public class AnimalProfilesControllerAvA  extends RescueCenterMenuController imp
         adoptionButton.setLayoutY(149);
         adoptionButton.setPrefSize(155, 34);
         adoptionButton.setStyle("-fx-background-color: #D08122;");
+        adoptionButton.setOnAction(event -> {
+            boolean success = pawCare.putAnimalUpForAdoption(animalProf, loginCredentials.getUsername());
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            if (success) {
+                alert.setTitle("Success");
+                alert.setHeaderText(null);
+                alert.setContentText("Animal has been successfully put up for adoption!");
+                displayAnimalProfiles(); // Refresh the list after removing the animal
+            } else {
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Failed to put the animal up for adoption. Please check eligibility.");
+            }
+            alert.showAndWait();
+        });
 
         Button reportButton = new Button("Show Injury Report");
         reportButton.setLayoutX(499);

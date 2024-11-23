@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.*;
 
 public class PawCare {
@@ -17,13 +18,14 @@ public class PawCare {
     private ArrayList<Volunteer> volunteers;
     private ArrayList<User> users;
     private ArrayList<Form> forms;
+    private ArrayList<Vitals> vitals;
     private DBhandler db;
     private FormFactory formFactory;
     private GeoLocation geoLocation;
     private ProfileFactory profileFactory;
 
     // Constructor
-    public PawCare() {
+    public PawCare()  {
         this.vets = new ArrayList<>();
         this.volunteers= new ArrayList<>();
         this.rescueCenters = new ArrayList<>();
@@ -32,6 +34,7 @@ public class PawCare {
         this.db=new DBhandler();
         this.formFactory=new FormFactory();
         this.geoLocation=new GeoLocation();
+        this.vitals=new ArrayList<>();
         this.profileFactory = new ProfileFactory();
         loadDataFromDatabase();
         this.donationContext = new DonationContext();
@@ -259,15 +262,26 @@ public class PawCare {
     }
 
     //loading any existing members of system from database
-    private void loadDataFromDatabase() {
+    private void loadDataFromDatabase()  {
         users = db.getAllUsers();
         vets = db.getAllVets();
         rescueCenters = db.getAllRescueCenters();
+        loadVitals();
         for (RescueCenter rescueCenter : rescueCenters) {
             loadAnimals(rescueCenter);
             loadAlerts(rescueCenter);
         }
     }
+    public void loadVitals() {
+        try {
+            vitals = db.getVitals();
+        } catch (SQLException e) {
+            System.err.println("Error retrieving vitals from the database: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
     void loadAlerts(RescueCenter rescueCenter) {
         List<Alert> alert =db.getAlertsByRescueCenter(rescueCenter.getRescueCenterID());
         for(Alert a:alert) {
@@ -471,42 +485,6 @@ public class PawCare {
 
     }
 
-    public void displayUsers() {
-        if (users.isEmpty()) {
-            System.out.println("No users found.");
-        } else {
-            System.out.println("List of Users:");
-            for (User user : users) {
-                System.out.println(", Name: " + user.getUserName() +
-                        ", Email: " + user.getEmail() + ", phonenumber: " + user.getPhoneNumber());
-            }
-        }
-    }
-
-    public void displayVets() {
-        if (vets.isEmpty()) {
-            System.out.println("No vets found.");
-        } else {
-            System.out.println("List of Vets:");
-            for (Vets vet : vets) {
-                System.out.println(", Name: " + vet.getUserName() +
-                        ", location: " + vet.getLocation()+
-                        ", email: " + vet.getEmail());
-            }
-        }
-    }
-
-    public void displayRescueCenters() {
-        if (rescueCenters.isEmpty()) {
-            System.out.println("No rescue centers found.");
-        } else {
-            System.out.println("List of Rescue Centers:");
-            for (RescueCenter center : rescueCenters) {
-                System.out.println(", Name: " + center.getUserName() +
-                        ", Location: " + center.getLocation());
-            }
-        }
-    }
     public boolean updateAnimalProfile(Animal updatedAnimal) {
         return db.updateAnimalInDB(updatedAnimal);
     }
@@ -517,6 +495,72 @@ public class PawCare {
 
         return db.deleteAnimal(animalId);
     }
+    public RescueCenter getRescueCenterByUsername(String username) {
+
+        for (RescueCenter rc : rescueCenters) {
+            if (rc.getUserName().equals(username)) {
+                return rc;
+            }
+        }
+        return null;
+    }
+    public boolean putAnimalUpForAdoption(Profile animalProf, String username) {
+        RescueCenter rc = getRescueCenterByUsername(username);
+        if (rc == null) {
+            System.out.println("Rescue Center not found for username: " + username);
+            return false;
+        }
+        Animal animal = animalProf.getAnimal();
+        if (!animal.isVisitedVet()) {
+            return false;
+        }
+
+        if (animal.isWithVet()) {
+            return false;
+        }
+        boolean isHealthNormal = checkAnimalHealthStatus(animal);
+        if (!isHealthNormal) {
+            return false;
+        }
+
+        animal.setHealthStatus(true);
+        animal.setUpForAdoption(true);
+        rc.removeAnimalProfile(animalProf);
+        rc.addAdoptionProfile(animalProf);
+
+        db.updateAnimalInDB(animal);
+        return true;
+    }
+    public boolean checkAnimalHealthStatus(Animal animal) {
+        String animalType = animal.getType();
+
+        for (Vitals vital : vitals) {
+            if (vital.getAnimalType().equalsIgnoreCase(animalType)) {
+                // Compare the animal's vitals with the normal ranges
+                boolean isTemperatureNormal = animal.getHealth().getTemperature() >= vital.getLowerTemperature()
+                        && animal.getHealth().getTemperature() <= vital.getUpperTemperature();
+
+                boolean isHeartRateNormal = animal.getHealth().getHeartRate() >= vital.getLowerHeartRate()
+                        && animal.getHealth().getHeartRate() <= vital.getUpperHeartRate();
+
+                boolean isRespiratoryRateNormal = animal.getHealth().getRespiratoryRate() >= vital.getLowerRespiratoryRate()
+                        && animal.getHealth().getRespiratoryRate() <= vital.getUpperRespiratoryRate();
+
+                boolean isCapillaryRefillTimeNormal = animal.getHealth().getCapillaryRefillTime() == vital.getCapillaryRefillTime();
+
+                boolean isBloodOxygenNormal = animal.getHealth().getBloodOxygenLevel() >= vital.getLowerBloodOxygen()
+                        && animal.getHealth().getBloodOxygenLevel() <= vital.getUpperBloodOxygen();
+
+                boolean isBloodGlucoseNormal = animal.getHealth().getBloodGlucoseLevel() >= vital.getLowerBloodGlucose()
+                        && animal.getHealth().getBloodGlucoseLevel() <= vital.getUpperBloodGlucose();
+
+                return isTemperatureNormal && isHeartRateNormal && isRespiratoryRateNormal
+                        && isCapillaryRefillTimeNormal && isBloodOxygenNormal && isBloodGlucoseNormal;
+            }
+        }
+        return false;
+    }
+
 }
 
 

@@ -27,10 +27,11 @@ public class AnimalProfilesAAController extends RescueCenterMenuController imple
         super.initialize();
     }
     public void start(){
-        displayAdoptionProfiles();
+
         adoptionProfiles = getAnimalsFromRescueCenter();
         addAnimalBtn.setOnAction(event -> openAddAnimalPage());
         AvailableAnimals.setOnAction(event->openAVA());
+        displayAdoptionProfiles();
     }
     public void setSharedData(com.example.project1.BLL.PawCare pawCare, LoginClassCredentials loginCredentials) {
         if (pawCare == null || loginCredentials == null) {
@@ -149,20 +150,14 @@ public class AnimalProfilesAAController extends RescueCenterMenuController imple
 
         });
 
-        Button adoptionButton = new Button("Put up for Adoption");
-        adoptionButton.setLayoutX(499);
-        adoptionButton.setLayoutY(149);
-        adoptionButton.setPrefSize(155, 34);
-        adoptionButton.setStyle("-fx-background-color: #D08122;");
-
         Button reportButton = new Button("Show Injury Report");
         reportButton.setLayoutX(499);
-        reportButton.setLayoutY(204);
+        reportButton.setLayoutY(149);
         reportButton.setPrefSize(155, 34);
         reportButton.setStyle("-fx-background-color: #D08122;");
 
         // Add children to the pane
-        profilePane.getChildren().addAll(img, nameLabel, typeLabel, breedLabel, colorLabel, visitedVetLabel, withVetLabel, editButton, deleteButton, adoptionButton, reportButton);
+        profilePane.getChildren().addAll(img, nameLabel, typeLabel, breedLabel, colorLabel, visitedVetLabel, withVetLabel, editButton, deleteButton, reportButton);
 
         return profilePane;
     }

@@ -861,6 +861,45 @@ public  class DBhandler {
             return false;
         }
     }
+    public ArrayList<Vitals> getVitals() throws SQLException {
+        String query = "SELECT * FROM vitals";
+        ArrayList<Vitals> vitalsList = new ArrayList<>();
+
+        try (Connection conn = connect(); PreparedStatement statement = conn.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                String vitalsIdString = resultSet.getString("id");
+                UUID vitalsId = UUID.fromString(vitalsIdString);
+                String vitalsIdAsString = vitalsId.toString();
+
+                // Retrieve other columns as usual
+                double lowerTemperature = resultSet.getDouble("lowertemperature");
+                double upperTemperature = resultSet.getDouble("uppertemperature");
+                String animalType = resultSet.getString("animaltype");
+                int lowerHeartRate = resultSet.getInt("lowerheartrate");
+                int upperHeartRate = resultSet.getInt("upperheartrate");
+                int lowerRespiratoryRate = resultSet.getInt("lowerrespiratoryrate");
+                int upperRespiratoryRate = resultSet.getInt("upperrespiratoryrate");
+                int capillaryRefillTime = resultSet.getInt("capillaryrefilltime");
+                int lowerBloodOxygen = resultSet.getInt("lowerbloodoxygen");
+                int upperBloodOxygen = resultSet.getInt("upperbloodoxygen");
+                int lowerBloodGlucose = resultSet.getInt("lowerbloodglucose");
+                int upperBloodGlucose = resultSet.getInt("upperbloodglucose");
+
+                Vitals vitals = new Vitals(vitalsIdAsString, lowerTemperature, upperTemperature, animalType,
+                        lowerHeartRate, upperHeartRate, lowerRespiratoryRate, upperRespiratoryRate,
+                        capillaryRefillTime, lowerBloodOxygen, upperBloodOxygen, lowerBloodGlucose, upperBloodGlucose);
+
+                vitalsList.add(vitals);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error retrieving vitals data for all animal types.", e);
+        }
+
+        return vitalsList;
+    }
+
 
 
 
