@@ -59,8 +59,8 @@ public class PawCare {
         PaymentStrategy paymentStrategy = new EasypaisaPayment(phone,firstname,lastname);
         donationContext.setPaymentStrategy(paymentStrategy);
         double amount = Double.parseDouble(donationAmount);
-       Donation donation= donationContext.executePayment(amount,Session.getInstance().getLoggedInUser().getUserID(),rescuecenterid);
-       addDonationTodatabase(donation);
+        Donation donation= donationContext.executePayment(amount,Session.getInstance().getLoggedInUser().getUserID(),rescuecenterid);
+        addDonationTodatabase(donation);
 
     }
     public void addDonationTodatabase(Donation donation){
@@ -116,26 +116,50 @@ public class PawCare {
         }
         return null;
     }
-    void sendAlert(Alert alert) {
-        System.out.println("successfully sent alert");
-    }
-    public void createAlert(String animalType, String breed, String InjuryDesc, Image imagePath,
-                            double[] userLocation,String uerid, String rescuecenterid) {
+    public String createAlert(String animalType, String breed, String InjuryDesc, Image imagePath,
+                              double[] userLocation, String userid, String rescuecenterid, String type) {
+        // Validate userid and rescuecenterid before proceeding
+        if (userid == null || userid.isEmpty()) {
+            System.err.println("User ID is null or empty.");
+            return null; // Exit early if the user ID is invalid
+        }
 
+        if (rescuecenterid == null ) {
+            System.err.println("Rescue Center ID is null or empty.");
+            return null; // Exit early if the rescue center ID is invalid
+        }
+        Alert alert = new Alert(animalType, breed, InjuryDesc, imagePath, userLocation, userid, rescuecenterid);
+        String alertid=db.storeAlertRecord(alert, type);
+        for( RescueCenter r : rescueCenters)
+        {
+            if(rescuecenterid.equals(r.getRescueCenterID()))
+            {
+                r.addalert(alert);
+                break;
+            }
+        }
+        return alertid;
 
-        Alert alert = new Alert(animalType, breed,InjuryDesc, imagePath, userLocation,uerid,rescuecenterid);
-        db.storeAlertRecord(alert);
     }
 
 
     private boolean isPrefixMatch(String registeredLocation, String shelterLocation) {
         return registeredLocation.toLowerCase().startsWith(shelterLocation.toLowerCase());
     }
-    public List<Alert> getAlertsFromDatabase(){
-    return db.getAlertsByRescueCenter();
+    public List<Alert> getAlertsFromDatabase(String username){
+        List<Alert> a=new ArrayList<>();
+        for(RescueCenter r : rescueCenters)
+        {
+            if(r.getUserName().equals(username))
+            {
+                System.out.println("ByeBye");
+                return r.getAlerts();
+            }
+        }
+        return a;
     }
     public double[] getLocation()
-    {
+    {   System.out.println("getLocation called");
         double[] location=geoLocation.fetchDynamicLocation();
         geoLocation.setLatitude(location[0]);
         geoLocation.setLongitude(location[1]);
@@ -143,11 +167,13 @@ public class PawCare {
     }
     public String generatemap()
     {
-        double latitude = geoLocation.getLatitude();
-        double longitude = geoLocation.getLongitude();
+       // double latitude = getLocation()[0];
+        //double longitude = getLocation()[1];
+        double latitude=geoLocation.getLongitude();
+        double longitude=geoLocation.getLatitude();
         double radius = 5000;
 
-         return geoLocation.generateMapHTML(latitude, longitude);
+        return geoLocation.generateMapHTML(latitude, longitude);
     }
     public boolean addAnimalProf(String name,String type,String breed,String color,Image image,double temperature, int heartRate, int respiratoryRate,
                                  int capillaryRefillTime, int bloodOxygenLevel,
@@ -224,8 +250,18 @@ public class PawCare {
         rescueCenters = db.getAllRescueCenters();
         for (RescueCenter rescueCenter : rescueCenters) {
             loadAnimals(rescueCenter);
-
+            loadAlerts(rescueCenter);
         }
+    }
+    void loadAlerts(RescueCenter rescueCenter) {
+        List<Alert> alert =db.getAlertsByRescueCenter(rescueCenter.getRescueCenterID());
+        for(Alert a:alert) {
+            System.out.println("Added a Alert");
+            rescueCenter.addalert(a);
+        }
+    }
+    public GeoLocation getGeoLocation(){
+        return geoLocation;
     }
     public void loadAnimals(RescueCenter rescueCenter) {
         List<Animal> animals = db.getAnimalsByRescueCenter(rescueCenter.getRescueCenterID());
@@ -239,6 +275,37 @@ public class PawCare {
                 rescueCenter.addAnimalProfile(profile);
             }
         }
+    }
+    public void sendAlerttoVolunteer(Alert alert){
+        Random random = new Random();
+        int randomIndex = random.nextInt(volunteers.size());
+        Volunteer selectedVolunteer = volunteers.get(randomIndex);
+        System.out.println(selectedVolunteer.getUserId());
+        alert.setCompleted(true);
+        String alertid=createAlert(alert.getType(), alert.getBreed(), alert.getMessage(), alert.getImage(), alert.getLocation(), alert.getUserid(),
+                alert.getRescuecenterid(),"RescueCenter");
+
+
+        System.out.println(alertid);
+        alert.setAlertId(alertid);
+        setAlertToCompleted(alert.getaAlertID());
+
+
+    }
+    public void setAlertToCompleted(String id)
+    {
+        db.setCompletedToTrue(id);
+
+    }
+    public List<Alert> getRescueCenterAlerts()
+    {
+        return db.getRescueCenterAlerts(Session.getInstance().getLoggedInUser().getUserID());
+
+    }
+
+    public Boolean ifUserisaVolunter()
+    {
+        return db.isUserVolunteer();
     }
 
     public void printAllIDs() {
@@ -279,112 +346,112 @@ public class PawCare {
     // Register a User
     public boolean registerUser(String username,String name,String email,String password,String phoneNumber) {
 
-            // Checking if username or email is already taken
-            if (isUsernameOrEmailTaken(username, email)) {
-                //System.out.println("Username or Email is already taken. Registration failed.");
-                return false;
-            }
-
-            //User newUser = new User(userForm.getUserName(), userForm.getEmail(), userForm.getPassword(),userForm.getGender());
-            db.storeUserRecord(name,username,email,password,"",phoneNumber);
-            String userID = db.getIDByUsername("\"user\"", "userid", "username", username);
-            User newUser = new User(userID,username,name,email,password,"",phoneNumber);
-            users.add(newUser);
-           // System.out.println(newUser.getUserID());
-
-            return true;
-
+        // Checking if username or email is already taken
+        if (isUsernameOrEmailTaken(username, email)) {
+            //System.out.println("Username or Email is already taken. Registration failed.");
+            return false;
         }
+
+        //User newUser = new User(userForm.getUserName(), userForm.getEmail(), userForm.getPassword(),userForm.getGender());
+        db.storeUserRecord(name,username,email,password,"",phoneNumber);
+        String userID = db.getIDByUsername("\"user\"", "userid", "username", username);
+        User newUser = new User(userID,username,name,email,password,"",phoneNumber);
+        users.add(newUser);
+        // System.out.println(newUser.getUserID());
+
+        return true;
+
+    }
 
 
     // Register a Vet
     public boolean registerVet(String username,String name,String email,String password,String location,String phonenumber) {
 
-            // Checking if username or email is already taken
-            if (isUsernameOrEmailTaken(username, email)) {
-                //System.out.println("Username or Email is already taken. Registration failed.");
-                return false;
-            }
+        // Checking if username or email is already taken
+        if (isUsernameOrEmailTaken(username, email)) {
+            //System.out.println("Username or Email is already taken. Registration failed.");
+            return false;
+        }
 
-            db.storeVetRecord(name,username,email,password,location,phonenumber);
-            String vetID = db.getIDByUsername("vets", "vetid", "username", username);
-            Vets newVet = new Vets(vetID,username,name,email,password,location,phonenumber);
-            vets.add(newVet);
-           // System.out.println(newVet.getVetID());
-            return true;
+        db.storeVetRecord(name,username,email,password,location,phonenumber);
+        String vetID = db.getIDByUsername("vets", "vetid", "username", username);
+        Vets newVet = new Vets(vetID,username,name,email,password,location,phonenumber);
+        vets.add(newVet);
+        // System.out.println(newVet.getVetID());
+        return true;
 
     }
 
     // Register a Rescue Center
     public boolean registerRescueCenter(String username,String name,String email,String password,String location,String phonenumber) {
-            // Checking if username or email is already taken
-            if (isUsernameOrEmailTaken(username, email)) {
-                //System.out.println("Username or Email is already taken. Registration failed.");
-                return false;
-            }
+        // Checking if username or email is already taken
+        if (isUsernameOrEmailTaken(username, email)) {
+            //System.out.println("Username or Email is already taken. Registration failed.");
+            return false;
+        }
 
-            db.storeCenterRecord(name,username,password,phonenumber,location,email);
-            String rescueCenterID = db.getIDByUsername("rescuecenter", "rescuecenterid", "username", username);
+        db.storeCenterRecord(name,username,password,phonenumber,location,email);
+        String rescueCenterID = db.getIDByUsername("rescuecenter", "rescuecenterid", "username", username);
 
-            RescueCenter newCenter = new RescueCenter(rescueCenterID,username,name,email,password,location,phonenumber);
-            rescueCenters.add(newCenter);
+        RescueCenter newCenter = new RescueCenter(rescueCenterID,username,name,email,password,location,phonenumber);
+        rescueCenters.add(newCenter);
         //System.out.println(newCenter.getRescueCenterID());
-            return true;
+        return true;
 
     }
 
     //login function for anyone
     public boolean login(String username,String password,String type)
     {
-       // printAllIDs();
+        // printAllIDs();
         boolean loginSuccessful = false;
 
-            switch (type.toLowerCase()) {
-                case "user":
-                    for (User user : users) {
-                        if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
-                           // System.out.println("User successfully logged in!");
-                            loginSuccessful = true;
-                            Session.getInstance().setLoggedInUser(user);
-                            break;
-                        }
+        switch (type.toLowerCase()) {
+            case "user":
+                for (User user : users) {
+                    if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
+                        // System.out.println("User successfully logged in!");
+                        loginSuccessful = true;
+                        Session.getInstance().setLoggedInUser(user);
+                        break;
                     }
-                    break;
+                }
+                break;
 
-                case "vet":
-                    for (Vets vet : vets) {
-                        if (vet.getUserName().equals(username) && vet.getPassword().equals(password)) {
-                            System.out.println("Vet successfully logged in!");
-                            loginSuccessful = true;
-                            Session.getInstance().setLoggedInVets(vet);
-                            break;
-                        }
+            case "vet":
+                for (Vets vet : vets) {
+                    if (vet.getUserName().equals(username) && vet.getPassword().equals(password)) {
+                        System.out.println("Vet successfully logged in!");
+                        loginSuccessful = true;
+                        Session.getInstance().setLoggedInVets(vet);
+                        break;
                     }
-                    break;
+                }
+                break;
 
-                case "rescue center":
-                    for (RescueCenter center : rescueCenters) {
-                        if (center.getUserName().equals(username) && center.getPassword().equals(password)) {
-                            System.out.println("Rescue Center successfully logged in!");
-                            loginSuccessful = true;
-                            Session.getInstance().setLoggedInRescueCenter(center);
-                            break;
-                        }
+            case "rescue center":
+                for (RescueCenter center : rescueCenters) {
+                    if (center.getUserName().equals(username) && center.getPassword().equals(password)) {
+                        System.out.println("Rescue Center successfully logged in!");
+                        loginSuccessful = true;
+                        Session.getInstance().setLoggedInRescueCenter(center);
+                        break;
                     }
-                    break;
+                }
+                break;
 
-                default:
-                    System.out.println("Invalid type provided.");
-                    break;
-            }
+            default:
+                System.out.println("Invalid type provided.");
+                break;
+        }
 
-            if (!loginSuccessful) {
-               // System.out.println("Invalid username or password.");
-                return false;
-            }
-            else {
-                return true;
-            }
+        if (!loginSuccessful) {
+            // System.out.println("Invalid username or password.");
+            return false;
+        }
+        else {
+            return true;
+        }
 
 
     }

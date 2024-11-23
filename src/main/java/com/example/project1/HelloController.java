@@ -1,15 +1,20 @@
 package com.example.project1;
 
 import java.io.IOException;
+
+import com.example.project1.BLL.LoginClassCredentials;
+import com.example.project1.BLL.PawCare;
+import com.example.project1.BLL.RequiresSharedData;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class HelloController {
+public class HelloController implements RequiresSharedData{
     @FXML
     private Button signUpButton;
     @FXML
@@ -18,6 +23,8 @@ public class HelloController {
     private Button signUpButton1;
     @FXML
     private Button logInButton1;
+    private PawCare pawCare;
+    private LoginClassCredentials loginCredentials;
 
     private static final Logger LOGGER = Logger.getLogger(HelloController.class.getName());
 
@@ -29,6 +36,10 @@ public class HelloController {
         logInButton.setOnAction(event -> openLogInPage());
         signUpButton1.setOnAction(event -> openSignUpPage());
         logInButton1.setOnAction(event -> openLogInPage());
+    }
+    public void setSharedData(PawCare pawCare, LoginClassCredentials loginCredentials) {
+        this.pawCare = pawCare;
+        this.loginCredentials = loginCredentials;
     }
 
     private void openSignUpPage() {

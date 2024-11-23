@@ -1,13 +1,17 @@
 package com.example.project1;
 
+import com.example.project1.BLL.LoginClassCredentials;
+import com.example.project1.BLL.PawCare;
+import com.example.project1.BLL.RequiresSharedData;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UserMenuController {
+public class UserMenuController  {
 
     @FXML
     private Button btnReportInjuredAnimalHeader;
@@ -21,19 +25,25 @@ public class UserMenuController {
     private Button btnDonate;
     @FXML
     private Label PawCare;
-
+    private PawCare pawCare;
     private static final Logger LOGGER = Logger.getLogger(com.example.project1.UserMenuController.class.getName());
+    private LoginClassCredentials loginCredentials;
 
     @FXML
     public void initialize() {
-
         PawCare.setOnMouseClicked(event -> handleLogo());
         btnReportInjuredAnimalHeader.setOnAction(event -> handleReportInjuredAnimalHeader());
         btnReportMissingAnimal.setOnAction(event -> handleReportMissingAnimal());
         btnAdopt.setOnAction(event -> handleAdopt());
-        btnVolunteer.setOnAction(event -> handleVolunteer());
-        btnDonate.setOnAction(event -> handleDonate());
 
+        btnDonate.setOnAction(event -> handleDonate());
+        starting();
+
+    }
+    public void starting(){
+        System.out.println("Volunteer button clicked.");
+
+        btnVolunteer.setOnAction(event -> handleVolunteer());
     }
 
     @FXML
@@ -44,6 +54,7 @@ public class UserMenuController {
             LOGGER.log(Level.SEVERE, "Failed to change scene to Select-UserType.fxml", e);
         }
     }
+
 
     @FXML
     private void handleReportInjuredAnimalHeader() {
@@ -74,8 +85,15 @@ public class UserMenuController {
 
     @FXML
     private void handleVolunteer() {
+        System.out.println("Volunteer");
         try {
-            HelloApplication.getInstance().changeScene("Volunteer.fxml");
+            System.out.println("Volunteer");
+            //System.out.println(pawCare.ifUserisaVolunter());
+            //if (pawCare.ifUserisaVolunter())
+            //{
+                HelloApplication.getInstance().changeScene("Volunteer.fxml");
+
+            //}
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to change scene to Select-UserType.fxml", e);
         }

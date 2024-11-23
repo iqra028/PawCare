@@ -9,11 +9,12 @@ public class RescueCenter {
     private String CenterName;
     private String password;
     private String email;
-    private String location;    // change this to a Location type later
+    private String location;
     private String phoneNumber;
 
     private ArrayList<Profile> animalProfiles;
     private ArrayList<Profile> adoptionProfiles;
+    private ArrayList<Alert> alerts;
 
     public RescueCenter(String rescueCenterID,String userName, String CenterName, String email, String password, String location, String phoneNumber) {
         this.rescueCenterID=rescueCenterID;
@@ -23,10 +24,16 @@ public class RescueCenter {
         this.password = password;
         this.location = location;
         this.phoneNumber = phoneNumber;
-
+        this.alerts=new ArrayList<>();
         this.animalProfiles = new ArrayList<>();
         this.adoptionProfiles = new ArrayList<>();
 
+    }
+    public void addalert(Alert alert) {
+        alerts.add(alert);
+    }
+    public List<Alert> getAlerts(){
+        return alerts;
     }
     public double[] getLocationAsArray() {
         String[] parts = location.split(",");

@@ -102,26 +102,38 @@ public  class DBhandler {
         }
         return users;
     }
-    public boolean storeVolunteerRecord(String userId, String cnic, String vehicleType, Image vehicleImage, String vehicleModel,Boolean availability) {
-        String sql = "INSERT INTO volunteer ( userid, cnic, vehicle_type, vehicle_image, vehicle_model,availability) " +
-                "VALUES ( ?, ?, ?, ?, ?,?)";
+    public boolean storeVolunteerRecord(String userId, String cnic, String vehicleType, Image vehicleImage, String vehicleModel, Boolean availability) {
+        String insertVolunteerSql = "INSERT INTO volunteer (userid, cnic, vehicle_type, vehicle_image, vehicle_model, availability) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+        String updateUserSql = "UPDATE \"user\" SET volunteer = ? WHERE userid = ?"; // Escaped user table name
 
-        try (Connection conn = connect();  // Make sure to use your database connection method
-             PreparedStatement statement = conn.prepareStatement(sql)) {
+        try (Connection conn = connect();  // Use your database connection method
+             PreparedStatement insertStatement = conn.prepareStatement(insertVolunteerSql);
+             PreparedStatement updateStatement = conn.prepareStatement(updateUserSql)) {
 
-            // Set the parameters for the prepared statement
-            statement.setObject(1, UUID.fromString(userId));  // Set userId as UUID
-            statement.setString(2, cnic);    // Set CNIC
-            statement.setString(3, vehicleType); // Set vehicle type
-            statement.setBytes(4, imageToByteArray(vehicleImage)); // Set vehicle image (binary data)
-            statement.setString(5, vehicleModel); // Set vehicle model
-            statement.setBoolean(6, availability); // Set vehicle model
+            // Insert into volunteer table
+            insertStatement.setObject(1, UUID.fromString(userId));  // Set userId as UUID
+            insertStatement.setString(2, cnic);    // Set CNIC
+            insertStatement.setString(3, vehicleType); // Set vehicle type
+            insertStatement.setBytes(4, imageToByteArray(vehicleImage)); // Convert image to byte array
+            insertStatement.setString(5, vehicleModel); // Set vehicle model
+            insertStatement.setBoolean(6, availability); // Set availability
 
-            // Execute the insert operation
-            int rowsInserted = statement.executeUpdate();
+            int rowsInserted = insertStatement.executeUpdate();
+
+            // Update the user's table to set 'volunteer' column to true
             if (rowsInserted > 0) {
-                System.out.println("A new volunteer record was inserted successfully!");
+                updateStatement.setBoolean(1, true);  // Set volunteer to true
+                updateStatement.setObject(2, UUID.fromString(userId));  // Match userId
+                int rowsUpdated = updateStatement.executeUpdate();
+
+                if (rowsUpdated > 0) {
+                    System.out.println("User's volunteer status updated successfully!");
+                } else {
+                    System.out.println("Failed to update user's volunteer status.");
+                }
             }
+
             return rowsInserted > 0;
 
         } catch (SQLException e) {
@@ -129,6 +141,98 @@ public  class DBhandler {
             return false;
         }
     }
+    public Image byteArrayToImage(byte[] byteArray) {
+        if (byteArray == null) {
+            return null;  // Return null if no image is found
+        }
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
+        return new Image(byteArrayInputStream);
+    }
+    public ArrayList<Volunteer> getAllVolunteers() {
+        String selectVolunteerSql = "SELECT * FROM volunteer";
+        ArrayList<Volunteer> volunteers = new ArrayList<>();
+
+        try (Connection conn = connect();  // Use your database connection method
+             PreparedStatement statement = conn.prepareStatement(selectVolunteerSql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            // Loop through the results and create Volunteer objects
+            while (resultSet.next()) {
+                String userId = resultSet.getString("userid");
+                String cnic = resultSet.getString("cnic");
+                String vehicleType = resultSet.getString("vehicle_type");
+                byte[] vehicleImageBytes = resultSet.getBytes("vehicle_image");
+                String vehicleModel = resultSet.getString("vehicle_model");
+                boolean availability = resultSet.getBoolean("availability");
+
+                // Convert vehicle image bytes to Image object
+                Image vehicleImage = byteArrayToImage(vehicleImageBytes);
+
+                Volunteer volunteer = new Volunteer(userId, cnic, vehicleType, vehicleImage, vehicleModel, availability);
+                volunteers.add(volunteer);
+                System.out.println("successful");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return volunteers;
+    }
+    public boolean isUserVolunteer() {
+        String sql = "SELECT volunteer FROM \"user\" WHERE userid = ?";
+
+        try (Connection conn = connect(); // Use your database connection method
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+
+            // Set the userId parameter
+            statement.setObject(1, UUID.fromString(Session.getInstance().getLoggedInUser().getUserID()));
+
+            // Execute the query
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                // Get the 'volunteer' column value
+                return resultSet.getBoolean("volunteer");
+            }
+
+            // User not found
+            System.out.println("User not found in the database.");
+            return false;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean updateVolunteerAvailability(String userId, boolean availability) {
+        String sql = "UPDATE volunteer SET availability = ? WHERE userid = ?";
+
+        try (Connection conn = connect(); // Use your database connection method
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+
+            // Set parameters
+            statement.setBoolean(1, availability); // Set availability (true/false)
+            statement.setObject(2, UUID.fromString(userId)); // Set userId as UUID
+
+            // Execute the update
+            int rowsUpdated = statement.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                System.out.println("Volunteer availability updated successfully!");
+                return true;
+            } else {
+                System.out.println("Volunteer not found or update failed.");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
     public boolean storeUserRecord(String name, String username, String email, String password, String location, String phoneNumber)
     {
         String sql = "INSERT INTO \"user\" (name, username, email, password, location, phonenumber) VALUES (?, ?, ?, ?, ?, ?)";
@@ -204,6 +308,29 @@ public  class DBhandler {
             return false;
         }
     }
+    public boolean setCompletedToTrue(String alertId) {
+       System.out.println(alertId);
+        String sql = "UPDATE alert SET completed = true WHERE alertid = ?AND \" alertType\" = 'User'";
+
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+
+            stmt.setObject(1, UUID.fromString(alertId));  // Convert alertId to UUID if it's a string
+
+            // Execute the statement
+            int rowsUpdated = stmt.executeUpdate();
+
+            // Return true if at least one row was updated
+            return rowsUpdated > 0;
+
+        } catch (SQLException e) {
+            // Handle SQL exceptions and log error details
+            System.err.println("Error updating alert record: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
     private byte[] imageToByteArray(Image image) {
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
             // Using ImageIO to write the Image to ByteArrayOutputStream
@@ -216,58 +343,167 @@ public  class DBhandler {
             return null;
         }
     }
-    public boolean storeAlertRecord(Alert alert) {
-        System.out.println("Entering storeAlertRecord method");
-
-        String sql = "INSERT INTO alert(type, message, breed, image, location, date_created, userid, rescuecenterid) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    public List<Alert> getRescueCenterAlerts(String userid) {
+        List<Alert> alerts = new ArrayList<>();
+        String sql = "SELECT alertid, type, message, breed, image, location, date_created, userid, rescuecenterid " +
+                "FROM alert WHERE userid = CAST(? AS UUID) AND completed = false AND \"alertType\" = 'RescueCenter'";
 
         try (Connection conn = connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, alert.getType());
-            stmt.setString(2, alert.getMessage());
-            stmt.setString(3, alert.getBreed());
+
+            // Getting the UUID from the session, ensure this is a valid UUID string
+            UUID uuid = UUID.fromString(Session.getInstance().getLoggedInUser().getUserID());
+            stmt.setObject(1, uuid);
+
+            // Execute the query
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Alert alert = new Alert();
+                    alert.setType(rs.getString("type"));
+                    alert.setMessage(rs.getString("message"));
+                    alert.setBreed(rs.getString("breed"));
+
+                    // Handle image bytes from DB
+                    byte[] imageBytes = rs.getBytes("image");
+                    if (imageBytes != null) {
+                        InputStream imageStream = new ByteArrayInputStream(imageBytes);
+                        Image image = new Image(imageStream);
+                        alert.setImage(image);
+                    }
+
+                    // Parsing location and other fields
+                    alert.setLocation(parseLocation(rs.getString("location")));
+                    alert.setDateCreated(rs.getDate("date_created").toLocalDate());
+                    alert.setUserid(rs.getString("userid"));
+                    alert.setRescuecenterid(rs.getString("rescuecenterid"));
+
+                    alerts.add(alert);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error retrieving alert records: " + e.getMessage());
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            System.err.println("Invalid UUID format for rescuecenterid: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return alerts;
+    }
+
+
+
+
+
+    public String storeAlertRecord(Alert alert, String type) {
+        System.out.println("Entering storeAlertRecord method");
+
+        // Updated SQL query to insert without specifying alertid (auto-generated in DB)
+        String sql = "INSERT INTO alert(type, message, breed, image, location, date_created, userid, rescuecenterid, \"alertType\", completed) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+            // Set parameters for the SQL query
+            stmt.setString(1, alert.getType()); // Alert type
+            stmt.setString(2, alert.getMessage()); // Alert message
+            stmt.setString(3, alert.getBreed()); // Animal breed
+
+            // If image exists, convert to bytes and insert, otherwise set to null
             if (alert.getImage() != null) {
                 byte[] imageBytes = imageToByteArray(alert.getImage());
-                stmt.setBytes(4, imageBytes);
+                stmt.setBytes(4, imageBytes); // Image
             } else {
-                stmt.setBytes(4, null);
+                stmt.setBytes(4, null); // No image
             }
+
+            // Handle location - assuming it's an array with two values (latitude, longitude)
             if (alert.getLocation() != null) {
-                String locationString = alert.getLocation()[0] + "," + alert.getLocation()[1];
-                stmt.setString(5, locationString);
+                String locationString = alert.getLocation()[0] + "," + alert.getLocation()[1]; // Concatenate location values
+                stmt.setString(5, locationString); // Location
             } else {
-                stmt.setString(5, null);
+                stmt.setString(5, null); // No location
             }
 
-            stmt.setDate(6, java.sql.Date.valueOf(LocalDate.now()));
+            // Set the current date for the date_created column
+            stmt.setDate(6, java.sql.Date.valueOf(LocalDate.now())); // Date created
 
-            try {
-                stmt.setObject(7, UUID.fromString(alert.getUserid()));
-                stmt.setObject(8, UUID.fromString(alert.getRescuecenterid()));
-            } catch (IllegalArgumentException e) {
-                System.err.println("Invalid UUID format for user or rescuecenterid: " + e.getMessage());
-                return false;
+            // Check if userid and rescuecenterid are not null and are valid UUIDs
+            if (alert.getUserid() != null && !alert.getUserid().isEmpty()) {
+                try {
+                    stmt.setObject(7, UUID.fromString(alert.getUserid())); // User ID
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Invalid UUID format for userid: " + alert.getUserid());
+                    return null; // Invalid UUID format
+                }
+            } else {
+                System.err.println("User ID is null or empty.");
+                return null; // User ID is null or empty
             }
+
+            if (alert.getRescuecenterid() != null && !alert.getRescuecenterid().isEmpty()) {
+                try {
+                    stmt.setObject(8, UUID.fromString(alert.getRescuecenterid())); // Rescue Center ID
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Invalid UUID format for rescuecenterid: " + alert.getRescuecenterid());
+                    return null; // Invalid UUID format
+                }
+            } else {
+                System.err.println("Rescue Center ID is null or empty.");
+                return null; // Rescue Center ID is null or empty
+            }
+
+            // Set the type (from the method parameter) for alertType
+            stmt.setString(9, type); // Alert type (from the parameter)
+
+            // Set false for the 'completed' column
+            stmt.setBoolean(10, false); // Completed status (false by default)
+
+            // Execute the query and check how many rows were inserted
             int rowsInserted = stmt.executeUpdate();
             System.out.println("Number of rows inserted: " + rowsInserted);
-            return rowsInserted > 0;
+
+            // Retrieve the generated alertid
+            if (rowsInserted > 0) {
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        // Get the generated alert ID (as a UUID)
+                        UUID alertId = (UUID) generatedKeys.getObject(1); // First column (alertid)
+
+                        // Convert UUID to String and return it
+                        System.out.println("Generated alert ID: " + alertId.toString());
+                        return alertId.toString(); // Return the UUID as a string
+                    } else {
+                        System.err.println("Failed to retrieve generated alert ID.");
+                        return null;
+                    }
+                }
+            } else {
+                System.err.println("No rows inserted.");
+                return null;
+            }
 
         } catch (SQLException e) {
             System.err.println("Error storing alert record: " + e.getMessage());
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
-    public List<Alert> getAlertsByRescueCenter() {
+
+
+
+
+
+    public List<Alert> getAlertsByRescueCenter(String id ) {
 
         List<Alert> alerts = new ArrayList<>();
         String sql = "SELECT alertid, type, message, breed, image, location, date_created, userid, rescuecenterid " +
-                "FROM alert WHERE rescuecenterid = CAST(? AS UUID)";
-
+                "FROM alert WHERE rescuecenterid = CAST(? AS UUID) AND completed = false AND \"alertType\" = 'User'";
         try (Connection conn = connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            String rescueCenterId = Session.getInstance().getLoggedInRescueCenter().getRescueCenterID();
+            String rescueCenterId = id;
             UUID uuid = UUID.fromString(rescueCenterId);
             stmt.setObject(1, uuid);
             ResultSet rs = stmt.executeQuery();

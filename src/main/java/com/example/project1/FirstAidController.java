@@ -1,5 +1,8 @@
 package com.example.project1;
 
+import com.example.project1.BLL.LoginClassCredentials;
+import com.example.project1.BLL.PawCare;
+import com.example.project1.BLL.RequiresSharedData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -11,7 +14,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class FirstAidController extends UserMenuController {
+public class FirstAidController extends UserMenuController implements RequiresSharedData {
 
     @FXML
     private VBox ChatVbox;
@@ -21,17 +24,29 @@ public class FirstAidController extends UserMenuController {
     private Button sendmessagebtn;
     @FXML
     private ScrollPane ChatScrollingPane;
-
+    private PawCare pawCare;
+    private LoginClassCredentials loginCredentials;
     private static final Logger LOGGER = Logger.getLogger(com.example.project1.FirstAidController.class.getName());
 
     @FXML
     public void initialize() {
         super.initialize();
 
+
+    }
+    void start(){
         sendmessagebtn.setOnAction(event -> handleSendMessage());
     }
-
-
+    public void setSharedData(com.example.project1.BLL.PawCare pawCare, LoginClassCredentials loginCredentials) {
+        if (pawCare == null || loginCredentials == null) {
+            System.out.println("Error: Shared data is null.");
+        } else {
+            this.pawCare = pawCare;
+            this.loginCredentials = loginCredentials;
+            System.out.println("Shared data set: " + pawCare + ", " + loginCredentials);
+            start();
+        }
+    }
     @FXML
     private void handleSendMessage() {
         String userMessage = UserTextField.getText().trim();

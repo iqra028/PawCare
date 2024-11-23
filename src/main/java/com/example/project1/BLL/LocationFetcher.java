@@ -46,10 +46,12 @@ public class LocationFetcher {
     }
 
     public static String getValidLocation() {
+        System.out.println("getValidLocation");
         String randomIp = generateRandomIp();
+        System.out.println("getValidLocation1");
         System.out.println("Trying IP: " + randomIp);
         String locationJson = fetchLocationForIp(randomIp);
-
+        System.out.println("getValidLocation1");
         if (locationJson != null) {
             JSONObject obj = new JSONObject(locationJson);
             if (obj.has("lat") && obj.has("lon")) {

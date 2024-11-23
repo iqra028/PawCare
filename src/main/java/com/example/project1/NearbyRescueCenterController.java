@@ -1,9 +1,6 @@
 package com.example.project1;
 
-import com.example.project1.BLL.PawCare;
-import com.example.project1.BLL.RescueCenter;
-import com.example.project1.BLL.Session;
-import com.example.project1.BLL.SharedData;
+import com.example.project1.BLL.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,7 +10,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-public class NearbyRescueCenterController extends UserMenuController {
+public class NearbyRescueCenterController extends UserMenuController implements RequiresSharedData {
 
     @FXML
     private Button FirstAid;
@@ -21,7 +18,7 @@ public class NearbyRescueCenterController extends UserMenuController {
     @FXML
     private VBox rescueCentersContainer;
 
-
+    private LoginClassCredentials loginCredentials;
     @FXML
     private Button Panebutton;
 
@@ -29,24 +26,33 @@ public class NearbyRescueCenterController extends UserMenuController {
 
     @FXML
     public void initialize() {
-        try {
+
             super.initialize();
-            pawCare=   new PawCare();
 
-            if (rescueCentersContainer == null) {
-                throw new IllegalStateException("rescueCentersContainer is not injected.");
-            }
-            List<RescueCenter> shelterInfoList = pawCare.fetchNearbyRegisteredRescueCenters();
+    }
+    void start(){
+        if (rescueCentersContainer == null) {
+            throw new IllegalStateException("rescueCentersContainer is not injected.");
+        }
+        List<RescueCenter> shelterInfoList = pawCare.fetchNearbyRegisteredRescueCenters();
 
-            for (RescueCenter info : shelterInfoList) {
-                addRescueCenterPane(info);
-            }
-            FirstAid.setOnAction(event -> handleFirstAid());
-            Panebutton.setOnAction(event -> handleSubmitRequest());
-        } catch (Exception e) {
-            e.printStackTrace();
+        for (RescueCenter info : shelterInfoList) {
+            addRescueCenterPane(info);
+        }
+        FirstAid.setOnAction(event -> handleFirstAid());
+        Panebutton.setOnAction(event -> handleSubmitRequest());
+    }
+    public void setSharedData(PawCare pawCare, LoginClassCredentials loginCredentials) {
+        if (pawCare == null || loginCredentials == null) {
+            System.out.println("Error: Shared data is null.");
+        } else {
+            this.pawCare = pawCare;
+            this.loginCredentials = loginCredentials;
+            System.out.println("Shared data set: " + pawCare + ", " + loginCredentials);
+            start();
         }
     }
+
 
     private void handleFirstAid() {
     }
@@ -96,9 +102,10 @@ public class NearbyRescueCenterController extends UserMenuController {
 
     private void handleSubmitRequest(Button submitButton) {
         String rescueCenterId = (String) submitButton.getUserData();
+        System.out.println("Clicked Rescue Center ID: " + rescueCenterId);
         pawCare.createAlert(SharedData.getInstance().getAnimalType(),SharedData.getInstance().getBreed(),
                 SharedData.getInstance().getInjuryDesc(),SharedData.getInstance().getImage(), SharedData.getInstance().getLocation(),
-                Session.getInstance().getLoggedInUser().getUserID(),rescueCenterId);
+                Session.getInstance().getLoggedInUser().getUserID(),rescueCenterId,"User");
         System.out.println("Clicked Rescue Center ID: " + rescueCenterId);
 
     }

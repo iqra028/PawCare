@@ -1,6 +1,8 @@
 package com.example.project1;
 
+import com.example.project1.BLL.LoginClassCredentials;
 import com.example.project1.BLL.PawCare;
+import com.example.project1.BLL.RequiresSharedData;
 import com.example.project1.BLL.Session;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -20,7 +22,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class VolunteerController extends UserMenuController {
+public class VolunteerController extends UserMenuController implements RequiresSharedData {
 
     private static final Logger LOGGER = Logger.getLogger(com.example.project1.VolunteerController.class.getName()); ;
     @FXML
@@ -43,11 +45,24 @@ public class VolunteerController extends UserMenuController {
     private String selectedVehicleType;
     private PawCare pawCare;
     private Image image;
+    private LoginClassCredentials loginCredentials;
 
     @FXML
     public void initialize() {
         super.initialize();
-        pawCare = new PawCare();
+
+    }
+
+    public void start() {
+        if(pawCare.ifUserisaVolunter())
+        {
+            try {
+                HelloApplication.getInstance().changeScene("VolunteerRequests.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return;
+        }
         // Set up vehicle type selection
         for (String type : new String[]{"Car", "Motorbike", "Bicycle", "Truck", "Van"}) {
             Text typeText = new Text(type);
@@ -59,6 +74,17 @@ public class VolunteerController extends UserMenuController {
 
         // Set submit button action
         submitButton.setOnAction(event -> handleSubmitAction());
+    }
+
+    public void setSharedData(PawCare pawCare, LoginClassCredentials loginCredentials) {
+        if (pawCare == null || loginCredentials == null) {
+            System.out.println("Error: Shared data is null.");
+        } else {
+            this.pawCare = pawCare;
+            this.loginCredentials = loginCredentials;
+            System.out.println("Shared data set: " + pawCare + ", " + loginCredentials);
+            start();
+        }
     }
     private void onUploadImage() {
         // Create a FileChooser to let the user pick an image file

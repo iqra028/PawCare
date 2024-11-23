@@ -39,18 +39,13 @@ public class GeoLocation {
         this.radius = 5000;
     }
     public double[] fetchDynamicLocation() {
-
-        try {
+            System.out.println("fetchDynamicLocation");
             String json = LocationFetcher.getValidLocation();
             double[] location= LocationParser.parseLocation(json);
             longitude = location[0];
             latitude = location[1];
             radius = 9000;
             return location;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new double[]{40.712776, -74.005974};
-        }
     }
     public List<String> parseAndDisplayShelterInfo(JSONObject jsonResponse) {
         List<String> shelterInfoList = new ArrayList<>();
@@ -100,6 +95,7 @@ public class GeoLocation {
     }
 
     public String generateMapHTML(double latitude, double longitude) {
+        System.out.println("i came to generate map");
         return ""
                 + "<!DOCTYPE html>"
                 + "<html>"

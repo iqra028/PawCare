@@ -14,6 +14,9 @@ public class Alert {
     private LocalDate dateCreated;
     private String userid;
     private String rescuecenterid;
+    private String alertType;
+    private Boolean completed;
+    private String alertId;
     public Alert(String animalType, String breed, String InjuryDesc,  Image image, double[] userLocation,String userid,String rescuecenterid) {
         this.type = animalType;
         this.breed = breed;
@@ -22,12 +25,33 @@ public class Alert {
         this.location = userLocation;
         this.dateCreated = LocalDate.now();
         this.userid = userid;
-        this.rescuecenterid = rescuecenterid;
+        completed=false;
+        this.rescuecenterid=rescuecenterid;
+        this.alertType="User";
     }
+    public void setAlertId(String id)
+    {
+        this.alertId=id;
+    }
+    public String getaAlertID()
+    {
+        return alertId;
+    }
+
     public Alert()
     {
 
     }
+    public void setAlertType(String t)
+    {
+        this.alertType=t;
+    }
+    public void setCompleted(Boolean b)
+    {
+        completed=b;
+    }
+
+
     public String getBreed() {
         return breed ;
     }

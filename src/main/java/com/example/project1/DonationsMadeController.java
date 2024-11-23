@@ -1,6 +1,8 @@
 package com.example.project1;
 import com.example.project1.BLL.Donation;
+import com.example.project1.BLL.LoginClassCredentials;
 import com.example.project1.BLL.PawCare;
+import com.example.project1.BLL.RequiresSharedData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -9,8 +11,8 @@ import javafx.scene.layout.VBox;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class DonationsMadeController extends RescueCenterMenuController {
-
+public class DonationsMadeController extends RescueCenterMenuController implements RequiresSharedData {
+    private LoginClassCredentials loginCredentials;
     private PawCare pawCare;
 
     @FXML
@@ -19,11 +21,20 @@ public class DonationsMadeController extends RescueCenterMenuController {
     @FXML
     public void initialize() {
         super.initialize();
-        pawCare = new PawCare();
+    }
+    public void start(){
         List<Donation> donationList = pawCare.DisplayDonationRecords();
-
-        // Display each donation dynamically
         displayDonations(donationList);
+    }
+    public void setSharedData(PawCare pawCare, LoginClassCredentials loginCredentials) {
+        if (pawCare == null || loginCredentials == null) {
+            System.out.println("Error: Shared data is null.");
+        } else {
+            this.pawCare = pawCare;
+            this.loginCredentials = loginCredentials;
+            System.out.println("Shared data set: " + pawCare + ", " + loginCredentials);
+            start();
+        }
     }
 
     private void displayDonations(List<Donation> donationList) {

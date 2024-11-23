@@ -1,6 +1,8 @@
 package com.example.project1;
 
+import com.example.project1.BLL.LoginClassCredentials;
 import com.example.project1.BLL.PawCare;
+import com.example.project1.BLL.RequiresSharedData;
 import com.example.project1.BLL.RescueCenter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,9 +15,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DonateController extends UserMenuController {
+public class DonateController extends UserMenuController implements RequiresSharedData {
 
-
+    private LoginClassCredentials loginCredentials;
     @FXML
     private TextField firstname;
     @FXML
@@ -46,13 +48,22 @@ public class DonateController extends UserMenuController {
     @Override
     public void initialize() {
         super.initialize();
-
-        // Initialize PawCare instance
-        pawCare = new PawCare();
+    }
+    public void start(){
         populateRescueCenters();
         Missing.setOnAction(event -> openCardPage());
         Found.setOnAction(event -> openEasypaisaPage());
         submitbutton.setOnAction(event -> handleSubmit());
+    }
+    public void setSharedData(PawCare pawCare, LoginClassCredentials loginCredentials) {
+        if (pawCare == null || loginCredentials == null) {
+            System.out.println("Error: Shared data is null.");
+        } else {
+            this.pawCare = pawCare;
+            this.loginCredentials = loginCredentials;
+            System.out.println("Shared data set: " + pawCare + ", " + loginCredentials);
+            start();
+        }
     }
     private void populateRescueCenters() {
         // Assuming PawCare has a method to fetch rescue center names

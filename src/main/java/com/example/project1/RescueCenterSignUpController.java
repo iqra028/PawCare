@@ -1,6 +1,8 @@
 package com.example.project1;
 
+import com.example.project1.BLL.LoginClassCredentials;
 import com.example.project1.BLL.PawCare;
+import com.example.project1.BLL.RequiresSharedData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -9,9 +11,10 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-public class RescueCenterSignUpController {
+public class RescueCenterSignUpController implements RequiresSharedData {
 
-    private PawCare pawcare;
+    private PawCare pawCare;
+    private LoginClassCredentials loginCredentials;
     @FXML
     private TextField usernameField;
     @FXML
@@ -33,9 +36,22 @@ public class RescueCenterSignUpController {
     private Button Finish;
 
     private HelloApplication helloApplication;
-
+    public void setSharedData(PawCare pawCare, LoginClassCredentials loginCredentials) {
+        if (pawCare == null || loginCredentials == null) {
+            System.out.println("Error: Shared data is null.");
+        } else {
+            this.pawCare = pawCare;
+            this.loginCredentials = loginCredentials;
+            System.out.println("Shared data set: " + pawCare + ", " + loginCredentials);
+            start();
+        }
+    }
     @FXML
     private void initialize() {
+
+
+    }
+    void start(){
         signUpButton.setOnAction(event -> openSignUpPage());
         logInButton.setOnAction(event -> openLogInPage());
         Finish.setOnAction(event ->  {
@@ -43,9 +59,11 @@ public class RescueCenterSignUpController {
                 openUserHomePage();
             }
         });
-
     }
     private void openUserHomePage() {
+        loginCredentials.setType("rescue center");
+        loginCredentials.setUsername(usernameField.getText());
+        loginCredentials.setPassword(passwordField.getText());
         try {
             HelloApplication.getInstance().changeScene("RescueCenterHomeScreen.fxml");
         } catch (IOException e) {
@@ -54,7 +72,6 @@ public class RescueCenterSignUpController {
     }
 
     private boolean handleSignUp() {
-        pawcare=new PawCare();
         String username = usernameField.getText();
         String name = nameField.getText();
         String email = emailField.getText();
@@ -63,7 +80,7 @@ public class RescueCenterSignUpController {
         String PhoneNumber = NumField.getText();
 
         if (!username.isEmpty() && !name.isEmpty() &&  !email.isEmpty() && !password.isEmpty() && !Location.isEmpty() && !PhoneNumber.isEmpty()) {
-            boolean reg= pawcare.registerRescueCenter(username,name,email,password,Location,PhoneNumber);
+            boolean reg= pawCare.registerRescueCenter(username,name,email,password,Location,PhoneNumber);
             if(reg){
                 showAlert("Success", "Sign-up successful!");
                 return true;

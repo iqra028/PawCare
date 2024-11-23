@@ -16,6 +16,14 @@ public class Volunteer {
 
     // Default constructor
     public Volunteer() {
+
+    }
+
+    public Boolean getAvailable() {
+        return available;
+    }
+    public void setAvailable(Boolean available) {
+        this.available = available;
     }
 
     // Constructor with parameters

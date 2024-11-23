@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1100.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.AdoptionRequestsController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1100.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.AlertsReceivedController">
    <content>
       <AnchorPane prefHeight="1108.0" prefWidth="1374.0" style="-fx-background-color: #E4C7A2;">
          <children>
@@ -68,25 +68,29 @@
                   </Text>
                   <VBox fx:id="container" layoutX="62.0" layoutY="175.0" prefHeight="572.0" prefWidth="686.0">
                      <children>
-                        <Pane fx:id="pane1" prefHeight="130.0" prefWidth="686.0" style="-fx-background-color: #EEB673;">
-                           <children>
-                              <Label fx:id="InjuredAnimalLabel" layoutX="25.0" layoutY="18.0" text="Injured Animal Found at">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="sendNearbyVolunteers" layoutX="517.0" layoutY="87.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #D08122;" text="Send Nearby Volunteers" />
-                              <Label fx:id="locationLabel" layoutX="25.0" layoutY="57.0" text="Location">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="dispatchteam" layoutX="409.0" layoutY="87.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: #D08122;" text="Dispatch Team" />
-                           </children>
-                           <effect>
-                              <DropShadow blurType="ONE_PASS_BOX" />
-                           </effect>
-                        </Pane>
+                        <ScrollPane prefHeight="721.0" prefWidth="686.0">
+                           <content>
+                              <Pane fx:id="pane1" prefHeight="130.0" prefWidth="686.0" style="-fx-background-color: #EEB673;">
+                                 <children>
+                                    <Label fx:id="InjuredAnimalLabel" layoutX="25.0" layoutY="18.0" text="Injured Animal Found at">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="sendNearbyVolunteers" layoutX="517.0" layoutY="87.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: #D08122;" text="Send Nearby Volunteers" />
+                                    <Label fx:id="locationLabel" layoutX="25.0" layoutY="57.0" text="Location">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="dispatchteam" layoutX="409.0" layoutY="87.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: #D08122;" text="Dispatch Team" />
+                                 </children>
+                                 <effect>
+                                    <DropShadow blurType="ONE_PASS_BOX" />
+                                 </effect>
+                              </Pane>
+                           </content>
+                        </ScrollPane>
                      </children>
                   </VBox>
                </children>

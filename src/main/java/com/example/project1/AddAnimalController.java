@@ -1,5 +1,7 @@
 package com.example.project1;
+import com.example.project1.BLL.LoginClassCredentials;
 import com.example.project1.BLL.PawCare;
+import com.example.project1.BLL.RequiresSharedData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,7 +18,7 @@ import java.io.File;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
-public class AddAnimalController extends RescueCenterMenuController{
+public class AddAnimalController extends RescueCenterMenuController implements RequiresSharedData {
     @FXML private TextField nameField;
     @FXML private TextField typeField;
     @FXML private TextField breedField;
@@ -33,13 +35,26 @@ public class AddAnimalController extends RescueCenterMenuController{
     @FXML private Button submitButton;
     @FXML private Label uploadLabel;
     private PawCare pawCare;
+    private LoginClassCredentials loginCredentials;
     private Image animalImage;
 
     public void initialize() {
         super.initialize();
-        pawCare = new PawCare();
+
+    }
+    public void start(){
         submitButton.setOnAction(event -> handleSubmitButtonAction());
         uploadButton.setOnAction(event -> handleUploadButtonAction());
+    }
+    public void setSharedData(PawCare pawCare, LoginClassCredentials loginCredentials) {
+        if (pawCare == null || loginCredentials == null) {
+            System.out.println("Error: Shared data is null.");
+        } else {
+            this.pawCare = pawCare;
+            this.loginCredentials = loginCredentials;
+            System.out.println("Shared data set: " + pawCare + ", " + loginCredentials);
+            start();
+        }
     }
 
     @FXML

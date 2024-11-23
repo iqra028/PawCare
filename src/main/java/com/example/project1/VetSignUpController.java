@@ -1,5 +1,7 @@
 package com.example.project1;
+import com.example.project1.BLL.LoginClassCredentials;
 import com.example.project1.BLL.PawCare;
+import com.example.project1.BLL.RequiresSharedData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -9,7 +11,7 @@ import javafx.scene.control.Alert.AlertType;
 
 import java.io.IOException;
 
-public class VetSignUpController {
+public class VetSignUpController implements RequiresSharedData {
 
     private PawCare pawCare;
     @FXML
@@ -31,6 +33,7 @@ public class VetSignUpController {
     private Button logInButton;
     @FXML
     private Button Finish;
+    private LoginClassCredentials loginCredentials;
 
     @FXML
     private void initialize() {
@@ -43,7 +46,29 @@ public class VetSignUpController {
         });
 
     }
+    public void start(){
+        signUpButton.setOnAction(event -> openSignUpPage());
+        logInButton.setOnAction(event -> openLogInPage());
+        Finish.setOnAction(event ->  {
+            if (handleSignUp()) {
+                openUserHomePage();
+            }
+        });
+    }
+    public void setSharedData(PawCare pawCare, LoginClassCredentials loginCredentials) {
+        if (pawCare == null || loginCredentials == null) {
+            System.out.println("Error: Shared data is null.");
+        } else {
+            this.pawCare = pawCare;
+            this.loginCredentials = loginCredentials;
+            System.out.println("Shared data set: " + pawCare + ", " + loginCredentials);
+            start();
+        }
+    }
     private void openUserHomePage() {
+        loginCredentials.setUsername(usernameField.getText());
+        loginCredentials.setPassword(passwordField.getText());
+        loginCredentials.setType("vet");
         try {
             HelloApplication.getInstance().changeScene("VetHomeScreen.fxml");
         } catch (IOException e) {
@@ -52,8 +77,6 @@ public class VetSignUpController {
     }
 
     private boolean handleSignUp() {
-
-        pawCare=new PawCare();
         String username = usernameField.getText();
         String name = namefield.getText();
         String email = emailField.getText();

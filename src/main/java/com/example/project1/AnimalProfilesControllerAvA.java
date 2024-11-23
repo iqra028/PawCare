@@ -15,22 +15,35 @@ import java.util.List;
 
 import java.io.IOException;
 
-public class AnimalProfilesControllerAvA  extends RescueCenterMenuController{
+public class AnimalProfilesControllerAvA  extends RescueCenterMenuController implements RequiresSharedData{
 
     @FXML
     private Button addAnimalBtn;
     @FXML
     private VBox animalContainer;
     private List<Profile> animalProfiles;
-    PawCare pawcare;
+    PawCare pawCare;
+    private LoginClassCredentials loginCredentials;
     @FXML
     public void initialize() {
 
         super.initialize();
-        pawcare=new PawCare();
+
+    }
+    public void start(){
         addAnimalBtn.setOnAction(event -> openAddAnimalPage());
         animalProfiles = getAnimalsFromRescueCenter();
         displayAnimalProfiles();
+    }
+    public void setSharedData(PawCare pawCare, LoginClassCredentials loginCredentials) {
+        if (pawCare == null || loginCredentials == null) {
+            System.out.println("Error: Shared data is null.");
+        } else {
+            this.pawCare = pawCare;
+            this.loginCredentials = loginCredentials;
+            System.out.println("Shared data set: " + pawCare + ", " + loginCredentials);
+            start();
+        }
     }
 
     private void displayAnimalProfiles() {

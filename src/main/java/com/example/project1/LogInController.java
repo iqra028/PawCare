@@ -1,18 +1,20 @@
 package com.example.project1;
 
+import com.example.project1.BLL.LoginClassCredentials;
 import com.example.project1.BLL.PawCare;
+import com.example.project1.BLL.RequiresSharedData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 
 import java.io.IOException;
 
-public class LogInController {
+public class LogInController implements RequiresSharedData  {
 
-    private PawCare pawCare;
+    private PawCare pawCare; // Shared PawCare instance
+    private LoginClassCredentials loginCredentials; // Shared credentials instance
     @FXML
     private TextField emailField;
     @FXML
@@ -30,13 +32,12 @@ public class LogInController {
     @FXML
     private Button VetLogin;
 
-    private HelloApplication helloApplication;
     private boolean loginSuccessful = false; // Tracks if login was successful
     private String homePage = "";
+    private String userType = ""; // Tracks the selected user type
 
     @FXML
     private void initialize() {
-        pawCare=new PawCare();
         signUpButton.setOnAction(event -> openSignUpPage());
         logInButton.setOnAction(event -> openLogInPage());
         UserLogin.setOnAction(event -> handleUserLogin());
@@ -45,23 +46,23 @@ public class LogInController {
         Finish.setOnAction(event -> handleFinish());
     }
 
-    /* private void openUserHomePage() {
-         try {
-             HelloApplication.getInstance().changeScene("UserHomeScreen.fxml");
-         } catch (IOException e) {
-             e.printStackTrace();
-         }
-     }*/
+    @Override
+    public void setSharedData(PawCare pawCare, LoginClassCredentials loginCredentials) {
+        this.pawCare = pawCare;
+        this.loginCredentials = loginCredentials;
+    }
 
     private void handleUserLogin() {
         String username = emailField.getText();
         String password = passwordField.getText();
 
         if (!username.isEmpty() && !password.isEmpty()) {
-            if (pawCare.login(username, password,"user")) {
+            if (pawCare.login(username, password, "user")) {
                 loginSuccessful = true;
+                userType = "user";
                 homePage = "UserHomeScreen.fxml";
-                showAlert("Login Success", "User logged in successfully! Press Login to continue.");
+                saveCredentials(username, password, userType);
+                showAlert("Login Success", "User logged in successfully! Press Finish to continue.");
             } else {
                 loginSuccessful = false;
                 showAlert("Login Error", "Invalid username or password.");
@@ -76,10 +77,12 @@ public class LogInController {
         String password = passwordField.getText();
 
         if (!username.isEmpty() && !password.isEmpty()) {
-            if (pawCare.login(username, password,"vet")) {
+            if (pawCare.login(username, password, "vet")) {
                 loginSuccessful = true;
+                userType = "vet";
                 homePage = "VetHomeScreen.fxml";
-                showAlert("Login Success", "Vet logged in successfully! Press Login to continue.");
+                saveCredentials(username, password, userType);
+                showAlert("Login Success", "Vet logged in successfully! Press Finish to continue.");
             } else {
                 loginSuccessful = false;
                 showAlert("Login Error", "Invalid username or password.");
@@ -94,10 +97,12 @@ public class LogInController {
         String password = passwordField.getText();
 
         if (!username.isEmpty() && !password.isEmpty()) {
-            if (pawCare.login(username, password,"rescue center")) {
+            if (pawCare.login(username, password, "rescue center")) {
                 loginSuccessful = true;
+                userType = "rescue center";
                 homePage = "RescueCenterHomeScreen.fxml";
-                showAlert("Login Success", "Rescue Center logged in successfully! Press Login to continue.");
+                saveCredentials(username, password, userType);
+                showAlert("Login Success", "Rescue Center logged in successfully! Press Finish to continue.");
             } else {
                 loginSuccessful = false;
                 showAlert("Login Error", "Invalid username or password.");
@@ -130,6 +135,7 @@ public class LogInController {
             e.printStackTrace();
         }
     }
+
     private void openSignUpPage() {
         try {
             HelloApplication.getInstance().changeScene("Select-UserType.fxml");
@@ -138,10 +144,21 @@ public class LogInController {
         }
     }
 
+    private void saveCredentials(String username, String password, String type) {
+        // Save credentials into the shared LoginClassCredentials object
+        if (loginCredentials != null) {
+            loginCredentials.setUsername(username);
+            loginCredentials.setPassword(password);
+            loginCredentials.setType(type);
+        } else {
+            showAlert("Error", "Shared Login Credentials object is not initialized.");
+        }
+    }
+
     private void showAlert(String title, String message) {
-        Alert alert = new Alert(AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
-        alert.setHeaderText((String)null);
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }

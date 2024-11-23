@@ -1,6 +1,8 @@
 package com.example.project1;
 
+import com.example.project1.BLL.LoginClassCredentials;
 import com.example.project1.BLL.PawCare;
+import com.example.project1.BLL.RequiresSharedData;
 import com.example.project1.BLL.RescueCenter;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
@@ -14,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DonateEasypaisaController extends UserMenuController {
+public class DonateEasypaisaController extends UserMenuController implements RequiresSharedData {
 
     @FXML
     private TextField phoneNumber;
@@ -27,7 +29,7 @@ public class DonateEasypaisaController extends UserMenuController {
 
     @FXML
     private TextField amount;
-
+    private LoginClassCredentials loginCredentials;
     @FXML
     private Button submitbutton;
     @FXML
@@ -42,18 +44,28 @@ public class DonateEasypaisaController extends UserMenuController {
     public void initialize() {
         super.initialize();
 
-        // Initialize PawCare instance
-        pawCare = new PawCare();
-        populateRescueCenters();
-        Missing.setOnAction(event -> openCardPage());
-        Found.setOnAction(event -> openEasypaisaPage());
-        submitbutton.setOnAction(event -> handleSubmit());
     }
     private void openCardPage() {
         try {
             HelloApplication.getInstance().changeScene("DonateForm.fxml");        } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void setSharedData(PawCare pawCare, LoginClassCredentials loginCredentials) {
+        if (pawCare == null || loginCredentials == null) {
+            System.out.println("Error: Shared data is null.");
+        } else {
+            this.pawCare = pawCare;
+            this.loginCredentials = loginCredentials;
+            System.out.println("Shared data set: " + pawCare + ", " + loginCredentials);
+            start();
+        }
+    }
+    void start(){
+        populateRescueCenters();
+        Missing.setOnAction(event -> openCardPage());
+        Found.setOnAction(event -> openEasypaisaPage());
+        submitbutton.setOnAction(event -> handleSubmit());
     }
 
     private void openEasypaisaPage() {
