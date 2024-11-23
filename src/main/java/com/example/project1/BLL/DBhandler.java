@@ -391,6 +391,73 @@ public  class DBhandler {
 
         return alerts;
     }
+    public void animalWentToVet(String animal_id) {
+
+    }
+    public void addvet_animal(String animal_id, String vet_id) {
+        // SQL query to insert into the animal_vet table
+        String sql = "INSERT INTO vet_animals (vetid, animalid) VALUES (CAST(? AS UUID), CAST(? AS UUID))";
+
+        try (Connection conn = connect(); // Ensure you have a valid database connection
+             PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+            // Validate and set animal_id and vet_id as UUID
+            UUID animalUuid = UUID.fromString(vet_id); // Ensure it's a valid UUID
+            UUID vetUuid = UUID.fromString(animal_id);
+            // Ensure it's a valid UUID
+
+            stmt.setObject(1, vetUuid);
+            stmt.setObject(2,animalUuid );
+
+
+            // Execute the update and check if it was successful
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Animal " + animal_id + " successfully assigned to Vet " + vet_id + ".");
+            } else {
+                System.out.println("Failed to assign Animal " + animal_id + " to Vet " + vet_id + ".");
+            }
+
+        } catch (SQLException e) {
+            // Log SQL exceptions
+            System.err.println("Error while inserting into animal_vet: " + e.getMessage());
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            // Handle invalid UUID format
+            System.err.println("Invalid UUID format: " + e.getMessage());
+        }
+    }
+    public void updateanimalwenttovet(String animal_id) {
+        // SQL query to insert into the animal_vet table
+        String sql = "UPDATE animals SET with_vet = true WHERE animal_id = CAST(? AS UUID)";
+
+        try (Connection conn = connect(); // Ensure you have a valid database connection
+             PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+            UUID vetUuid = UUID.fromString(animal_id);
+            // Ensure it's a valid UUID
+
+            stmt.setObject(1, vetUuid);
+
+
+            // Execute the update and check if it was successful
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Animal " + animal_id + " successfully ");
+            }
+
+        } catch (SQLException e) {
+            // Log SQL exceptions
+            System.err.println("Error while inserting into animal_vet: " + e.getMessage());
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            // Handle invalid UUID format
+            System.err.println("Invalid UUID format: " + e.getMessage());
+        }
+    }
+
+
+
 
 
 

@@ -321,6 +321,21 @@ public class PawCare {
 
 
     }
+    public void sendAnimalToVet(Profile animal, String vet)
+    {
+        for(Vets v: vets)
+        {
+            if(v.getUserName().equals(vet))
+            {
+                v.setCurrentlybeingchecked(animal);
+                System.out.println(v.getVetID());
+                db.addvet_animal(v.getVetID(),animal.getAnimal().getAnimalID());
+                db.updateanimalwenttovet(animal.getAnimal().getAnimalID());
+            }
+        }
+
+    }
+
     public void setAlertToCompleted(String id)
     {
         db.setCompletedToTrue(id);

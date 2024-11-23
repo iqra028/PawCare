@@ -14,6 +14,13 @@ public class SharedData {
     private String breed;
     private String injuryDesc;
     private Image image;
+    private Vets selectedVet;
+    public void setSelectedVet(Vets vet) {
+        selectedVet = vet;
+    }
+    public Vets getSelectedVet() {
+        return selectedVet;
+    }
 
     // Private constructor to enforce singleton pattern
     private SharedData() {}

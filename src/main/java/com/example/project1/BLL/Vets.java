@@ -1,5 +1,8 @@
 package com.example.project1.BLL;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Vets {
 
     private String vetID;
@@ -9,6 +12,7 @@ public class Vets {
     private String email;
     private String location;  // You can change this to a Location type later
     private String phoneNumber;
+    private List<Profile> currentlybeingchecked;
 
     // Updated constructor to include phone number
     public Vets(String vetID,String userName, String vetName, String email, String password, String location, String phoneNumber) {
@@ -19,8 +23,18 @@ public class Vets {
         this.password = password;
         this.location = location;
         this.phoneNumber = phoneNumber;
+        currentlybeingchecked=new ArrayList<Profile>();
     }
-
+    public void setCurrentlybeingchecked(Profile animal) {
+        currentlybeingchecked.add(animal);
+        for(Profile a:currentlybeingchecked)
+        {
+            System.out.println(a.getAnimal().getName()+" "+a.getAnimal().getAnimalID());
+        }
+    }
+    public List<Profile> getCurrentlybeingchecked() {
+        return currentlybeingchecked;
+    }
     // Getters and Setters
     public String getVetID() {
         return vetID;
