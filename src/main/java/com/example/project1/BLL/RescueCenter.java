@@ -48,6 +48,13 @@ public class RescueCenter {
     public void addAdoptionProfile(Profile pf) {
         adoptionProfiles.add(pf);
     }
+    public void removeAnimalProfile(Profile pf) {
+        animalProfiles.remove(pf);
+    }
+
+    public void removeAdoptionProfile(Profile pf) {
+        adoptionProfiles.remove(pf);
+    }
 
 
     // Getters and Setters

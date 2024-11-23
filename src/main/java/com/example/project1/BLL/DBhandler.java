@@ -726,5 +726,146 @@ public  class DBhandler {
         return animals;
     }
 
+    public UUID getHealthIdFromAnimal(String animalIdString) {
+        UUID animalId = UUID.fromString(animalIdString);
+
+        String query = "SELECT health_id FROM animals WHERE animal_id = ?";
+
+        try (Connection connection = connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setObject(1, animalId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String healthIdString = resultSet.getString("health_id");
+                return UUID.fromString(healthIdString);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean updateAnimalInDB(Animal updatedAnimal) {
+        String animalIdString = updatedAnimal.getAnimalID();
+        UUID healthId = getHealthIdFromAnimal(animalIdString);
+
+        if (healthId == null) {
+            System.out.println("No health record found for the given animal ID.");
+            return false;
+        }
+
+        boolean healthUpdateSuccess = updateHealthDescriptionInDB(updatedAnimal.getHealth(), healthId);
+
+        if (healthUpdateSuccess) {
+            return updateAnimalDetailsInDB(updatedAnimal, healthId);
+        }
+        return false;
+    }
+    public boolean updateAnimalDetailsInDB(Animal updatedAnimal, UUID healthId) {
+        String updateQuery = "UPDATE animals SET type = ?, breed = ?, color = ?, health_id = ?, " +
+                "health_status = ?, visited_vet = ?, with_vet = ?, up_for_adoption = ?, adopted = ?, " +
+                "name = ? WHERE animal_id = ?";
+
+        try (Connection connection = connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+
+            // Set the parameters in the prepared statement
+            preparedStatement.setString(1, updatedAnimal.getType());
+            preparedStatement.setString(2, updatedAnimal.getBreed());
+            preparedStatement.setString(3, updatedAnimal.getColor());
+            preparedStatement.setObject(4, healthId); // health_id is a UUID
+            preparedStatement.setBoolean(5, updatedAnimal.isHealthStatus());
+            preparedStatement.setBoolean(6, updatedAnimal.isVisitedVet());
+            preparedStatement.setBoolean(7, updatedAnimal.isWithVet());
+            preparedStatement.setBoolean(8, updatedAnimal.isUpForAdoption());
+            preparedStatement.setBoolean(9, updatedAnimal.isAdopted());
+            preparedStatement.setString(10, updatedAnimal.getName());
+            preparedStatement.setObject(11, UUID.fromString(updatedAnimal.getAnimalID())); // animal_id as UUID
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+            return rowsUpdated > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean updateHealthDescriptionInDB(HealthDescription updatedHealth, UUID healthId) {
+        String updateQuery = "UPDATE health_description SET temperature = ?, heart_rate = ?, respiratory_rate = ?, " +
+                "capillary_refill_time = ?, blood_oxygen_level = ?, blood_glucose_level = ?, weight = ? " +
+                "WHERE id = ?";
+
+        try (Connection connection = connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+            preparedStatement.setDouble(1, updatedHealth.getTemperature());
+            preparedStatement.setInt(2, updatedHealth.getHeartRate());
+            preparedStatement.setInt(3, updatedHealth.getRespiratoryRate());
+            preparedStatement.setInt(4, updatedHealth.getCapillaryRefillTime());
+            preparedStatement.setInt(5, updatedHealth.getBloodOxygenLevel());
+            preparedStatement.setInt(6, updatedHealth.getBloodGlucoseLevel());
+            preparedStatement.setDouble(7, updatedHealth.getWeight());
+            preparedStatement.setObject(8, healthId);
+            int rowsUpdated = preparedStatement.executeUpdate();
+            return rowsUpdated > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean deleteAnimal(String animalId) {
+        String getHealthIdQuery = "SELECT health_id FROM Animals WHERE animal_id = ?";
+        String deleteAnimalQuery = "DELETE FROM Animals WHERE animal_id = ?";
+        String deleteHealthDescriptionQuery = "DELETE FROM health_description WHERE id = ?";
+
+        try (Connection conn = connect();  // Establish the database connection
+             PreparedStatement getHealthIdStmt = conn.prepareStatement(getHealthIdQuery);
+             PreparedStatement deleteAnimalStmt = conn.prepareStatement(deleteAnimalQuery);
+             PreparedStatement deleteHealthDescriptionStmt = conn.prepareStatement(deleteHealthDescriptionQuery)) {
+
+            // Convert string animalId to UUID
+            UUID animalUuid = UUID.fromString(animalId);
+
+            getHealthIdStmt.setObject(1, animalUuid);
+            ResultSet resultSet = getHealthIdStmt.executeQuery();
+            UUID healthId = null;
+            if (resultSet.next()) {
+                healthId = (UUID) resultSet.getObject("health_id");
+            }
+
+            if (healthId == null) {
+                System.err.println("No health_id found for the given animal_id: " + animalId);
+                return false;
+            }
+
+            deleteAnimalStmt.setObject(1, animalUuid);
+            int animalRowsAffected = deleteAnimalStmt.executeUpdate();
+            if (animalRowsAffected == 0) {
+                System.err.println("Failed to delete the animal with animal_id: " + animalId);
+                return false;
+            }
+
+            deleteHealthDescriptionStmt.setObject(1, healthId);
+            int healthRowsAffected = deleteHealthDescriptionStmt.executeUpdate();
+            return healthRowsAffected > 0;
+
+        } catch (IllegalArgumentException e) {
+            System.err.println("Invalid UUID format: " + animalId);
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
+
+
+
 }
 

@@ -194,6 +194,21 @@ public class PawCare {
             return false;
         }
     }
+    public void deleteAnimalProf(Profile pf) {
+        RescueCenter loggedInRescueCenter = Session.getInstance().getLoggedInRescueCenter();
+
+        if (loggedInRescueCenter != null) {
+            if (pf instanceof AnimalProfile) {
+                loggedInRescueCenter.removeAnimalProfile(pf);
+            } else if (pf instanceof AdoptionProfile) {
+                loggedInRescueCenter.removeAdoptionProfile(pf);
+            } else {
+                System.err.println("Unknown profile type: Cannot delete");
+            }
+        } else {
+            System.err.println("No rescue center is currently logged in.");
+        }
+    }
     public List<String> generatenearbycenters(){
 
         String overpassUrl = "https://overpass-api.de/api/interpreter?data=[out:json];" +
@@ -492,4 +507,16 @@ public class PawCare {
             }
         }
     }
+    public boolean updateAnimalProfile(Animal updatedAnimal) {
+        return db.updateAnimalInDB(updatedAnimal);
+    }
+
+    public boolean deleteAnimalProfile(Profile animalProfile) {
+        Animal animal = animalProfile.getAnimal();
+        String animalId = animal.getAnimalID();
+
+        return db.deleteAnimal(animalId);
+    }
 }
+
+

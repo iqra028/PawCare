@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -46,6 +47,7 @@ public class AnimalProfilesControllerAvA  extends RescueCenterMenuController imp
         }
     }
 
+
     private void displayAnimalProfiles() {
         animalContainer.getChildren().clear(); // Clear any existing profiles
 
@@ -57,20 +59,14 @@ public class AnimalProfilesControllerAvA  extends RescueCenterMenuController imp
         }
 
         for (Profile animalProf : animalProfiles) {
-            Pane animalPane = createAnimalProfile(
-                    animalProf.getAnimal().getName(),
-                    animalProf.getAnimal().getType(),
-                    animalProf.getAnimal().getBreed(),
-                    animalProf.getAnimal().getColor(),
-                    animalProf.getAnimal().isVisitedVet(),
-                    animalProf.getAnimal().isWithVet(),
-                    animalProf.getAnimal().getImage()
-            );
+            Pane animalPane = createAnimalProfile(animalProf); // Pass the entire Profile object
             animalContainer.getChildren().add(animalPane);
         }
     }
 
-    private Pane createAnimalProfile(String name, String type, String breed, String color, boolean visitedVet, boolean withVet, Image image) {
+    private Pane createAnimalProfile(Profile animalProf) {
+        Animal animal = animalProf.getAnimal(); // Access the Animal object from the Profile
+
         // Create a new Pane for the animal profile
         Pane profilePane = new Pane();
         profilePane.setPrefSize(674, 287);
@@ -82,32 +78,32 @@ public class AnimalProfilesControllerAvA  extends RescueCenterMenuController imp
         img.setFitWidth(250); // Adjust width as needed
         img.setLayoutX(20);   // Set X position
         img.setLayoutY(40);   // Set Y position
-        img.setImage(image);
-        img.setPreserveRatio(true);  // Maintain the aspect ratio of the image
+        img.setImage(animal.getImage());
+        img.setPreserveRatio(true); // Maintain the aspect ratio of the image
 
         // Labels
-        Label nameLabel = new Label(name);
+        Label nameLabel = new Label(animal.getName());
         nameLabel.setLayoutX(300); // Adjust layout X position as needed
         nameLabel.setLayoutY(40);
         nameLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
-        Label typeLabel = new Label("Type: " + type);
+        Label typeLabel = new Label("Type: " + animal.getType());
         typeLabel.setLayoutX(300);
         typeLabel.setLayoutY(70);
 
-        Label breedLabel = new Label("Breed: " + breed);
+        Label breedLabel = new Label("Breed: " + animal.getBreed());
         breedLabel.setLayoutX(300);
         breedLabel.setLayoutY(100);
 
-        Label colorLabel = new Label("Color: " + color);
+        Label colorLabel = new Label("Color: " + animal.getColor());
         colorLabel.setLayoutX(300);
         colorLabel.setLayoutY(130);
 
-        Label visitedVetLabel = new Label("Visited Vet: " + (visitedVet ? "Yes" : "No"));
+        Label visitedVetLabel = new Label("Visited Vet: " + (animal.isVisitedVet() ? "Yes" : "No"));
         visitedVetLabel.setLayoutX(300);
         visitedVetLabel.setLayoutY(160);
 
-        Label withVetLabel = new Label("With Vet: " + (withVet ? "Yes" : "No"));
+        Label withVetLabel = new Label("With Vet: " + (animal.isWithVet() ? "Yes" : "No"));
         withVetLabel.setLayoutX(300);
         withVetLabel.setLayoutY(190);
 
@@ -118,11 +114,40 @@ public class AnimalProfilesControllerAvA  extends RescueCenterMenuController imp
         editButton.setPrefSize(155, 34);
         editButton.setStyle("-fx-background-color: #D08122;");
 
+        //new stuff :(
+        editButton.setOnAction(event -> {
+            SharedProfile.getInstance().setSelectedAnimalProfile(animalProf);
+            try {
+                HelloApplication.getInstance().changeScene("EditAnimal.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         Button deleteButton = new Button("Delete");
         deleteButton.setLayoutX(499);
         deleteButton.setLayoutY(93);
         deleteButton.setPrefSize(155, 34);
         deleteButton.setStyle("-fx-background-color: #D08122;");
+
+        // new stuff:
+        deleteButton.setOnAction(event -> {
+            boolean deleted = pawCare.deleteAnimalProfile(animalProf);
+            if (deleted) { javafx.scene.control.Alert alert = new javafx.scene.control.Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText(null);
+                alert.setContentText("Profile deleted successfully!");
+                alert.showAndWait();
+                pawCare.deleteAnimalProf(animalProf);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Error deleting profile.");
+                alert.showAndWait();
+            }
+
+        });
 
         Button adoptionButton = new Button("Put up for Adoption");
         adoptionButton.setLayoutX(499);
@@ -157,4 +182,5 @@ public class AnimalProfilesControllerAvA  extends RescueCenterMenuController imp
             e.printStackTrace();
         }
     }
+
 }
