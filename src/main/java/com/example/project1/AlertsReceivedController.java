@@ -45,7 +45,6 @@ public class AlertsReceivedController extends RescueCenterMenuController impleme
     }
     // This function is responsible for loading the adoption requests (alerts) from the database
     private void loadAllertsRequests() {
-        pawCare = new PawCare();
         List<Alert> alerts = pawCare.getAlertsFromDatabase(Session.getInstance().getLoggedInRescueCenter().getUserName()); // Fetch alerts from the database
 
         // Clear existing alerts if any
