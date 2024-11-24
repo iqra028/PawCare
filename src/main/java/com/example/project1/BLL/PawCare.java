@@ -550,11 +550,17 @@ public class PawCare {
         }
         return rc;
     }
-
+    public boolean isUserAvailable(){
+        return db.isUserAvailable();
+    }
 
     public Boolean ifUserisaVolunter()
     {
         return db.isUserVolunteer();
+    }
+    public void setVolunteerAvailability(Boolean b)
+    {
+        db.setVolunteerAvailability(b);
     }
 
     public void printAllIDs() {

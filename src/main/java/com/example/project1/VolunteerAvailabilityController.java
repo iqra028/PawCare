@@ -1,9 +1,6 @@
 
 package com.example.project1;
-import com.example.project1.BLL.LoginClassCredentials;
-import com.example.project1.BLL.PawCare;
-import com.example.project1.BLL.RequiresSharedData;
-import com.example.project1.BLL.Session;
+import com.example.project1.BLL.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -50,7 +47,13 @@ public class VolunteerAvailabilityController extends UserMenuController implemen
 
     @FXML
     private void handleSubmitAction() {
-        //pawCare.setVolunteerAvilability(true);
+        pawCare.setVolunteerAvailability(true);
+        try {
+            HelloApplication.getInstance().changeScene("VolunteerRequests.fxml");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 }

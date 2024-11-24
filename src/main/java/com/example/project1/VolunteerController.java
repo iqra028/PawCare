@@ -56,12 +56,23 @@ public class VolunteerController extends UserMenuController implements RequiresS
     public void start() {
         if(pawCare.ifUserisaVolunter())
         {
-            try {
-                HelloApplication.getInstance().changeScene("VolunteerRequests.fxml");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            if(pawCare.isUserAvailable()) {
+                try {
+                    HelloApplication.getInstance().changeScene("VolunteerRequests.fxml");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                return;
             }
-            return;
+            else{
+                try {
+                    HelloApplication.getInstance().changeScene("VolunteerAvailability.fxml");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                return;
+
+            }
         }
         // Set up vehicle type selection
         for (String type : new String[]{"Car", "Motorbike", "Bicycle", "Truck", "Van"}) {

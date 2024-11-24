@@ -243,6 +243,57 @@ public  class DBhandler {
             return false;
         }
     }
+    public boolean setVolunteerAvailability(boolean availability) {
+        String sql = "UPDATE volunteer SET availability = ? WHERE userid = ?";
+
+        try (Connection conn = connect(); // Use your database connection method
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+
+            // Set the 'availability' parameter
+            statement.setBoolean(1, availability);
+
+            // Set the userId parameter
+            statement.setObject(2, UUID.fromString(Session.getInstance().getLoggedInUser().getUserID()));
+
+            // Execute the update query
+            int rowsUpdated = statement.executeUpdate();
+
+            // Return true if at least one row was updated (indicating success)
+            return rowsUpdated > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean isUserAvailable() {
+        String sql = "SELECT availability FROM volunteer WHERE userid = ?";
+
+        try (Connection conn = connect(); // Use your database connection method
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+
+            // Set the userId parameter
+            statement.setObject(1, UUID.fromString(Session.getInstance().getLoggedInUser().getUserID()));
+
+            // Execute the query
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                // Get the 'availability' column value (assuming 'availability' is a boolean field)
+                return resultSet.getBoolean("availability");
+            }
+
+            // User not found
+            System.out.println("User not found in the volunteer table.");
+            return false;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean updateVolunteerAvailability(String userId, boolean availability) {
         String sql = "UPDATE volunteer SET availability = ? WHERE userid = ?";
 
