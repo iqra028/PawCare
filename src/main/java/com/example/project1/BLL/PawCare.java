@@ -272,6 +272,30 @@ public class PawCare {
         this.forms.add(form);
     }
 
+    public void storeAdoptionRequest(AdoptionRequest adoptionRequest)
+    {
+        db.addAdoptionRequest(adoptionRequest);
+        RescueCenter rescueCenter = getRescueCenterById(adoptionRequest.getRescueCenterId());
+        rescueCenter.addAdoptionRequest(adoptionRequest);
+
+    }
+    public ArrayList<AdoptionRequest> getAdoptionRequestsForRescueCenter(String rescueCenterUsername) {
+        RescueCenter rescueCenter = getRescueCenterByUsername(rescueCenterUsername);
+        if (rescueCenter == null) {
+            return new ArrayList<>();
+        }
+        return rescueCenter.getRequests();
+    }
+
+    private RescueCenter getRescueCenterById(String rescueCenterId) {
+        for (RescueCenter rescueCenter : getRescueCenters()) {
+            if (rescueCenter.getRescueCenterID().equals(rescueCenterId)) {
+                return rescueCenter;
+            }
+        }
+        return null;
+    }
+
     //loading any existing members of system from database
     private void loadDataFromDatabase()  {
         users = db.getAllUsers();
@@ -307,6 +331,10 @@ public class PawCare {
     }
     public void loadAdoptionRequests(RescueCenter rescueCenter)
     {
+        ArrayList<AdoptionRequest> ad= db.getAdoptionRequests(rescueCenter);
+        for (AdoptionRequest request : ad) {
+            rescueCenter.addAdoptionRequest(request);
+        }
 
     }
 
@@ -375,6 +403,7 @@ public class PawCare {
         }
 
     }
+
 
     public void setAlertToCompleted(String id)
     {

@@ -51,7 +51,7 @@
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="DonationsMade" layoutX="1055.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Donations made" textFill="WHITE">
+                  <Button fx:id="DonationsMade" layoutX="1055.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Donations Made" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -66,28 +66,8 @@
                         <Font size="36.0" />
                      </font>
                   </Text>
-                  <VBox fx:id="container" layoutX="62.0" layoutY="179.0" prefHeight="572.0" prefWidth="686.0">
-                     <children>
-                        <Pane fx:id="pane1" prefHeight="130.0" prefWidth="686.0" style="-fx-background-color: #EEB673;">
-                           <children>
-                              <Label fx:id="adoptionReq" layoutX="25.0" layoutY="18.0" text="Adoption Request for Gilbert">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="Deny" layoutX="593.0" layoutY="87.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="79.0" style="-fx-background-color: #D08122;" text="Deny" />
-                              <Label fx:id="adopter" layoutX="25.0" layoutY="57.0" text="By *name of person*">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="approve" layoutX="496.0" layoutY="87.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="83.0" style="-fx-background-color: #D08122;" text="Approve" />
-                           </children>
-                           <effect>
-                              <DropShadow blurType="ONE_PASS_BOX" />
-                           </effect>
-                        </Pane>
-                     </children>
+                  <VBox fx:id="container" layoutX="62.0" layoutY="179.0" prefHeight="572.0" prefWidth="686.0" spacing="10.0">
+                     <!-- Dynamic adoption request elements will be added here -->
                   </VBox>
                </children>
             </AnchorPane>

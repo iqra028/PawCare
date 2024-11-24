@@ -140,23 +140,39 @@ public class AdoptController extends UserMenuController implements RequiresShare
         vbox.getChildren().addAll(allergyCheckBox, livingConditionCheckBox, reasonField);
         dialog.getDialogPane().setContent(vbox);
 
-        Button submitButton = new Button("Submit");
-        submitButton.setOnAction(event -> {
-            String allergies = allergyCheckBox.isSelected() ? "Yes" : "No";
-            String suitableLivingConditions = livingConditionCheckBox.isSelected() ? "Yes" : "No";
-            String reason = reasonField.getText();
-            System.out.println("Adoption Application: " + allergies + ", " + suitableLivingConditions + ", Reason: " + reason);
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Adoption Application");
-            alert.setHeaderText(null);
-            alert.setContentText("You have successfully applied for adoption of " + animalProf.getAnimal().getName() + "!");
-            alert.showAndWait();
+        // Set the OK button's action
+        ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, okButtonType);
 
-            dialog.close();
+        // Handle the OK button press (submit the adoption request)
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == okButtonType) {
+                // Collect user input
+                String allergies = allergyCheckBox.isSelected() ? "Yes" : "No";
+                String suitableLivingConditions = livingConditionCheckBox.isSelected() ? "Yes" : "No";
+                String reason = reasonField.getText();
+
+                // Create and store the adoption request
+                AdoptionRequest adoptionRequest = new AdoptionRequest(" ", userId, rescueCenterId, animalId, allergyCheckBox.isSelected(), livingConditionCheckBox.isSelected(), reason, false,false);
+                pawCare.storeAdoptionRequest(adoptionRequest);
+
+                // Display success message
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Adoption Application");
+                alert.setHeaderText(null);
+                alert.setContentText("You have successfully applied for adoption of " + animalProf.getAnimal().getName() + "!");
+                alert.showAndWait();
+
+                // Close the dialog
+                dialog.close();
+            }
+            return null;
         });
-        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
+
+        // Show the dialog
         dialog.show();
-        }
+    }
+
     private String getUserFromUsername(String username) {
         for (User user : pawCare.getUsers()) {
             if (user.getUserName().equals(username)) {

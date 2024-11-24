@@ -61,7 +61,10 @@ public class RescueCenter {
 
 
     // Getters and Setters
-
+public ArrayList<AdoptionRequest> getRequests()
+{
+    return this.requests;
+}
     public String getRescueCenterID() {
         return rescueCenterID;
     }

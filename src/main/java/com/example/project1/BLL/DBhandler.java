@@ -1175,6 +1175,74 @@ public  class DBhandler {
         }
         return reports;
     }
+    public void addAdoptionRequest(AdoptionRequest adoptionRequest) {
+        // Insert query with auto-generated requestID
+        String query = "INSERT INTO adoption_requests (user_id, rescue_center_id, animal_id, has_allergy, has_suitable_living_condition, reason_to_adopt, application_status, is_resolved) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setObject(1, UUID.fromString(adoptionRequest.getUserId()));  // Convert string to UUID before setting
+            stmt.setObject(2, UUID.fromString(adoptionRequest.getRescueCenterId()));  // Convert string to UUID before setting
+            stmt.setObject(3, UUID.fromString(adoptionRequest.getAnimalId()));  // Convert string to UUID before setting
+            stmt.setBoolean(4, adoptionRequest.isHas_allergy());
+            stmt.setBoolean(5, adoptionRequest.isSuitable_living_conditions());
+            stmt.setString(6, adoptionRequest.getReason_to_adopt());
+            stmt.setBoolean(7, adoptionRequest.isApplicationStatus());
+            stmt.setBoolean(8, adoptionRequest.getIsResolved());
+
+            int rowsAffected = stmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        String generatedRequestID = generatedKeys.getString(1);
+                        adoptionRequest.setRequestID(generatedRequestID);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public ArrayList<AdoptionRequest> getAdoptionRequests(RescueCenter rc) {
+        ArrayList<AdoptionRequest> adoptionRequests = new ArrayList<>();
+        String rescueCenterIdString = rc.getRescueCenterID();
+        UUID rescueCenterId = UUID.fromString(rescueCenterIdString);
+
+        String query = "SELECT * FROM adoption_requests WHERE rescue_center_id = ?";
+
+        try (Connection connection = connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setObject(1, rescueCenterId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String requestId = resultSet.getObject("request_id", UUID.class).toString();
+                String userId = resultSet.getObject("user_id", UUID.class).toString();
+                String animalId = resultSet.getObject("animal_id", UUID.class).toString();
+                boolean hasAllergy = resultSet.getBoolean("has_allergy");
+                boolean suitableLivingConditions = resultSet.getBoolean("has_suitable_living_condition");
+                String reason = resultSet.getString("reason_to_adopt");
+                boolean applicationStatus = resultSet.getBoolean("application_status");
+                boolean isResolved = resultSet.getBoolean("is_resolved"); // New attribute
+
+                AdoptionRequest adoptionRequest = new AdoptionRequest(requestId, userId, rescueCenterIdString, animalId,
+                        hasAllergy, suitableLivingConditions, reason, applicationStatus, isResolved);
+
+                adoptionRequests.add(adoptionRequest);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return adoptionRequests;
+    }
+
+
 
 
 

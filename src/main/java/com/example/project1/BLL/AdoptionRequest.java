@@ -10,7 +10,28 @@ public class AdoptionRequest {
     private boolean suitable_living_conditions;
     private String reason_to_adopt;
     boolean applicationStatus;
+    boolean is_resolved;
+    public AdoptionRequest(String requestID, String userId, String rescueCenterId, String animalId,
+                           boolean has_allergy, boolean suitable_living_conditions, String reason_to_adopt,
+                           boolean applicationStatus,boolean is_resolved) {
+        this.requestID = requestID;
+        this.userId = userId;
+        this.rescueCenterId = rescueCenterId;
+        this.animalId = animalId;
+        this.has_allergy = has_allergy;
+        this.suitable_living_conditions = suitable_living_conditions;
+        this.reason_to_adopt = reason_to_adopt;
+        this.applicationStatus = applicationStatus;
+        this.is_resolved=is_resolved;
+    }
 
+    public boolean getIsResolved() {
+        return is_resolved;
+    }
+
+    public void setIs_resolved(boolean res) {
+        this.is_resolved=res;
+    }
     public String getRequestID() {
         return requestID;
     }
