@@ -54,7 +54,17 @@ public class ReportInjuredAnimalController extends UserMenuController implements
             super.initialize();
             btnSubmit.setOnAction(event -> onSubmitClick());
             btnUploadImage.setOnAction(event -> onUploadImage());
+            btnFirstAid.setOnAction(event -> openFirstAid() );
 
+        }
+        public void openFirstAid()
+        {
+            try {
+                HelloApplication.getInstance().changeScene("FirstAid.fxml");
+            } catch (IOException e) {
+                LOGGER.log(Level.SEVERE, "Failed to change scene to Select-UserType.fxml", e);
+
+            }
         }
         public void customInitialize() {
             if (pawCare != null) {

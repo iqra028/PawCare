@@ -24,6 +24,7 @@ public class PawCare {
     private GeoLocation geoLocation;
     private ProfileFactory profileFactory;
     private List<injuryReport> InjuryReport;
+    private FirstAid firstAid;
 
     // Constructor
     public PawCare()  {
@@ -40,7 +41,13 @@ public class PawCare {
         loadDataFromDatabase();
         this.donationContext = new DonationContext();
         this.InjuryReport = new ArrayList<>();
+        this.firstAid=new FirstAid();
 
+    }
+
+    public String getFirstAidResponse(String userMessage) {
+        String response =firstAid.getResponse(userMessage);
+        return  response;
     }
     public void saveInjuryReport(injuryReport report) {
 
