@@ -121,20 +121,12 @@ public class VolunteerRequestsController extends UserMenuController implements R
     // Handle the event when the "Dispatch Team" button is clicked
     private void setCompleted(Alert alert) {
         try {
+            System.out.println(alert.getaAlertID());
+            System.out.println("set Alert");
             pawCare.setAlertToCompleted(alert.getaAlertID());
         } catch (Exception e) {;
             showErrorDialog("Failed to complete. Please try again.");
         }
-    }
-
-    // Utility method to show a confirmation dialog
-    private void showConfirmationDialog(String message) {
-        // Create a simple confirmation dialog (or use an existing UI framework dialog box)
-        javafx.scene.control.Alert confirmationAlert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
-        confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setHeaderText(null);
-        confirmationAlert.setContentText(message);
-        confirmationAlert.showAndWait();
     }
 
     // Utility method to show an error dialog

@@ -515,7 +515,7 @@ public class PawCare {
 
 
     public void setAlertToCompleted(String id)
-    {
+    {   System.out.println("set Alert to Completed");
         db.setCompletedToTrue(id);
 
     }

@@ -88,12 +88,7 @@ public class UserMenuController  {
         System.out.println("Volunteer");
         try {
             System.out.println("Volunteer");
-            //System.out.println(pawCare.ifUserisaVolunter());
-            //if (pawCare.ifUserisaVolunter())
-            //{
-                HelloApplication.getInstance().changeScene("Volunteer.fxml");
-
-            //}
+            HelloApplication.getInstance().changeScene("Volunteer.fxml");
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to change scene to Select-UserType.fxml", e);
         }

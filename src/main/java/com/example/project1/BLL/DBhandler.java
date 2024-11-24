@@ -89,6 +89,44 @@ public  class DBhandler {
         }
         return vets;
     }
+    public ArrayList<Alert> getAllAlerts() {
+        ArrayList<Alert> alerts = new ArrayList<>();
+        String sql = "SELECT * FROM alerts"; // Assuming the table is named "alerts"
+
+        try (Connection conn = connect(); Statement stmt = conn.createStatement()) {
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                // Parse location array from the database (e.g., "latitude,longitude")
+                String locationStr = rs.getString("location");
+                double[] location = parseLocation(locationStr);
+
+                // Create a new Alert object with retrieved values
+                Alert alert = new Alert(
+                        rs.getString("type"),                // Animal type
+                        rs.getString("breed"),               // Breed
+                        rs.getString("message"),
+                        null,// Injury description/message
+                        //convertToImage(rs.getBytes("image")), // Convert byte array to Image
+                        location,                             // User location (parsed double array)
+                        rs.getString("userid"),              // User ID (UUID as String)
+                        rs.getString("rescuecenterid")       // Rescue center ID (UUID as String)
+                );
+
+                // Set additional properties
+                alert.setAlertId(rs.getString("alertId")); // Alert ID (UUID as String)
+                alert.setCompleted(rs.getBoolean("completed")); // Completed status
+                alert.setDateCreated(rs.getObject("dateCreated", LocalDate.class)); // Date created
+                alert.setAlertType(rs.getString("alertType")); // Alert type
+
+                alerts.add(alert);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return alerts;
+    }
+
 
     public ArrayList<User> getAllUsers() {
         ArrayList<User> users = new ArrayList<>();
@@ -308,29 +346,38 @@ public  class DBhandler {
             return false;
         }
     }
+
     public boolean setCompletedToTrue(String alertId) {
-       System.out.println(alertId);
-        String sql = "UPDATE alert SET completed = true WHERE alertid = ?AND \" alertType\" = 'User'";
+        System.out.println("set completed to true");
+        System.out.println("Alert ID: " + alertId);  // Print the alertId for debugging
+
+        String sql = "UPDATE alert SET completed = true WHERE alertid = ? AND \"alertType\" = 'RescueCenter'";
 
         try (Connection conn = connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
+            // Convert alertId to UUID and print for debugging
+            UUID alertUUID = UUID.fromString(alertId);
+            System.out.println("Converted UUID: " + alertUUID);
 
-            stmt.setObject(1, UUID.fromString(alertId));  // Convert alertId to UUID if it's a string
+            stmt.setObject(1, alertUUID);  // Set the alertId parameter
 
-            // Execute the statement
+            // Execute the update
             int rowsUpdated = stmt.executeUpdate();
+
+            // Print the number of rows updated for debugging
+            System.out.println("Rows updated: " + rowsUpdated);
 
             // Return true if at least one row was updated
             return rowsUpdated > 0;
 
         } catch (SQLException e) {
-            // Handle SQL exceptions and log error details
             System.err.println("Error updating alert record: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
+
     private byte[] imageToByteArray(Image image) {
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
             // Using ImageIO to write the Image to ByteArrayOutputStream
@@ -344,6 +391,7 @@ public  class DBhandler {
         }
     }
     public List<Alert> getRescueCenterAlerts(String userid) {
+
         List<Alert> alerts = new ArrayList<>();
         String sql = "SELECT alertid, type, message, breed, image, location, date_created, userid, rescuecenterid " +
                 "FROM alert WHERE userid = CAST(? AS UUID) AND completed = false AND \"alertType\" = 'RescueCenter'";
@@ -362,6 +410,7 @@ public  class DBhandler {
                     alert.setType(rs.getString("type"));
                     alert.setMessage(rs.getString("message"));
                     alert.setBreed(rs.getString("breed"));
+                    alert.setAlertId(rs.getString("alertId"));
 
                     // Handle image bytes from DB
                     byte[] imageBytes = rs.getBytes("image");
@@ -391,6 +440,7 @@ public  class DBhandler {
 
         return alerts;
     }
+
     public void animalWentToVet(String animal_id) {
 
     }
