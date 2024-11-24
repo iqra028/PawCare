@@ -180,6 +180,14 @@ public class AnimalProfilesControllerAvA  extends RescueCenterMenuController imp
         reportButton.setLayoutY(204);
         reportButton.setPrefSize(155, 34);
         reportButton.setStyle("-fx-background-color: #D08122;");
+        SharedProfile.getInstance().setSelectedAnimalProfile(animalProf);
+       reportButton.setOnAction( e->{
+           try {
+               HelloApplication.getInstance().changeScene("displayInjuryReportforRescueCenter.fxml");
+           } catch (IOException ex) {
+               throw new RuntimeException(ex);
+           }
+       });
 
         // Add children to the pane
         profilePane.getChildren().addAll(img, nameLabel, typeLabel, breedLabel, colorLabel, visitedVetLabel, withVetLabel, editButton, deleteButton, adoptionButton, reportButton);

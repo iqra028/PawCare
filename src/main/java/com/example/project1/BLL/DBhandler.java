@@ -457,14 +457,80 @@ public  class DBhandler {
     }
 
 
+    public void updateVetAnimalHandled(String vetId, String animalId, boolean handledStatus) {
+        String updateQuery = "UPDATE vet_animals " +
+                "SET handled = ? " +
+                "WHERE vetid = CAST(? AS UUID) " +
+                "AND animalid = CAST(? AS UUID)";
+
+        try (Connection connection = connect();  // Ensure you have a valid database connection
+             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+
+            // Set the parameters for the query
+            preparedStatement.setBoolean(1, handledStatus);
+
+            // Convert input strings to UUID and set in the query
+            try {
+                preparedStatement.setObject(2, UUID.fromString(vetId));
+                preparedStatement.setObject(3, UUID.fromString(animalId));
+            } catch (IllegalArgumentException e) {
+                System.err.println("Invalid UUID format for VetID or AnimalID: " + e.getMessage());
+                return; // Exit the function if UUID conversion fails
+            }
+
+            // Execute the update
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Successfully updated 'handled' status to " + handledStatus +
+                        " for VetID: " + vetId + ", AnimalID: " + animalId);
+            } else {
+                System.out.println("No matching records found for VetID: " + vetId + ", AnimalID: " + animalId);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error while updating vet_animals table: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    public void visitedvet(String animalId) {
+        String updateQuery = "UPDATE animals " +
+                "SET with_vet = false, visited_vet = true " +
+                "WHERE animal_id = CAST(? AS UUID)";
+
+        try (Connection connection = connect();
+             PreparedStatement updateStmt = connection.prepareStatement(updateQuery)) {
+
+            // Convert animalId to UUID and set it in the query
+            try {
+                updateStmt.setObject(1, UUID.fromString(animalId));
+            } catch (IllegalArgumentException e) {
+                System.err.println("Invalid UUID format for animal_id: " + e.getMessage());
+                return; // Exit the function if UUID is invalid
+            }
+
+            // Execute the update
+            int rowsAffected = updateStmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Animal status updated successfully for animal_id: " + animalId);
+            } else {
+                System.out.println("No records were updated. Check if the animal_id exists.");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error updating animal status: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
     public void loadanimalsinvet(Vets vet) {
         String fetchAnimalsQuery = "SELECT a.animal_id, a.name, a.type, a.breed, a.color, " +
                 "a.health_id, a.health_status, a.visited_vet, a.with_vet, " +
-                "a.up_for_adoption, a.adopted, a.image,a.rescue_center_id " +  // Fetch image as bytea
+                "a.up_for_adoption, a.adopted, a.image, a.rescue_center_id " +  // Fetch image as bytea
                 "FROM animals a " +
                 "JOIN vet_animals va ON a.animal_id = va.animalid " +
-                "WHERE va.vetid = CAST(? AS UUID)";
+                "WHERE va.vetid = CAST(? AS UUID) " +
+                "AND va.handled = false";
+
 
         try (Connection connection = connect()) {
             if (connection != null && !connection.isClosed()) {
@@ -1165,22 +1231,28 @@ public  class DBhandler {
                         rs.getString("animal_id"),
                         rs.getString("description"),
                         rs.getDouble("temperature"),
-                        rs.getInt("heart_rate"),
-                        rs.getInt("respiratory_rate"),
-                        rs.getInt("capillary_refill_time"),
-                        rs.getInt("blood_oxygen_level"),
-                        rs.getInt("blood_glucose_level"),
+                        rs.getInt("heartrate"),
+                        rs.getInt("respiratoryRate"),
+                        rs.getInt("capillaryRefillTime"),
+                        rs.getInt("bloodOxygenLevel"),
+                        rs.getInt("bloodGlucoseLevel"),
                         rs.getDouble("weight")
                 );
                 reports.add(report);
             }
 
+            // Log the number of reports loaded
+            System.out.println("Number of reports loaded: " + reports.size());
+
         } catch (SQLException e) {
             System.err.println("Error while loading all reports: " + e.getMessage());
             e.printStackTrace();
         }
+
         return reports;
     }
+
+
     public void addAdoptionRequest(AdoptionRequest adoptionRequest) {
         // Insert query with auto-generated requestID
         String query = "INSERT INTO adoption_requests (user_id, rescue_center_id, animal_id, has_allergy, has_suitable_living_condition, reason_to_adopt, application_status, is_resolved) " +

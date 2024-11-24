@@ -34,7 +34,7 @@ public class GenInjuryReportController extends VetMenu implements RequiresShared
     private Button updateProfileButton1;
 
     private Profile selectedProfile;
-
+    private injuryReport re;
     // Initializes the controller
     @FXML
     public void initialize() {
@@ -62,14 +62,14 @@ public class GenInjuryReportController extends VetMenu implements RequiresShared
         System.out.println(pawCare.getRescuecenteridthroughanimalid(selectedProfile));
 
        updateProfileButton.setOnAction(e -> {save();});
-        updateProfileButton1.setOnAction(e->{sendAnimaltoRescuecenter();
+        updateProfileButton1.setOnAction(e->{sendAnimaltoRescuecenter(re);
         });
 
 
 
     }
-    private void sendAnimaltoRescuecenter(){
-
+    private void sendAnimaltoRescuecenter(injuryReport report){
+        pawCare.visitedvet(report);
     }
     private void save() {
         try {
@@ -136,6 +136,7 @@ public class GenInjuryReportController extends VetMenu implements RequiresShared
 
             // Save report
             generateReport(report);
+            re=report;
 
             // Show success message
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -178,7 +179,6 @@ public class GenInjuryReportController extends VetMenu implements RequiresShared
      * @param report Injury report to save
      */
     private void generateReport(injuryReport report) {
-        System.out.println("iiiiiii");
         pawCare.saveInjuryReport(report);
     }
 }

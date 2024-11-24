@@ -4,6 +4,7 @@ public class SharedProfile {
     private static SharedProfile instance;
     private Profile selectedAnimalProfile;
 
+
     private SharedProfile() {
     }
     public static SharedProfile getInstance() {

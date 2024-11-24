@@ -45,9 +45,45 @@ public class PawCare {
     public void saveInjuryReport(injuryReport report) {
 
         this.InjuryReport.add(report);
-
         db.saveReport(report);
+        db.updateVetAnimalHandled(report.getVetid(),report.getAnimal_id(),true);
+
     }
+    public void visitedvet(injuryReport report)
+    {
+        db.visitedvet(report.getAnimal_id());
+    }
+    public injuryReport retreivereport(Profile animal, String username) {
+        InjuryReport=db.loadReports();
+        System.out.println("Number of reports loaded: " + InjuryReport.size());
+        for(injuryReport i:InjuryReport) {
+            System.out.println(i.hell());
+        }
+
+        for (injuryReport report : InjuryReport) {
+          //  System.out.println(report.hell());
+            //System.out.println("Checking report for Animal ID: " + report.getAnimal_id());
+
+            // Check if the report's animal ID matches
+            if (report.getAnimal_id().equals(animal.getAnimal().getAnimalID())) {
+                // Uncomment and complete the rescue center check if needed
+
+            if (animal.getRescueCenterId().equals(getRescueCenterByUsername(username).getRescueCenterID())) {
+                System.out.println("Matching report found.");
+                return report;
+            }
+
+
+                // If rescue center check isn't required, return the matching report
+            //    System.out.println("Matching report found.");
+              //  return report;
+            }
+        }
+
+        System.out.println("No matching report found for Animal ID: " + animal.getAnimal().getAnimalID());
+        return null;
+    }
+
     public String getRescuecenteridthroughanimalid(Profile p){
         return p.getRescueCenterId();
     }
@@ -129,6 +165,24 @@ public class PawCare {
             }
         }
         return null;
+    }
+    public String getVetname(String id)
+    {
+        for(Vets v : vets)
+        {
+            if(v.getVetID().equals(id))
+                return v.getName();
+        }
+        return "";
+    }
+    public String getRescuecentername(String id){
+        for(RescueCenter center : rescueCenters)
+        {
+            if(center.getRescueCenterID().equalsIgnoreCase(id)){
+                return center.getName();
+            }
+        }
+        return "";
     }
     public String createAlert(String animalType, String breed, String InjuryDesc, Image imagePath,
                               double[] userLocation, String userid, String rescuecenterid, String type) {
@@ -301,6 +355,12 @@ public class PawCare {
         users = db.getAllUsers();
         vets = db.getAllVets();
         rescueCenters = db.getAllRescueCenters();
+        InjuryReport=db.loadReports();
+        System.out.println("Number of reports loaded: " + InjuryReport.size());
+        for(injuryReport i:InjuryReport) {
+            System.out.println(i.hell());
+        }
+
         loadVitals();
         for(Vets v: vets)
         {
@@ -328,6 +388,7 @@ public class PawCare {
     }
     public void loadvetsrequests(Vets vet) {
         db.loadanimalsinvet(vet);
+
     }
     public void loadAdoptionRequests(RescueCenter rescueCenter)
     {
