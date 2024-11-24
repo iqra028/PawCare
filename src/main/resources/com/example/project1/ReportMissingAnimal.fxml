@@ -8,6 +8,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -17,6 +18,7 @@
    <content>
       <AnchorPane prefHeight="1202.0" prefWidth="1374.0" style="-fx-background-color: #E4C7A2;">
          <children>
+            <!-- Header Section -->
             <AnchorPane prefHeight="243.0" prefWidth="1374.0" style="-fx-background-color: #8B0000;">
                <children>
                   <Circle fill="#efefef" layoutX="1307.0" layoutY="53.0" radius="24.0" stroke="BLACK" strokeType="INSIDE" />
@@ -55,25 +57,11 @@
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="Found" layoutX="480.0" layoutY="150.0" mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-size: 30;" text="Found Missing Animal">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <effect>
-                        <ColorAdjust />
-                     </effect>
-                  </Button>
-                  <Button fx:id="Missing" layoutX="260.0" layoutY="150.0" mnemonicParsing="false" style="-fx-background-radius: 50;" text="Report Missing Animal">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <effect>
-                        <ColorAdjust brightness="-0.23" />
-                     </effect>
-                  </Button>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="260.0" layoutY="200.0" prefHeight="966.0" prefWidth="808.0" style="-fx-background-color: #ffffff;">
+
+            <!-- Form Section (Initially visible) -->
+            <AnchorPane fx:id="formPane" layoutX="260.0" layoutY="200.0" prefHeight="966.0" prefWidth="808.0" style="-fx-background-color: #ffffff;">
                <children>
                   <Line endX="627.5999755859375" layoutX="140.0" layoutY="132.0" startX="-100.0" stroke="#9c8585" />
                   <TextField fx:id="animalTypeField" layoutX="68.0" layoutY="243.0" prefHeight="34.0" prefWidth="293.0" style="-fx-background-color: 8F4646;">
@@ -101,12 +89,7 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Text layoutX="68.0" layoutY="541.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Upload Image" wrappingWidth="215.44351196289062">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-                  <Button fx:id="submitButton" layoutX="649.0" layoutY="869.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="98.0" style="-fx-background-color: 4177FF;" text="Submit ">
+                  <Button fx:id="submitButton" layoutX="592.0" layoutY="800.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="155.0" style="-fx-background-color: white;" text="Submit ">
                      <effect>
                         <ColorAdjust brightness="-0.36" contrast="0.22" hue="-0.71" saturation="0.32" />
                      </effect>
@@ -132,23 +115,13 @@
                         <ColorAdjust contrast="-0.15" />
                      </effect>
                   </TextField>
-                  <TextField fx:id="genderField" layoutX="68.0" layoutY="448.0" prefHeight="34.0" prefWidth="293.0" style="-fx-background-color: 8F4646;">
-                     <effect>
-                        <ColorAdjust contrast="-0.15" />
-                     </effect>
-                  </TextField>
-                  <Text layoutX="68.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender" wrappingWidth="215.44351196289062">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="68.0" layoutY="644.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Location" wrappingWidth="215.44351196289062">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
                </children>
             </AnchorPane>
+
+            <!-- Profiles Section (Initially hidden) -->
+            <VBox fx:id="profilesPane" layoutX="260.0" layoutY="200.0" prefHeight="966.0" prefWidth="808.0" style="-fx-background-color: #ffffff; visibility: hidden;">
+               <!-- Profiles will be added dynamically here -->
+            </VBox>
          </children>
       </AnchorPane>
    </content>

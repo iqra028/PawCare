@@ -33,5 +33,5 @@ public abstract class Profile {
     public void setAnimal(Animal animal) {
         this.animal = animal;
     }
-
+    public abstract Profile FindMatch(String type,String name, String breed, String color );
 }

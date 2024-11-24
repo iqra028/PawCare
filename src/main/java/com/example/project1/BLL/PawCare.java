@@ -464,6 +464,33 @@ public class PawCare {
 
     }
 
+    public ArrayList<RescueCenter> getRescueCentersProfiles(String animalType, String name, String breed, String color) {
+        ArrayList<RescueCenter> rc = new ArrayList<>();
+        for (RescueCenter rescueCenter : rescueCenters) {
+            RescueCenter matchedRescueCenter = new RescueCenter(rescueCenter.getRescueCenterID(), rescueCenter.getUserName(),rescueCenter.getName(),rescueCenter.getEmail(),rescueCenter.getPassword(), rescueCenter.getLocation(),rescueCenter.getPhoneNumber());
+
+            for (Profile pf : rescueCenter.getAnimalProfiles()) {
+                Profile matchedProfile = pf.FindMatch(animalType, name, breed, color);
+                if (matchedProfile != null) {
+                    matchedRescueCenter.addAnimalProfile(matchedProfile);
+                }
+            }
+
+            for (Profile pf : rescueCenter.getAdoptionProfiles()) {
+                Profile matchedProfile = pf.FindMatch(animalType, name, breed, color);
+                if (matchedProfile != null) {
+                    matchedRescueCenter.addAdoptionProfile(matchedProfile);
+                }
+            }
+
+            if (!matchedRescueCenter.getAnimalProfiles().isEmpty() || !matchedRescueCenter.getAdoptionProfiles().isEmpty()) {
+                rc.add(matchedRescueCenter);
+            }
+        }
+        return rc;
+    }
+
+
     public Boolean ifUserisaVolunter()
     {
         return db.isUserVolunteer();
