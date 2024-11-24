@@ -39,6 +39,13 @@ public class Vets {
             currentlybeingchecked.add(f);
         }
     }
+    public void setProfiles(List<Profile> animals){
+        currentlybeingchecked=animals;
+    }
+    public void addprofile(Animal animal,String id){
+        Profile f=new AnimalProfile(animal);
+        f.setRescueCenterId(id);
+    }
     public List<Profile> getCurrentlybeingchecked() {
         return currentlybeingchecked;
     }

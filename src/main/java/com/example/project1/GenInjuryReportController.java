@@ -30,6 +30,8 @@ public class GenInjuryReportController extends VetMenu implements RequiresShared
     private TextField weightField1; // This seems to be for the description
     @FXML
     private Button updateProfileButton;
+    @FXML
+    private Button updateProfileButton1;
 
     private Profile selectedProfile;
 
@@ -59,8 +61,14 @@ public class GenInjuryReportController extends VetMenu implements RequiresShared
         selectedProfile=SharedProfile.getInstance().getSelectedAnimalProfile();
         System.out.println(pawCare.getRescuecenteridthroughanimalid(selectedProfile));
 
-       // updateProfileButton.setOnAction(e -> {save();});
+       updateProfileButton.setOnAction(e -> {save();});
+        updateProfileButton1.setOnAction(e->{sendAnimaltoRescuecenter();
+        });
 
+
+
+    }
+    private void sendAnimaltoRescuecenter(){
 
     }
     private void save() {
@@ -103,7 +111,7 @@ public class GenInjuryReportController extends VetMenu implements RequiresShared
             }
             else {
                 System.out.println("noooitisnotnull");
-               // report.setRescuecenterid(rescueCenterId);
+                report.setRescuecenterid(SharedProfile.getInstance().getSelectedAnimalProfile().getRescueCenterId());
             }
 
             // Validate and set Animal ID

@@ -461,7 +461,7 @@ public  class DBhandler {
     public void loadanimalsinvet(Vets vet) {
         String fetchAnimalsQuery = "SELECT a.animal_id, a.name, a.type, a.breed, a.color, " +
                 "a.health_id, a.health_status, a.visited_vet, a.with_vet, " +
-                "a.up_for_adoption, a.adopted, a.image " +  // Fetch image as bytea
+                "a.up_for_adoption, a.adopted, a.image,a.rescue_center_id " +  // Fetch image as bytea
                 "FROM animals a " +
                 "JOIN vet_animals va ON a.animal_id = va.animalid " +
                 "WHERE va.vetid = CAST(? AS UUID)";
@@ -474,7 +474,7 @@ public  class DBhandler {
             try (PreparedStatement fetchAnimalsStmt = connection.prepareStatement(fetchAnimalsQuery)) {
                 fetchAnimalsStmt.setString(1, vet.getVetID()); // Pass as a string, explicitly cast in the query
 
-                List<Animal> animalList = new ArrayList<>();
+                List<Profile> animalList = new ArrayList<>();
 
                 try (ResultSet animalResultSet = fetchAnimalsStmt.executeQuery()) {
                     while (animalResultSet.next()) {
@@ -489,18 +489,23 @@ public  class DBhandler {
                         animal.setWithVet(animalResultSet.getBoolean("with_vet"));
                         animal.setUpForAdoption(animalResultSet.getBoolean("up_for_adoption"));
                         animal.setAdopted(animalResultSet.getBoolean("adopted"));
+                        String rescuecenterid=animalResultSet.getString("rescue_center_id");
 
                         // Retrieve the image as byte array
                         byte[] imageBytes = animalResultSet.getBytes("image");
-                        if (imageBytes != null) {
+                        if (imageBytes !=null) {
                             animal.setImage(byteArrayToImage(imageBytes));  // Set image as byte array
                         }
 
-                        animalList.add(animal);
+                        Profile f=new AnimalProfile(animal);
+                        f.setRescueCenterId(rescuecenterid);
+                        animalList.add(f);
+                       // vet.addprofile(animal,rescuecenterid);
                     }
                 }
 
-                vet.setAnimals(animalList);  // Assuming this method exists to set the animal list for the vet
+                vet.setProfiles(animalList);
+                // Assuming this method exists to set the animal list for the vet
                 System.out.println("Loaded " + animalList.size() + " animals for vet " + vet.getVetID());
             }
 
@@ -1026,9 +1031,10 @@ public  class DBhandler {
 
 
         // SQL query to insert the report data
-        String sql = "INSERT INTO report (vetid, rescuecenterid, animal_id, description, temperature, heart_rate, " +
-                "respiratory_rate, capillary_refill_time, blood_oxygen_level, blood_glucose_level, weight) " +
+        String sql = "INSERT INTO report (vetid, rescuecenterid, animal_id, description, temperature, heartRate, " +
+                "respiratoryRate, capillaryRefillTime, bloodOxygenLevel, bloodGlucoseLevel, weight) " +
                 "VALUES (CAST(? AS UUID), CAST(? AS UUID), CAST(? AS UUID), ?, ?, ?, ?, ?, ?, ?, ?)";
+
 
         try (Connection conn = connect(); // Ensure you have a valid database connection
              PreparedStatement stmt = conn.prepareStatement(sql)) {
