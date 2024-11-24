@@ -104,15 +104,25 @@ public class AdoptionRequestsController extends RescueCenterMenuController imple
     }
 
     private void approveRequest(AdoptionRequest request) {
-        // Set the application status to approved and mark as resolved
-        request.setApplicationStatus(true); // Approved
-        request.setIs_resolved(true); // Mark as resolved
-
+        request.setApplicationStatus(true);
+        request.setIs_resolved(true);
+        boolean success = pawCare.handleAdoptionRequest(loginCredentials.getUsername(), request);
+        if (success) {
+            System.out.println("Request accepted successfully.");
+        } else {
+            System.out.println("Failed to accept the request.");
+        }
     }
 
     private void denyRequest(AdoptionRequest request) {
-        request.setApplicationStatus(false); // Denied
-        request.setIs_resolved(true); // Mark as resolved
+        request.setApplicationStatus(false);
+        request.setIs_resolved(true);
+        boolean success = pawCare.handleAdoptionRequest(loginCredentials.getUsername(), request);
+        if (success) {
+            System.out.println("Request denied successfully.");
+        } else {
+            System.out.println("Failed to deny the request.");
+        }
 
     }
 

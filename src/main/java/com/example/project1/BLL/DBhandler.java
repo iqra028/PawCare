@@ -1242,7 +1242,21 @@ public  class DBhandler {
         return adoptionRequests;
     }
 
+    public boolean updateAdoptionReqStatus(String rescueCenterID, AdoptionRequest request) {
+        String query = "UPDATE adoption_requests SET application_status = ?, is_resolved = ? WHERE rescue_center_id = ? AND request_id = ?";
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setBoolean(1, request.isApplicationStatus());
+            stmt.setBoolean(2, request.getIsResolved());
+            stmt.setObject(3, UUID.fromString(rescueCenterID));
+            stmt.setObject(4, UUID.fromString(request.getRequestID()));
 
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0; // Return true if update was successful
+        } catch (SQLException e) {
+            System.err.println("Error updating adoption request in database: " + e.getMessage());
+            return false; // Return false in case of failure
+        }
+    }
 
 
 

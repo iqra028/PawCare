@@ -338,6 +338,54 @@ public class PawCare {
 
     }
 
+    public boolean handleAdoptionRequest(String rescueCenterName,AdoptionRequest request)
+    {
+        RescueCenter rc =getRescueCenterByUsername(rescueCenterName);
+        if (rc == null) {
+            System.out.println("Rescue Center not found for username: " + rescueCenterName);
+            return false;
+        }
+        db.updateAdoptionReqStatus( rc.getRescueCenterID(),request);
+
+        ArrayList<AdoptionRequest> adoptionRequests = rc.getRequests();
+        for (AdoptionRequest ar : adoptionRequests) {
+            if (ar.getRequestID().equals(request.getRequestID())) {
+                ar.setApplicationStatus(request.isApplicationStatus());
+                ar.setIs_resolved(request.getIsResolved());
+                System.out.println("Adoption request updated in memory for ID: " + request.getRequestID());
+                return true;
+            }
+        }
+
+        System.out.println("Adoption request not found in the rescue center's list.");
+        return false;
+    }
+
+    public AdoptionRequest getAdoptionRequestByProfile(String username,Profile animalProf) {
+
+        String userId = getUserIdFromUsername(username);
+        String animalId = animalProf.getAnimal().getAnimalID();
+
+        for (RescueCenter rescueCenter : getRescueCenters()) {
+            for (AdoptionRequest request : rescueCenter.getRequests()) {
+                if (request.getUserId().equals(userId) && request.getAnimalId().equals(animalId)) {
+                    return request;
+                }
+            }
+        }
+
+        return null;
+    }
+    private String getUserIdFromUsername(String username) {
+        for (User user : users) {
+            if (user.getUserName().equals(username)) {
+                return user.getUserID();
+            }
+        }
+        return null;
+    }
+
+
     public void loadVitals() {
         try {
             vitals = db.getVitals();

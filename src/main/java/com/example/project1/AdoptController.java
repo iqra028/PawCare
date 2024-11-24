@@ -98,7 +98,7 @@ public class AdoptController extends UserMenuController implements RequiresShare
         Label breedLabel = createLabel("Breed: " + animal.getBreed(), 240, 100, "");
         Label colorLabel = createLabel("Color: " + animal.getColor(), 240, 130, "");
 
-        Label statusLabel = createLabel("Request Status: -- ", 240, 160, "");
+        Label statusLabel = createLabel("Request Status: " + getRequestStatus(loginCredentials.getUsername(),animalProf), 240, 160, "");
 
         Button applyButton = new Button("Apply for Adoption");
         applyButton.setLayoutX(240);
@@ -180,5 +180,22 @@ public class AdoptController extends UserMenuController implements RequiresShare
             }
         }
         return null;
+    }
+    private String getRequestStatus(String username,Profile animalProf) {
+        AdoptionRequest request = pawCare.getAdoptionRequestByProfile(username,animalProf);
+
+        if (request == null) {
+            return "--";
+        }
+
+        if (request.getIsResolved()) {
+            if (request.isApplicationStatus()) {
+                return "Accepted";
+            } else {
+                return "Rejected";
+            }
+        }
+
+        return "--";
     }
 }
