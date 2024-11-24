@@ -23,6 +23,7 @@ public class PawCare {
     private FormFactory formFactory;
     private GeoLocation geoLocation;
     private ProfileFactory profileFactory;
+    private List<injuryReport> InjuryReport;
 
     // Constructor
     public PawCare()  {
@@ -38,7 +39,17 @@ public class PawCare {
         this.profileFactory = new ProfileFactory();
         loadDataFromDatabase();
         this.donationContext = new DonationContext();
+        this.InjuryReport = new ArrayList<>();
 
+    }
+    public void saveInjuryReport(injuryReport report) {
+
+        this.InjuryReport.add(report);
+
+        db.saveReport(report);
+    }
+    public String getRescuecenteridthroughanimalid(Profile p){
+        return p.getRescueCenterId();
     }
     public void create_volunteer( String userId, String cnic, String vehicleType, Image vehicleImage, String vehicleModel)
     {
@@ -278,6 +289,9 @@ public class PawCare {
             loadAdoptionRequests(rescueCenter);
         }
     }
+    public void savereport(){
+
+    }
     public Vets getVetfromUsername(String username){
         for(Vets v: vets)
         {
@@ -285,6 +299,7 @@ public class PawCare {
                 return v;
 
         }
+        System.out.println("no found");
         return null;
     }
     public void loadvetsrequests(Vets vet) {

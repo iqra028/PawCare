@@ -1022,6 +1022,159 @@ public  class DBhandler {
     }
 
 
+    public void saveReport(injuryReport report) {
+
+
+        // SQL query to insert the report data
+        String sql = "INSERT INTO report (vetid, rescuecenterid, animal_id, description, temperature, heart_rate, " +
+                "respiratory_rate, capillary_refill_time, blood_oxygen_level, blood_glucose_level, weight) " +
+                "VALUES (CAST(? AS UUID), CAST(? AS UUID), CAST(? AS UUID), ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = connect(); // Ensure you have a valid database connection
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            // Try to convert and set UUIDs
+            try {
+                stmt.setObject(1, UUID.fromString(report.getVetid())); // Set vetid as UUID
+                stmt.setObject(2, UUID.fromString(report.getRescuecenterid())); // Set rescuecenterid as UUID
+                stmt.setObject(3, UUID.fromString(report.getAnimal_id())); // Set animal_id as UUID
+            } catch (IllegalArgumentException e) {
+                System.err.println("Invalid UUID format: " + e.getMessage());
+                return; // Return early if UUIDs are invalid
+            }
+
+            // Set the other values in the SQL statement
+            stmt.setString(4, report.getDescription()); // Set description
+            stmt.setDouble(5, report.getTemperature()); // Set temperature
+            stmt.setInt(6, report.getHeartRate()); // Set heart rate
+            stmt.setInt(7, report.getRespiratoryRate()); // Set respiratory rate
+            stmt.setInt(8, report.getCapillaryRefillTime()); // Set capillary refill time
+            stmt.setInt(9, report.getBloodOxygenLevel()); // Set blood oxygen level
+            stmt.setInt(10, report.getBloodGlucoseLevel()); // Set blood glucose level
+            stmt.setDouble(11, report.getWeight()); // Set weight
+
+            // Execute the update
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Report successfully saved.");
+            } else {
+                System.out.println("Failed to save report.");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error while saving report: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
+    // Get reports by rescue center
+    public List<injuryReport> getReportsByRescueCenter(String rescuecenterid) {
+        List<injuryReport> reports = new ArrayList<>();
+        String sql = "SELECT * FROM report WHERE rescuecenterid = CAST(? AS UUID)";
+
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setObject(1, UUID.fromString(rescuecenterid));
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                injuryReport report = new injuryReport(
+                        //rs.getString("reportid"),
+                        rs.getString("vetid"),
+                        rs.getString("rescuecenterid"),
+                        rs.getString("animal_id"),
+                        rs.getString("description"),
+                        rs.getDouble("temperature"),
+                        rs.getInt("heart_rate"),
+                        rs.getInt("respiratory_rate"),
+                        rs.getInt("capillary_refill_time"),
+                        rs.getInt("blood_oxygen_level"),
+                        rs.getInt("blood_glucose_level"),
+                        rs.getDouble("weight")
+                );
+                reports.add(report);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error while fetching reports by rescuecenterid: " + e.getMessage());
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            System.err.println("Invalid UUID format: " + e.getMessage());
+        }
+        return reports;
+    }
+
+    // Get reports by animal ID
+    public List<injuryReport> getReportsByAnimalId(String animal_id) {
+        List<injuryReport> reports = new ArrayList<>();
+        String sql = "SELECT * FROM report WHERE animal_id = CAST(? AS UUID)";
+
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setObject(1, UUID.fromString(animal_id));
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                injuryReport report = new injuryReport(
+                        rs.getString("vetid"),
+                        rs.getString("rescuecenterid"),
+                        rs.getString("animal_id"),
+                        rs.getString("description"),
+                        rs.getDouble("temperature"),
+                        rs.getInt("heart_rate"),
+                        rs.getInt("respiratory_rate"),
+                        rs.getInt("capillary_refill_time"),
+                        rs.getInt("blood_oxygen_level"),
+                        rs.getInt("blood_glucose_level"),
+                        rs.getDouble("weight")
+                );
+                reports.add(report);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error while fetching reports by animal_id: " + e.getMessage());
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            System.err.println("Invalid UUID format: " + e.getMessage());
+        }
+        return reports;
+    }
+
+    // Load all reports
+    public List<injuryReport> loadReports() {
+        List<injuryReport> reports = new ArrayList<>();
+        String sql = "SELECT * FROM report";
+
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                injuryReport report = new injuryReport(
+                        rs.getString("vetid"),
+                        rs.getString("rescuecenterid"),
+                        rs.getString("animal_id"),
+                        rs.getString("description"),
+                        rs.getDouble("temperature"),
+                        rs.getInt("heart_rate"),
+                        rs.getInt("respiratory_rate"),
+                        rs.getInt("capillary_refill_time"),
+                        rs.getInt("blood_oxygen_level"),
+                        rs.getInt("blood_glucose_level"),
+                        rs.getDouble("weight")
+                );
+                reports.add(report);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error while loading all reports: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return reports;
+    }
 
 
 

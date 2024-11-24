@@ -45,7 +45,7 @@ public class VetMenu {
     @FXML
     private void handleInjuryReportButtonAction() {
         try {
-            HelloApplication.getInstance().changeScene("GenerateInjurtReport.fxml");
+            HelloApplication.getInstance().changeScene("AnimalProfilesForVet.fxml");
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to change scene to GenerateInjuryReport.fxml", e);
         }
