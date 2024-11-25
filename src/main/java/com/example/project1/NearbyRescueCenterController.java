@@ -103,9 +103,10 @@ public class NearbyRescueCenterController extends UserMenuController implements 
     private void handleSubmitRequest(Button submitButton) {
         String rescueCenterId = (String) submitButton.getUserData();
         System.out.println("Clicked Rescue Center ID: " + rescueCenterId);
+        String id=pawCare.getUserIDByUsername(loginCredentials.getUsername());
         pawCare.createAlert(SharedData.getInstance().getAnimalType(),SharedData.getInstance().getBreed(),
                 SharedData.getInstance().getInjuryDesc(),SharedData.getInstance().getImage(), SharedData.getInstance().getLocation(),
-                Session.getInstance().getLoggedInUser().getUserID(),rescueCenterId,"User");
+                id,rescueCenterId,"User");
         System.out.println("Clicked Rescue Center ID: " + rescueCenterId);
 
     }

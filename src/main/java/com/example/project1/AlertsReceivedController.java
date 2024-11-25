@@ -58,6 +58,7 @@ public class AlertsReceivedController extends RescueCenterMenuController impleme
         }
     }
 
+
     private Pane createAlertPane(Alert alert) {
         Pane alertPane = new Pane();
         alertPane.setPrefSize(780, 250);

@@ -23,7 +23,7 @@ public class DonationsMadeController extends RescueCenterMenuController implemen
         super.initialize();
     }
     public void start(){
-        List<Donation> donationList = pawCare.DisplayDonationRecords();
+        List<Donation> donationList = pawCare.DisplayDonationRecords(pawCare.getRescueCenterIDByUserName(loginCredentials.getUsername()));
         displayDonations(donationList);
     }
     public void setSharedData(PawCare pawCare, LoginClassCredentials loginCredentials) {

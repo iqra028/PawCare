@@ -45,7 +45,7 @@ public class AnimalProfilesAAController extends RescueCenterMenuController imple
     }
     private List<Profile> getAnimalsFromRescueCenter() {
         List<Profile> adoptionProfile;
-        RescueCenter rc= Session.getInstance().getLoggedInRescueCenter();
+        RescueCenter rc= pawCare.getRescueCenterbyUsername(loginCredentials.getUsername());
         adoptionProfile =rc.getAdoptionProfiles();
         return adoptionProfile;
 
@@ -139,7 +139,7 @@ public class AnimalProfilesAAController extends RescueCenterMenuController imple
                 alert.setHeaderText(null);
                 alert.setContentText("Profile deleted successfully!");
                 alert.showAndWait();
-                pawCare.deleteAnimalProf(animalProf);
+                pawCare.deleteAnimalProf(animalProf,loginCredentials.getUsername());
             } else {
                 javafx.scene.control.Alert alert = new javafx.scene.control.Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");

@@ -219,14 +219,14 @@ public  class DBhandler {
 
         return volunteers;
     }
-    public boolean isUserVolunteer() {
+    public boolean isUserVolunteer(String id) {
         String sql = "SELECT volunteer FROM \"user\" WHERE userid = ?";
 
         try (Connection conn = connect(); // Use your database connection method
              PreparedStatement statement = conn.prepareStatement(sql)) {
 
             // Set the userId parameter
-            statement.setObject(1, UUID.fromString(Session.getInstance().getLoggedInUser().getUserID()));
+            statement.setObject(1, UUID.fromString(id));
 
             // Execute the query
             ResultSet resultSet = statement.executeQuery();
@@ -245,7 +245,7 @@ public  class DBhandler {
             return false;
         }
     }
-    public boolean setVolunteerAvailability(boolean availability) {
+    public boolean setVolunteerAvailability(boolean availability,String id) {
         String sql = "UPDATE volunteer SET availability = ? WHERE userid = ?";
 
         try (Connection conn = connect(); // Use your database connection method
@@ -255,7 +255,7 @@ public  class DBhandler {
             statement.setBoolean(1, availability);
 
             // Set the userId parameter
-            statement.setObject(2, UUID.fromString(Session.getInstance().getLoggedInUser().getUserID()));
+            statement.setObject(2, UUID.fromString(id));
 
             // Execute the update query
             int rowsUpdated = statement.executeUpdate();
@@ -269,14 +269,14 @@ public  class DBhandler {
         }
     }
 
-    public boolean isUserAvailable() {
+    public boolean isUserAvailable(String id) {
         String sql = "SELECT availability FROM volunteer WHERE userid = ?";
 
         try (Connection conn = connect(); // Use your database connection method
              PreparedStatement statement = conn.prepareStatement(sql)) {
 
             // Set the userId parameter
-            statement.setObject(1, UUID.fromString(Session.getInstance().getLoggedInUser().getUserID()));
+            statement.setObject(1, UUID.fromString(id));
 
             // Execute the query
             ResultSet resultSet = statement.executeQuery();
@@ -483,7 +483,7 @@ public  class DBhandler {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             // Getting the UUID from the session, ensure this is a valid UUID string
-            UUID uuid = UUID.fromString(Session.getInstance().getLoggedInUser().getUserID());
+            UUID uuid = UUID.fromString(userid);
             stmt.setObject(1, uuid);
 
             // Execute the query
@@ -884,13 +884,13 @@ public  class DBhandler {
         return location;
     }
 
-    public List<Donation> displayDonationRecords() {
+    public List<Donation> displayDonationRecords(String id) {
         String sql = "SELECT * FROM donations WHERE rescuecenterid = ?";
         List<Donation> donations = new ArrayList<>();
 
         try (Connection conn = connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setObject(1, UUID.fromString(Session.getInstance().getLoggedInRescueCenter().getRescueCenterID())); // Convert to UUID if necessary
+            stmt.setObject(1, UUID.fromString(id)); // Convert to UUID if necessary
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {

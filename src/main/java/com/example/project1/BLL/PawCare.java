@@ -102,29 +102,29 @@ public class PawCare {
 
     }
 
-    public void processDonation(String foundation, String firstName, String lastName, String cardNumber, String expirationDate, String pin, String country, String billingAddress, String postalCode,String Amount,String rescuecenterid)
+    public void processDonation(String foundation, String firstName, String lastName, String cardNumber, String expirationDate, String pin, String country, String billingAddress, String postalCode,String Amount,String rescuecenterid,String id )
     {
 
         PaymentStrategy paymentStrategy = new CardPayment(cardNumber, firstName + " " + lastName, expirationDate, pin);
         donationContext.setPaymentStrategy(paymentStrategy);
         double amount = Double.parseDouble(Amount);
-        Donation donation= donationContext.executePayment(amount,Session.getInstance().getLoggedInUser().getUserID(),rescuecenterid);
+        Donation donation= donationContext.executePayment(amount,id,rescuecenterid);
         addDonationTodatabase(donation);
     }
-    public void processDonation(String phone ,String firstname,String lastname, String donationAmount,String rescuecenterid )
+    public void processDonation(String phone ,String firstname,String lastname, String donationAmount,String rescuecenterid ,String id )
     {
         PaymentStrategy paymentStrategy = new EasypaisaPayment(phone,firstname,lastname);
         donationContext.setPaymentStrategy(paymentStrategy);
         double amount = Double.parseDouble(donationAmount);
-        Donation donation= donationContext.executePayment(amount,Session.getInstance().getLoggedInUser().getUserID(),rescuecenterid);
+        Donation donation= donationContext.executePayment(amount,id,rescuecenterid);
         addDonationTodatabase(donation);
 
     }
     public void addDonationTodatabase(Donation donation){
         db.storeDonationRecord(donation);
     }
-    public List<Donation> DisplayDonationRecords(){
-        return db.displayDonationRecords();
+    public List<Donation> DisplayDonationRecords(String id){
+        return db.displayDonationRecords(id);
     }
     public String getUserNameByUserid(String id)
     {
@@ -132,6 +132,16 @@ public class PawCare {
         {
             if(user.getUserID().equals(id))
                 return user.getName();
+        }
+        return "";
+
+    }
+    public String getUserIDByUsername(String name)
+    {
+        for(User user : users)
+        {
+            if(user.getUserName().equals(name))
+                return user.getUserID();
         }
         return "";
 
@@ -168,6 +178,14 @@ public class PawCare {
     public String getRescueCenterIDByName(String name) {
         for (RescueCenter center : rescueCenters) {
             if (center.getName().equalsIgnoreCase(name)) {
+                return center.getRescueCenterID();
+            }
+        }
+        return null;
+    }
+    public String getRescueCenterIDByUserName(String username) {
+        for (RescueCenter center : rescueCenters) {
+            if (center.getUserName().equalsIgnoreCase(username)) {
                 return center.getRescueCenterID();
             }
         }
@@ -254,15 +272,25 @@ public class PawCare {
 
         return geoLocation.generateMapHTML(latitude, longitude);
     }
+    public RescueCenter getRescueCenterbyUsername(String username) {
+        for(RescueCenter center : rescueCenters)
+        {
+            if(center.getUserName().equalsIgnoreCase(username))
+                return center;
+        }
+        return null;
+    }
     public boolean addAnimalProf(String name,String type,String breed,String color,Image image,double temperature, int heartRate, int respiratoryRate,
                                  int capillaryRefillTime, int bloodOxygenLevel,
-                                 int bloodGlucoseLevel, double weight)
+                                 int bloodGlucoseLevel, double weight,String username)
     {
         HealthDescription hd= new HealthDescription(temperature, heartRate,respiratoryRate, capillaryRefillTime,bloodOxygenLevel, bloodGlucoseLevel,weight);
         Animal animal=new Animal("",name,type,breed,color,hd,false,false,false,false,false,image);
         Profile animalProfile = profileFactory.createProfile("animal", animal);
-        Session.getInstance().getLoggedInRescueCenter().addAnimalProfile(animalProfile);
-        String rescueCenterID=Session.getInstance().getLoggedInRescueCenter().getRescueCenterID();
+        RescueCenter r=getRescueCenterbyUsername(username);
+        r.addAnimalProfile(animalProfile);
+        String rid=getRescueCenterIDByUserName(username);
+        String rescueCenterID=rid;
         String id = db.addAnimal(animal,rescueCenterID);
         if(id!=null)
         {
@@ -273,8 +301,8 @@ public class PawCare {
             return false;
         }
     }
-    public void deleteAnimalProf(Profile pf) {
-        RescueCenter loggedInRescueCenter = Session.getInstance().getLoggedInRescueCenter();
+    public void deleteAnimalProf(Profile pf,String username) {
+        RescueCenter loggedInRescueCenter = getRescueCenterbyUsername(username);
 
         if (loggedInRescueCenter != null) {
             if (pf instanceof AnimalProfile) {
@@ -573,9 +601,9 @@ public class PawCare {
     {
         setCompletedToTrueRC(id);
     }
-    public List<Alert> getRescueCenterAlerts()
+    public List<Alert> getRescueCenterAlerts(String id)
     {
-        return db.getRescueCenterAlerts(Session.getInstance().getLoggedInUser().getUserID());
+        return db.getRescueCenterAlerts(id);
 
     }
 
@@ -604,17 +632,17 @@ public class PawCare {
         }
         return rc;
     }
-    public boolean isUserAvailable(){
-        return db.isUserAvailable();
+    public boolean isUserAvailable(String id){
+        return db.isUserAvailable(id);
     }
 
-    public Boolean ifUserisaVolunter()
+    public Boolean ifUserisaVolunter(String id)
     {
-        return db.isUserVolunteer();
+        return db.isUserVolunteer(id);
     }
-    public void setVolunteerAvailability(Boolean b)
+    public void setVolunteerAvailability(Boolean b,String id)
     {
-        db.setVolunteerAvailability(b);
+        db.setVolunteerAvailability(b,id);
     }
 
     public void printAllIDs() {
@@ -721,7 +749,6 @@ public class PawCare {
                     if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
                         // System.out.println("User successfully logged in!");
                         loginSuccessful = true;
-                        Session.getInstance().setLoggedInUser(user);
                         break;
                     }
                 }
@@ -732,7 +759,6 @@ public class PawCare {
                     if (vet.getUserName().equals(username) && vet.getPassword().equals(password)) {
                         System.out.println("Vet successfully logged in!");
                         loginSuccessful = true;
-                        Session.getInstance().setLoggedInVets(vet);
                         break;
                     }
                 }
@@ -743,7 +769,6 @@ public class PawCare {
                     if (center.getUserName().equals(username) && center.getPassword().equals(password)) {
                         System.out.println("Rescue Center successfully logged in!");
                         loginSuccessful = true;
-                        Session.getInstance().setLoggedInRescueCenter(center);
                         break;
                     }
                 }

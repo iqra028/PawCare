@@ -3,7 +3,6 @@ package com.example.project1;
 import com.example.project1.BLL.LoginClassCredentials;
 import com.example.project1.BLL.PawCare;
 import com.example.project1.BLL.RequiresSharedData;
-import com.example.project1.BLL.Session;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -54,9 +53,9 @@ public class VolunteerController extends UserMenuController implements RequiresS
     }
 
     public void start() {
-        if(pawCare.ifUserisaVolunter())
+        if(pawCare.ifUserisaVolunter(pawCare.getUserIDByUsername(loginCredentials.getUsername())))
         {
-            if(pawCare.isUserAvailable()) {
+            if(pawCare.isUserAvailable(pawCare.getUserIDByUsername(loginCredentials.getUsername()))) {
                 try {
                     HelloApplication.getInstance().changeScene("VolunteerRequests.fxml");
                 } catch (IOException e) {
@@ -147,7 +146,7 @@ public class VolunteerController extends UserMenuController implements RequiresS
         System.out.println("CNIC: " + cnic);
         System.out.println("Vehicle Type: " + selectedVehicleType);
         System.out.println("Model: " + model);
-        pawCare.create_volunteer(Session.getInstance().getLoggedInUser().getUserID(),
+        pawCare.create_volunteer(pawCare.getUserIDByUsername(loginCredentials.getUsername()),
                 cnic,selectedVehicleType,image,model);
 
         RegField.clear();

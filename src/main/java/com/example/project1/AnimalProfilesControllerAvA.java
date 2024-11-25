@@ -141,7 +141,7 @@ public class AnimalProfilesControllerAvA  extends RescueCenterMenuController imp
                 alert.setHeaderText(null);
                 alert.setContentText("Profile deleted successfully!");
                 alert.showAndWait();
-                pawCare.deleteAnimalProf(animalProf);
+                pawCare.deleteAnimalProf(animalProf,loginCredentials.getUsername());
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -198,7 +198,7 @@ public class AnimalProfilesControllerAvA  extends RescueCenterMenuController imp
 
     private List<Profile> getAnimalsFromRescueCenter() {
         List<Profile> animalProfile;
-        RescueCenter rc= Session.getInstance().getLoggedInRescueCenter();
+        RescueCenter rc= pawCare.getRescueCenterbyUsername(loginCredentials.getUsername());
         animalProfile =rc.getAnimalProfiles();
         return animalProfile;
 

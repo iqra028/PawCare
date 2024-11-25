@@ -123,7 +123,7 @@ public class DonateController extends UserMenuController implements RequiresShar
                     userCountry,
                     billingAddress,
                     postalCode,Amount,
-                    pawCare.getRescueCenterIDByName(selectedFoundation)
+                    pawCare.getRescueCenterIDByName(selectedFoundation),pawCare.getUserIDByUsername(loginCredentials.getUsername())
             );
             System.out.println("Donation to " + selectedFoundation + " submitted successfully!");
         } catch (Exception e) {

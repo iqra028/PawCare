@@ -59,7 +59,7 @@ public class VolunteerRequestsController extends UserMenuController implements R
     private void loadAllertsRequests() {
         String rcu=loginCredentials.getUsername();
 
-        List<Alert> alerts = pawCare.getRescueCenterAlerts( ); // Fetch alerts from the database
+        List<Alert> alerts = pawCare.getRescueCenterAlerts( pawCare.getUserIDByUsername(loginCredentials.getUsername())); // Fetch alerts from the database
         if(alerts!=null) {
             // Clear existing alerts if any
             container.getChildren().clear();

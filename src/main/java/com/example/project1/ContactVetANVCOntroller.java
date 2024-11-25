@@ -130,7 +130,8 @@ public class ContactVetANVCOntroller extends RescueCenterMenuController implemen
 
     private List<Profile> getAnimalsFromRescueCenter() {
         List<Profile> animalProfile;
-        RescueCenter rc= Session.getInstance().getLoggedInRescueCenter();
+
+        RescueCenter rc= pawCare.getRescueCenterbyUsername(loginCredentials.getUsername());
         animalProfile =rc.getAnimalProfiles();
         return animalProfile;
 

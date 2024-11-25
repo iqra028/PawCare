@@ -105,7 +105,8 @@ public class DonateEasypaisaController extends UserMenuController implements Req
             System.out.println("Please select a rescue center.");
             return;
         }
-        pawCare.processDonation(phone,firstname,lastname,donationAmount,pawCare.getRescueCenterIDByName(selectedRescueCenter));
+        pawCare.processDonation(phone,firstname,lastname,donationAmount,pawCare.getRescueCenterIDByName(selectedRescueCenter),
+                pawCare.getUserIDByUsername(loginCredentials.getUsername()));
 
 
 

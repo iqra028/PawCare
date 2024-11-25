@@ -47,7 +47,7 @@ public class VolunteerAvailabilityController extends UserMenuController implemen
 
     @FXML
     private void handleSubmitAction() {
-        pawCare.setVolunteerAvailability(true);
+        pawCare.setVolunteerAvailability(true,pawCare.getUserIDByUsername(loginCredentials.getUsername()));
         try {
             HelloApplication.getInstance().changeScene("VolunteerRequests.fxml");
         } catch (IOException e) {

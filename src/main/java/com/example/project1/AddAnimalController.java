@@ -94,7 +94,8 @@ public class AddAnimalController extends RescueCenterMenuController implements R
         }
         else {
 
-            boolean check=pawCare.addAnimalProf(name,type,breed,color,animalImage,temperature,heartRate,respiratoryRate,capillaryRefillTime,bloodOxygenLevel,bloodGlucoseLevel,weight);
+            boolean check=pawCare.addAnimalProf(name,type,breed,color,animalImage,temperature,heartRate,respiratoryRate,capillaryRefillTime,bloodOxygenLevel,bloodGlucoseLevel,weight,
+                    loginCredentials.getUsername());
             if (check) {
                 showAlert("Animal added successfully", false);  // Show success alert
             }
