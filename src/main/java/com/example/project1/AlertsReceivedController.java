@@ -4,9 +4,12 @@ import com.example.project1.BLL.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.util.List;
@@ -14,41 +17,41 @@ import java.util.List;
 public class AlertsReceivedController extends RescueCenterMenuController implements RequiresSharedData {
 
     @FXML
-    private VBox container; // Reference to the VBox in FXML where alerts will be displayed
+    private VBox container;
 
-    @FXML
-    private Button sendNearbyVolunteers; // Reference to the Send Nearby Volunteers button
-    @FXML
-    private Button dispatchTeamButton; // Reference to the Dispatch Team button
-
-    PawCare pawCare;
+    private PawCare pawCare;
     private LoginClassCredentials loginCredentials;
 
     @FXML
     public void initialize() {
         super.initialize();
+        System.out.println("AlertsReceivedController initialized.");
     }
 
-    public void start() {
-        loadAllertsRequests();
-    }
-
-    public void setSharedData(com.example.project1.BLL.PawCare pawCare, LoginClassCredentials loginCredentials) {
+    public void setSharedData(PawCare pawCare, LoginClassCredentials loginCredentials) {
         if (pawCare == null || loginCredentials == null) {
-            System.out.println("Error: Shared data is null.");
-        } else {
-            this.pawCare = pawCare;
-            this.loginCredentials = loginCredentials;
-            System.out.println("Shared data set: " + pawCare + ", " + loginCredentials);
-            start();
+            System.err.println("Error: Shared data is null.");
+            return;
         }
+
+        this.pawCare = pawCare;
+        this.loginCredentials = loginCredentials;
+        System.out.println("Shared data set successfully.");
+        loadAlertRequests();
     }
 
-    // This function is responsible for loading the adoption requests (alerts) from the database
-    private void loadAllertsRequests() {
-        List<Alert> alerts = pawCare.getAlertsFromDatabase(Session.getInstance().getLoggedInRescueCenter().getUserName()); // Fetch alerts from the database
+    private void loadAlertRequests() {
+        if (pawCare == null) {
+            System.err.println("Error: PawCare is not initialized.");
+            return;
+        }
+
+        List<Alert> alerts = pawCare.getAlertsFromDatabase(
+                loginCredentials.getUsername()
+        );
 
         container.getChildren().clear();
+
         for (Alert alert : alerts) {
             Pane alertPane = createAlertPane(alert);
             container.getChildren().add(alertPane);
@@ -56,120 +59,111 @@ public class AlertsReceivedController extends RescueCenterMenuController impleme
     }
 
     private Pane createAlertPane(Alert alert) {
-        System.out.println("id is "+alert.getaAlertID());
         Pane alertPane = new Pane();
-        alertPane.setPrefSize(700.0, 200.0); // Slightly wider and taller for a cleaner layout
-        alertPane.setStyle("-fx-background-color: #F5F5DC; -fx-border-color: #D08122; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
-        alertPane.setEffect(new DropShadow(10, javafx.scene.paint.Color.GRAY)); // Softer shadow effect
+        alertPane.setPrefSize(780, 250);
+        alertPane.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #D08122; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
+        alertPane.setEffect(new DropShadow(10, Color.GRAY));
+        alertPane.setUserData(alert); // Attach the alert for easier reference later
+
+        // Image
+        ImageView alertImageView = new ImageView();
+        alertImageView.setLayoutX(20);
+        alertImageView.setLayoutY(20);
+        alertImageView.setFitWidth(150);
+        alertImageView.setFitHeight(150);
+        alertImageView.setStyle("-fx-border-color: #D08122; -fx-border-width: 2;");
+        if (alert.getImage() != null) {
+            alertImageView.setImage(alert.getImage());
+        } else {
+            alertImageView.setImage(new Image("default_image_placeholder.png")); // Default placeholder
+        }
 
         // Animal Type
         Label alertTypeLabel = new Label("Animal Type: " + alert.getType());
-        alertTypeLabel.setLayoutX(20.0);
-        alertTypeLabel.setLayoutY(15.0);
+        alertTypeLabel.setLayoutX(200);
+        alertTypeLabel.setLayoutY(20);
         alertTypeLabel.setFont(Font.font("Arial", 16));
         alertTypeLabel.setStyle("-fx-font-weight: bold;");
 
         // Location
-        double[] location = alert.getLocation();
-        String locationText = "Location: ";
-        if (location != null && location.length == 2) {
-            locationText += String.format("%.6f, %.6f", location[0], location[1]); // Formats to 6 decimal places
-        } else {
-            locationText += "Unavailable";
-        }
-        Label locationLabel = new Label(locationText);
-        locationLabel.setLayoutX(20.0);
-        locationLabel.setLayoutY(45.0);
+        Label locationLabel = new Label("Location: " + formatLocation(alert.getLocation()));
+        locationLabel.setLayoutX(200);
+        locationLabel.setLayoutY(50);
         locationLabel.setFont(Font.font("Arial", 14));
 
         // Breed
         Label breedLabel = new Label("Breed: " + (alert.getBreed() != null ? alert.getBreed() : "Unknown"));
-        breedLabel.setLayoutX(20.0);
-        breedLabel.setLayoutY(75.0);
+        breedLabel.setLayoutX(200);
+        breedLabel.setLayoutY(80);
         breedLabel.setFont(Font.font("Arial", 14));
 
         // Message
         Label messageLabel = new Label("Message: " + (alert.getMessage() != null ? alert.getMessage() : "None"));
-        messageLabel.setLayoutX(20.0);
-        messageLabel.setLayoutY(105.0);
+        messageLabel.setLayoutX(200);
+        messageLabel.setLayoutY(110);
         messageLabel.setFont(Font.font("Arial", 14));
 
         // Date
         Label dateLabel = new Label("Date: " + (alert.getDateCreated() != null ? alert.getDateCreated().toString() : "Unknown"));
-        dateLabel.setLayoutX(20.0);
-        dateLabel.setLayoutY(135.0);
+        dateLabel.setLayoutX(200);
+        dateLabel.setLayoutY(140);
         dateLabel.setFont(Font.font("Arial", 14));
 
-        // User ID
-        Label userIdLabel = new Label("User ID: " + (alert.getUserid() != null ? alert.getUserid() : "Unknown"));
-        userIdLabel.setLayoutX(380.0);
-        userIdLabel.setLayoutY(15.0);
+        // User
+        Label userIdLabel = new Label("User: " + (alert.getUserid() != null ? pawCare.getUserNameByUserid(alert.getUserid()) : "Unknown"));
+        userIdLabel.setLayoutX(200);
+        userIdLabel.setLayoutY(170);
         userIdLabel.setFont(Font.font("Arial", 14));
         userIdLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #333333;");
 
         // Buttons
         Button sendVolunteersButton = new Button("Send Nearby Volunteers");
-        sendVolunteersButton.setLayoutX(380.0);
-        sendVolunteersButton.setLayoutY(120.0);
-        sendVolunteersButton.setPrefSize(150.0, 30.0);
+        sendVolunteersButton.setLayoutX(500);
+        sendVolunteersButton.setLayoutY(70);
+        sendVolunteersButton.setPrefSize(150, 30);
         sendVolunteersButton.setStyle("-fx-background-color: #D08122; -fx-text-fill: white; -fx-font-size: 14; -fx-background-radius: 5;");
-        sendVolunteersButton.setOnAction(event -> handleSendVolunteers(alert)); // Pass the alert to the handler
+        sendVolunteersButton.setOnAction(event -> handleSendVolunteers(alert));
 
         Button dispatchButton = new Button("Dispatch Team");
-        dispatchButton.setLayoutX(550.0);
-        dispatchButton.setLayoutY(120.0);
-        dispatchButton.setPrefSize(120.0, 30.0);
+        dispatchButton.setLayoutX(500);
+        dispatchButton.setLayoutY(120);
+        dispatchButton.setPrefSize(150, 30);
         dispatchButton.setStyle("-fx-background-color: #D08122; -fx-text-fill: white; -fx-font-size: 14; -fx-background-radius: 5;");
-        dispatchButton.setOnAction(event -> handleDispatchTeam(alert)); // Pass the alert to the handler
+        dispatchButton.setOnAction(event -> handleDispatchTeam(alert));
 
-        // Add all elements to the alert pane
         alertPane.getChildren().addAll(
-                alertTypeLabel,
-                locationLabel,
-                breedLabel,
-                messageLabel,
-                dateLabel,
-                userIdLabel,
-                sendVolunteersButton,
-                dispatchButton
+                alertImageView, alertTypeLabel, locationLabel, breedLabel, messageLabel, dateLabel, userIdLabel,
+                sendVolunteersButton, dispatchButton
         );
 
         return alertPane;
     }
 
-    // Handle the event when the "Send Nearby Volunteers" button is clicked
+    private String formatLocation(double[] location) {
+        if (location != null && location.length == 2) {
+            return String.format("%.6f, %.6f", location[0], location[1]);
+        }
+        return "Unavailable";
+    }
+
     private void handleSendVolunteers(Alert alert) {
         try {
-            System.out.println("Alert sent to nearby volunteers for alert: " + alert.getaAlertID());
-
-            pawCare.sendAlerttoVolunteer(alert); // Call the method from the PawCare class
-            System.out.println("Alert sent to nearby volunteers for alert: " + alert.getType());
-            // Remove alert from the list after sending to volunteers
-            container.getChildren().removeIf(node -> {
-                Pane alertPane = (Pane) node;
-                return alertPane.getChildren().stream()
-                        .anyMatch(child -> child instanceof Label && ((Label) child).getText().contains(alert.getType()));
-            });
-            // Optionally, display a confirmation dialog to the user
+            pawCare.sendAlerttoVolunteer(alert);
+            System.out.println("Volunteers alerted for alert: " + alert.getaAlertID());
+            removeAlertFromView(alert);
             showConfirmationDialog("Volunteers have been alerted for: " + alert.getType());
         } catch (Exception e) {
             System.err.println("Failed to send alert to volunteers: " + e.getMessage());
+            showErrorDialog("Failed to send alert to volunteers. Please try again.");
         }
     }
 
-    // Handle the event when the "Dispatch Team" button is clicked
     private void handleDispatchTeam(Alert alert) {
         try {
-            System.out.println("Dispatching team for alert: " + alert.getaAlertID());
             pawCare.setAlertToCompleted(alert.getaAlertID());
-            alert.setCompleted(true); // Set the alert as completed
-            // Remove alert from the list after dispatching the team
-            container.getChildren().removeIf(node -> {
-                Pane alertPane = (Pane) node;
-                return alertPane.getChildren().stream()
-                        .anyMatch(child -> child instanceof Label && ((Label) child).getText().contains(alert.getType()));
-            });
-            // Optionally, show a confirmation dialog for dispatched team
+            alert.setCompleted(true);
+            System.out.println("Team dispatched for alert: " + alert.getaAlertID());
+            removeAlertFromView(alert);
             showConfirmationDialog("Team has been dispatched for: " + alert.getType());
         } catch (Exception e) {
             System.err.println("Failed to dispatch team: " + e.getMessage());
@@ -177,7 +171,10 @@ public class AlertsReceivedController extends RescueCenterMenuController impleme
         }
     }
 
-    // Utility method to show a confirmation dialog
+    private void removeAlertFromView(Alert alert) {
+        container.getChildren().removeIf(node -> node instanceof Pane && alert.equals(node.getUserData()));
+    }
+
     private void showConfirmationDialog(String message) {
         javafx.scene.control.Alert confirmationAlert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
         confirmationAlert.setTitle("Confirmation");
@@ -186,7 +183,6 @@ public class AlertsReceivedController extends RescueCenterMenuController impleme
         confirmationAlert.showAndWait();
     }
 
-    // Utility method to show an error dialog
     private void showErrorDialog(String message) {
         javafx.scene.control.Alert errorAlert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
         errorAlert.setTitle("Error");
