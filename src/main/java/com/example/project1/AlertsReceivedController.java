@@ -27,12 +27,12 @@ public class AlertsReceivedController extends RescueCenterMenuController impleme
     @FXML
     public void initialize() {
         super.initialize();
-
     }
 
-    public void start(){
+    public void start() {
         loadAllertsRequests();
     }
+
     public void setSharedData(com.example.project1.BLL.PawCare pawCare, LoginClassCredentials loginCredentials) {
         if (pawCare == null || loginCredentials == null) {
             System.out.println("Error: Shared data is null.");
@@ -43,22 +43,20 @@ public class AlertsReceivedController extends RescueCenterMenuController impleme
             start();
         }
     }
+
     // This function is responsible for loading the adoption requests (alerts) from the database
     private void loadAllertsRequests() {
         List<Alert> alerts = pawCare.getAlertsFromDatabase(Session.getInstance().getLoggedInRescueCenter().getUserName()); // Fetch alerts from the database
 
-        // Clear existing alerts if any
         container.getChildren().clear();
-
-        // Dynamically create and add UI elements for each alert
         for (Alert alert : alerts) {
-            // Create a new Pane to hold the information for each alert
             Pane alertPane = createAlertPane(alert);
-            container.getChildren().add(alertPane); // Add the pane to the VBox
+            container.getChildren().add(alertPane);
         }
     }
 
     private Pane createAlertPane(Alert alert) {
+        System.out.println("id is "+alert.getaAlertID());
         Pane alertPane = new Pane();
         alertPane.setPrefSize(700.0, 200.0); // Slightly wider and taller for a cleaner layout
         alertPane.setStyle("-fx-background-color: #F5F5DC; -fx-border-color: #D08122; -fx-border-width: 2; -fx-border-radius: 8; -fx-background-radius: 8;");
@@ -139,27 +137,40 @@ public class AlertsReceivedController extends RescueCenterMenuController impleme
         return alertPane;
     }
 
-
-
     // Handle the event when the "Send Nearby Volunteers" button is clicked
     private void handleSendVolunteers(Alert alert) {
         try {
+            System.out.println("Alert sent to nearby volunteers for alert: " + alert.getaAlertID());
+
             pawCare.sendAlerttoVolunteer(alert); // Call the method from the PawCare class
             System.out.println("Alert sent to nearby volunteers for alert: " + alert.getType());
+            // Remove alert from the list after sending to volunteers
+            container.getChildren().removeIf(node -> {
+                Pane alertPane = (Pane) node;
+                return alertPane.getChildren().stream()
+                        .anyMatch(child -> child instanceof Label && ((Label) child).getText().contains(alert.getType()));
+            });
             // Optionally, display a confirmation dialog to the user
             showConfirmationDialog("Volunteers have been alerted for: " + alert.getType());
         } catch (Exception e) {
-            // Handle any exceptions and provide feedback to the user
             System.err.println("Failed to send alert to volunteers: " + e.getMessage());
-           // showErrorDialog("Failed to alert volunteers. Please try again.");
         }
     }
 
     // Handle the event when the "Dispatch Team" button is clicked
     private void handleDispatchTeam(Alert alert) {
         try {
-            System.out.println("Dispatching team for alert: " + alert.getType());
-            // You can add additional logic here for dispatching the team, like showing more info
+            System.out.println("Dispatching team for alert: " + alert.getaAlertID());
+            pawCare.setAlertToCompleted(alert.getaAlertID());
+            alert.setCompleted(true); // Set the alert as completed
+            // Remove alert from the list after dispatching the team
+            container.getChildren().removeIf(node -> {
+                Pane alertPane = (Pane) node;
+                return alertPane.getChildren().stream()
+                        .anyMatch(child -> child instanceof Label && ((Label) child).getText().contains(alert.getType()));
+            });
+            // Optionally, show a confirmation dialog for dispatched team
+            showConfirmationDialog("Team has been dispatched for: " + alert.getType());
         } catch (Exception e) {
             System.err.println("Failed to dispatch team: " + e.getMessage());
             showErrorDialog("Failed to dispatch team. Please try again.");
@@ -168,7 +179,6 @@ public class AlertsReceivedController extends RescueCenterMenuController impleme
 
     // Utility method to show a confirmation dialog
     private void showConfirmationDialog(String message) {
-        // Create a simple confirmation dialog (or use an existing UI framework dialog box)
         javafx.scene.control.Alert confirmationAlert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
         confirmationAlert.setTitle("Confirmation");
         confirmationAlert.setHeaderText(null);

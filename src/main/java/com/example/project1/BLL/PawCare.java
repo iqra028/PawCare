@@ -194,17 +194,22 @@ public class PawCare {
     public String createAlert(String animalType, String breed, String InjuryDesc, Image imagePath,
                               double[] userLocation, String userid, String rescuecenterid, String type) {
         // Validate userid and rescuecenterid before proceeding
+        System.out.println("create alert");
         if (userid == null || userid.isEmpty()) {
             System.err.println("User ID is null or empty.");
             return null; // Exit early if the user ID is invalid
         }
+        if(imagePath.equals(null))
+            System.err.println("image is null from here");
 
         if (rescuecenterid == null ) {
             System.err.println("Rescue Center ID is null or empty.");
             return null; // Exit early if the rescue center ID is invalid
         }
+        System.out.println("image path is"+imagePath);
         Alert alert = new Alert(animalType, breed, InjuryDesc, imagePath, userLocation, userid, rescuecenterid);
         String alertid=db.storeAlertRecord(alert, type);
+
         for( RescueCenter r : rescueCenters)
         {
             if(rescuecenterid.equals(r.getRescueCenterID()))
@@ -222,16 +227,15 @@ public class PawCare {
         return registeredLocation.toLowerCase().startsWith(shelterLocation.toLowerCase());
     }
     public List<Alert> getAlertsFromDatabase(String username){
-        List<Alert> a=new ArrayList<>();
-        for(RescueCenter r : rescueCenters)
+        List<Alert> alert= loadAlerts(getRescueCenterByUsername(username));
+        for(RescueCenter r: rescueCenters)
         {
-            if(r.getUserName().equals(username))
+            if(r.getUserName().equalsIgnoreCase(username))
             {
-                System.out.println("ByeBye");
-                return r.getAlerts();
+                r.setAlert(alert);
             }
         }
-        return a;
+        return alert;
     }
     public double[] getLocation()
     {   System.out.println("getLocation called");
@@ -361,22 +365,18 @@ public class PawCare {
     private void loadDataFromDatabase()  {
         users = db.getAllUsers();
         vets = db.getAllVets();
+        volunteers=db.getAllVolunteers();
         rescueCenters = db.getAllRescueCenters();
         InjuryReport=db.loadReports();
-        System.out.println("Number of reports loaded: " + InjuryReport.size());
-        for(injuryReport i:InjuryReport) {
-            System.out.println(i.hell());
-        }
 
         loadVitals();
         for(Vets v: vets)
         {
             loadvetsrequests(v);
-            System.out.println("Started laoding vet animals");
         }
         for (RescueCenter rescueCenter : rescueCenters) {
             loadAnimals(rescueCenter);
-            loadAlerts(rescueCenter);
+            //loadAlerts(rescueCenter);
             loadAdoptionRequests(rescueCenter);
         }
     }
@@ -464,12 +464,12 @@ public class PawCare {
     }
 
 
-    void loadAlerts(RescueCenter rescueCenter) {
+    List<Alert> loadAlerts(RescueCenter rescueCenter) {
         List<Alert> alert =db.getAlertsByRescueCenter(rescueCenter.getRescueCenterID());
         for(Alert a:alert) {
-            System.out.println("Added a Alert");
             rescueCenter.addalert(a);
         }
+        return alert;
     }
     public GeoLocation getGeoLocation(){
         return geoLocation;
@@ -488,23 +488,66 @@ public class PawCare {
                 rescueCenter.addAnimalProfile(profile);
             }
         }
-    }
-    public void sendAlerttoVolunteer(Alert alert){
+    }public void sendAlerttoVolunteer(Alert alert) {
+        System.out.println("Attempting to send alert to a random available volunteer for alert: " + alert.getaAlertID());
+        System.out.println("I came on line 2");
+
+        if (volunteers == null || volunteers.isEmpty()) {
+            System.out.println("No volunteers available to send the alert.");
+            return;
+        }
+
+        System.out.println("I came on line 3");
+
         Random random = new Random();
-        int randomIndex = random.nextInt(volunteers.size());
-        Volunteer selectedVolunteer = volunteers.get(randomIndex);
-        System.out.println(selectedVolunteer.getUserId());
-        alert.setCompleted(true);
-        String alertid=createAlert(alert.getType(), alert.getBreed(), alert.getMessage(), alert.getImage(), alert.getLocation(), alert.getUserid(),
-                alert.getRescuecenterid(),"RescueCenter");
+        boolean alertSent = false;
 
+        // Try to find an appropriate volunteer up to the size of the list.
+        for (int attempts = 0; attempts < volunteers.size(); attempts++) {
+            int randomIndex = random.nextInt(volunteers.size());
+            Volunteer selectedVolunteer = volunteers.get(randomIndex);
 
-        System.out.println(alertid);
-        alert.setAlertId(alertid);
-        setAlertToCompleted(alert.getaAlertID());
+            System.out.println("Randomly selected volunteer: " + selectedVolunteer.getUserId());
 
+            // Check if the volunteer is available and the user IDs do not match.
+            if (selectedVolunteer.getAvailable())
+            {
+                System.out.println(selectedVolunteer.getUserId()+"    "+alert.getUserid());
 
+                if(!(selectedVolunteer.getUserId().equals(alert.getUserid())))
+                    {
+                System.out.println("Volunteer " + selectedVolunteer.getUserId() + " is available and user IDs do not match. Sending alert...");
+                if(alert.getImage()==null)
+                {
+                    System.out.println("alert image is null");
+                }
+                alert.setCompleted(true);
+                createAlert(
+                        alert.getType(),
+                        alert.getBreed(),
+                        alert.getMessage(),
+                        alert.getImage(),
+                        alert.getLocation(),
+                        selectedVolunteer.getUserId(),
+                        alert.getRescuecenterid(),
+                        "RescueCenter"
+                );
+                setAlertToCompleted(alert.getaAlertID());
+
+                alertSent = true;
+                break; // Exit loop once the alert is successfully sent.
+            } }else {
+                System.out.println("Volunteer " + selectedVolunteer.getUserId() + " is not available or user IDs match. Trying another...");
+            }
+        }
+
+        if (!alertSent) {
+            System.out.println("No suitable volunteers found to send the alert after random selection attempts.");
+        }
     }
+
+
+
     public void sendAnimalToVet(Profile animal, String vet)
     {
         for(Vets v: vets)
@@ -522,9 +565,13 @@ public class PawCare {
 
 
     public void setAlertToCompleted(String id)
-    {   System.out.println("set Alert to Completed");
+    {   System.out.println("Dispatching team for alert: " + id);
         db.setCompletedToTrue(id);
 
+    }
+    public void setCompletedToTrueRC(String id)
+    {
+        setCompletedToTrueRC(id);
     }
     public List<Alert> getRescueCenterAlerts()
     {

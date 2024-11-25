@@ -202,11 +202,13 @@ public  class DBhandler {
                 byte[] vehicleImageBytes = resultSet.getBytes("vehicle_image");
                 String vehicleModel = resultSet.getString("vehicle_model");
                 boolean availability = resultSet.getBoolean("availability");
+                String volid = resultSet.getString("volunteer_id");
 
                 // Convert vehicle image bytes to Image object
                 Image vehicleImage = byteArrayToImage(vehicleImageBytes);
 
                 Volunteer volunteer = new Volunteer(userId, cnic, vehicleType, vehicleImage, vehicleModel, availability);
+                volunteer.setVolunteerId(volid);
                 volunteers.add(volunteer);
                 System.out.println("successful");
             }
@@ -402,7 +404,37 @@ public  class DBhandler {
         System.out.println("set completed to true");
         System.out.println("Alert ID: " + alertId);  // Print the alertId for debugging
 
-        String sql = "UPDATE alert SET completed = true WHERE alertid = ? AND \"alertType\" = 'RescueCenter'";
+        String sql = "UPDATE alert SET completed = true WHERE alertid = ?";
+
+        try (Connection conn = connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            // Convert alertId to UUID and print for debugging
+            UUID alertUUID = UUID.fromString(alertId);
+            System.out.println("Converted UUID: " + alertUUID);
+
+            stmt.setObject(1, alertUUID);  // Set the alertId parameter
+
+            // Execute the update
+            int rowsUpdated = stmt.executeUpdate();
+
+            // Print the number of rows updated for debugging
+            System.out.println("Rows updated: " + rowsUpdated);
+
+            // Return true if at least one row was updated
+            return rowsUpdated > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Error updating alert record: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean setCompletedToTrueRC(String alertId) {
+        System.out.println("set completed to true");
+        System.out.println("Alert ID: " + alertId);  // Print the alertId for debugging
+
+        String sql = "UPDATE alert SET completed = true WHERE alertid = ? AND \"alertType\" = 'User'";
 
         try (Connection conn = connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -692,10 +724,16 @@ public  class DBhandler {
 
     public String storeAlertRecord(Alert alert, String type) {
         System.out.println("Entering storeAlertRecord method");
+        if(alert.getImage()==null)
+        {
+            System.out.println("image is null");
+        }
+        System.out.println(alert.getImage());
 
         // Updated SQL query to insert without specifying alertid (auto-generated in DB)
         String sql = "INSERT INTO alert(type, message, breed, image, location, date_created, userid, rescuecenterid, \"alertType\", completed) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
 
         try (Connection conn = connect();
              PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -706,12 +744,12 @@ public  class DBhandler {
             stmt.setString(3, alert.getBreed()); // Animal breed
 
             // If image exists, convert to bytes and insert, otherwise set to null
-            if (alert.getImage() != null) {
-                byte[] imageBytes = imageToByteArray(alert.getImage());
-                stmt.setBytes(4, imageBytes); // Image
-            } else {
-                stmt.setBytes(4, null); // No image
-            }
+            ////if (alert.getImage() != null) {
+               // byte[] imageBytes = imageToByteArray(alert.getImage());
+                stmt.setBytes(4, imageToByteArray(alert.getImage())); // Image
+            //} else {
+            //  stmt.setBytes(4, null); // No image
+           // }
 
             // Handle location - assuming it's an array with two values (latitude, longitude)
             if (alert.getLocation() != null) {
@@ -807,6 +845,7 @@ public  class DBhandler {
                 alert.setType(rs.getString("type"));
                 alert.setMessage(rs.getString("message"));
                 alert.setBreed(rs.getString("breed"));
+                alert.setAlertId(rs.getString("alertId"));
 
                 byte[] imageBytes = rs.getBytes("image");
                 if (imageBytes != null) {

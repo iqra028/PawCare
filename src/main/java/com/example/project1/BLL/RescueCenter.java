@@ -14,7 +14,7 @@ public class RescueCenter {
 
     private ArrayList<Profile> animalProfiles;
     private ArrayList<Profile> adoptionProfiles;
-    private ArrayList<Alert> alerts;
+    private List<Alert> alerts;
     private ArrayList<AdoptionRequest> requests;
 
     public RescueCenter(String rescueCenterID,String userName, String CenterName, String email, String password, String location, String phoneNumber) {
@@ -42,6 +42,9 @@ public class RescueCenter {
         double latitude = Double.parseDouble(parts[0].trim());
         double longitude = Double.parseDouble(parts[1].trim());
         return new double[]{latitude, longitude};
+    }
+    public void setAlert(List<Alert> alerts) {
+        this.alerts=alerts;
     }
 
     public void addAdoptionRequest( AdoptionRequest adoptionRequest) {requests.add(adoptionRequest);}
