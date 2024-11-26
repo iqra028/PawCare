@@ -87,6 +87,7 @@ public class VisitVetController extends RescueCenterMenuController implements Re
     }
     private void handleConfirmButtonClick() {
         Profile animal = SharedProfile.getInstance().getSelectedAnimalProfile();
+
         if (animal == null) {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Warning");
@@ -96,6 +97,8 @@ public class VisitVetController extends RescueCenterMenuController implements Re
             return;
         }
         String selectedVet = vetComboBox.getSelectionModel().getSelectedItem();
+        pawCare.setupwithvet(pawCare.getVetfromUsername(selectedVet).getVetID(),
+                animal.getAnimal().getAnimalID(),true);
         if (selectedVet == null || selectedVet.isEmpty()) {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Warning");

@@ -33,6 +33,7 @@ public class AnimalProfilesForVetController extends VetMenu implements RequiresS
         }
     }
 
+
     // Start the display process
     public void start() {
         displayAnimals();

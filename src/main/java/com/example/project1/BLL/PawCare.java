@@ -63,6 +63,22 @@ public class PawCare {
         }
         return null;
     }
+
+    public void setupwithvet(String vetid,String animalid ,Boolean b){
+        for(Vets v: vets){
+            if(v.getVetID().equals(vetid)){
+                List<Profile> profile= v.getCurrentlybeingchecked();
+                for(Profile p:profile){
+                    if(p.getAnimal().getAnimalID().equals(animalid)){
+                        Animal animal=p.getAnimal();
+                        animal.setWithVet(b);
+                        p.setAnimal(animal);
+                    }
+                }
+            }
+        }
+
+    }
     public void saveInjuryReport(injuryReport report) {
 
         this.InjuryReport.add(report);

@@ -135,6 +135,7 @@ public class ContactVetANVCOntroller extends RescueCenterMenuController implemen
 
         RescueCenter rc= pawCare.getRescueCenterbyUsername(loginCredentials.getUsername());
         animalProfile =rc.getAnimalProfiles();
+
         return animalProfile;
 
     }
@@ -142,7 +143,7 @@ public class ContactVetANVCOntroller extends RescueCenterMenuController implemen
        List<Profile> profile= getAnimalsFromRescueCenter();
        List<Profile> p =new ArrayList<>();
        for(Profile animalProfile : profile){
-           if(!animalProfile.getAnimal().isVisitedVet()||!animalProfile.getAnimal().isWithVet() )
+           if(!animalProfile.getAnimal().isVisitedVet()&&!animalProfile.getAnimal().isWithVet() )
            {
                p.add(animalProfile);
 
