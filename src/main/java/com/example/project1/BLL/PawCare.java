@@ -1,9 +1,6 @@
 package com.example.project1.BLL;
 
-import com.example.project1.BLL.Donation.Donation;
-import com.example.project1.BLL.Donation.DonationContext;
-import com.example.project1.BLL.Donation.EasypaisaPayment;
-import com.example.project1.BLL.Donation.PaymentStrategy;
+import com.example.project1.BLL.Donation.*;
 import com.example.project1.BLL.Location.GeoLocation;
 import com.example.project1.BLL.Location.SharedData;
 import com.example.project1.BLL.Profiles.AdoptionProfile;
@@ -28,10 +25,10 @@ public class PawCare {
     private ArrayList<RescueCenter> rescueCenters;
     private ArrayList<Volunteer> volunteers;
     private ArrayList<User> users;
-    private ArrayList<Form> forms;
+
     private ArrayList<Vitals> vitals;
     private DBhandler db;
-    private FormFactory formFactory;
+
     private GeoLocation geoLocation;
     private ProfileFactory profileFactory;
     private List<injuryReport> InjuryReport;
@@ -43,9 +40,7 @@ public class PawCare {
         this.volunteers= new ArrayList<>();
         this.rescueCenters = new ArrayList<>();
         this.users = new ArrayList<>();
-        this.forms = new ArrayList<>();
         this.db=new DBhandler();
-        this.formFactory=new FormFactory();
         this.geoLocation=new GeoLocation();
         this.vitals=new ArrayList<>();
         this.profileFactory = new ProfileFactory();
@@ -364,9 +359,7 @@ public class PawCare {
         return users;
     }
 
-    public void addForm(Form form) {
-        this.forms.add(form);
-    }
+
 
     public void storeAdoptionRequest(AdoptionRequest adoptionRequest)
     {

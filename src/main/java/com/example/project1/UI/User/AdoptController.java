@@ -121,11 +121,25 @@ public class AdoptController extends UserMenuController implements RequiresShare
     }
 
     private void applyForAdoption(Profile animalProf) {
+        // Retrieve the current user and adoption request status
+        String username = loginCredentials.getUsername();
+        AdoptionRequest existingRequest = pawCare.getAdoptionRequestByProfile(username, animalProf);
 
+        // Check if the request exists and is already resolved with acceptance
+        if (existingRequest != null && existingRequest.getIsResolved() && existingRequest.isApplicationStatus()) {
+            // Show alert: request already accepted
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Adoption Request");
+            alert.setHeaderText(null);
+            alert.setContentText("Your request for adoption of " + animalProf.getAnimal().getName() + " has already been accepted.");
+            alert.showAndWait();
+            return; // Exit the method to prevent further actions
+        }
+
+        // Proceed with showing the dialog for a new application
         Animal animal = animalProf.getAnimal();
         String animalId = animal.getAnimalID();
         String rescueCenterId = animalProf.getRescueCenterId();
-        String username = loginCredentials.getUsername();
         String userId = getUserFromUsername(username);
 
         Dialog<Void> dialog = new Dialog<>();
@@ -154,7 +168,7 @@ public class AdoptController extends UserMenuController implements RequiresShare
                 String reason = reasonField.getText();
 
                 // Create and store the adoption request
-                AdoptionRequest adoptionRequest = new AdoptionRequest(" ", userId, rescueCenterId, animalId, allergyCheckBox.isSelected(), livingConditionCheckBox.isSelected(), reason, false,false);
+                AdoptionRequest adoptionRequest = new AdoptionRequest(" ", userId, rescueCenterId, animalId, allergyCheckBox.isSelected(), livingConditionCheckBox.isSelected(), reason, false, false);
                 pawCare.storeAdoptionRequest(adoptionRequest);
 
                 // Display success message
@@ -173,6 +187,7 @@ public class AdoptController extends UserMenuController implements RequiresShare
         // Show the dialog
         dialog.show();
     }
+
 
     private String getUserFromUsername(String username) {
         for (User user : pawCare.getUsers()) {
