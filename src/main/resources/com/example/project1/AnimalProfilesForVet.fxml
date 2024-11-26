@@ -44,7 +44,7 @@
                 <AnchorPane layoutX="276.0" layoutY="141.0" prefHeight="866.0" prefWidth="808.0" style="-fx-background-color: #ffffff;">
                     <children>
                         <Line endX="627.5999755859375" layoutX="142.0" layoutY="134.0" startX="-100.0" stroke="#9c8585" />
-                        <Text layoutX="166.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Requests From Rescue Center" wrappingWidth="475.19995117187506">
+                        <Text layoutX="329.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profiles " wrappingWidth="132.79992675781256">
                             <font>
                                 <Font size="36.0" />
                             </font>
