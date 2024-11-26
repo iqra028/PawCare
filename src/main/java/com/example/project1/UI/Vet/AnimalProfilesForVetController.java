@@ -41,15 +41,18 @@ public class AnimalProfilesForVetController extends VetMenu implements RequiresS
     // Method to fetch the animals associated with the vet (replace with actual logic)
     private List<Profile> getAnimalsForVet() {
         Vets vet = pawCare.getVetfromUsername(loginCredentials.getUsername());
+        List<Profile> v= vet.getCurrentlybeingchecked();
+        System.out.println("All available");
+        for(Profile p:v)
+        {
+            System.out.println(p.getAnimal().getName());
+        }
         return vet.getCurrentlybeingchecked();
     }
 
     // Method to display the list of animals for the vet
     public void displayAnimals() {
         List<Profile> animals = getAnimalsForVet();
-        for(Profile animal : animals) {
-            System.out.println(animal.getAnimal());
-        }
 
         // Clear any existing UI components in the pane
         pane1.getChildren().clear();
@@ -127,8 +130,9 @@ public class AnimalProfilesForVetController extends VetMenu implements RequiresS
             profilePane.getChildren().addAll(img, nameLabel, typeLabel, breedLabel, colorLabel, visitedVetLabel, withVetLabel, displayHealthButton);
 
             // Add the profilePane to the main pane (pane1)
-            pane1.getChildren().add(profilePane);
+            profilesContainer.getChildren().add(profilePane);
         }
+        pane1.getChildren().add(profilesContainer);
     }
 
 
