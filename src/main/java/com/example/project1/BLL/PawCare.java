@@ -65,6 +65,27 @@ public class PawCare {
     }
     public void visitedvet(injuryReport report)
     {
+       /* System.out.println("imtrueeeeeeeeeeeeeeeeeeeeeeeee");
+        String rcid=report.getRescuecenterid();
+        System.out.println("imtrueeeeeeeeeeeeeeeeeeeeeeeee");
+        for(RescueCenter rc:this.rescueCenters)
+        {System.out.println("imtrueeeeeeeeeeeeeeeeeeeeeeeee");
+            if(rc.getRescueCenterID().equals(rcid))
+            {   System.out.println("imtrueeeeeeeeeeeeeeeeeeeeeeeee");
+                List<Profile> p= rc.getAnimalProfiles();
+                System.out.println("imtrueeeeeeeeeeeeeeeeeeeeeeeee");
+                for(Profile pp:p)
+                {
+                    System.out.println("imtrueeeeeeeeeeeeeeeeeeeeeeeee");
+                    if(pp.getAnimal().getAnimalID().equals(report.getAnimal_id()))
+                    {
+                        System.out.println("imtrueeeeeeeeeeeeeeeeeeeeeeeee");
+                        pp.getAnimal().setVisitedVet(true);
+                        pp.getAnimal().setWithVet(false);
+                    }
+                }
+            }
+        }*/
         db.visitedvet(report.getAnimal_id());
     }
     public injuryReport retreivereport(Profile animal, String username) {
@@ -396,16 +417,13 @@ public class PawCare {
         loadVitals();
         for(Vets v: vets)
         {
-            loadvetsrequests(v);
+           v.setProfiles( loadvetsrequests(v));
         }
         for (RescueCenter rescueCenter : rescueCenters) {
             loadAnimals(rescueCenter);
             //loadAlerts(rescueCenter);
             loadAdoptionRequests(rescueCenter);
         }
-    }
-    public void savereport(){
-
     }
     public Vets getVetfromUsername(String username){
         for(Vets v: vets)
@@ -417,8 +435,16 @@ public class PawCare {
         System.out.println("no found");
         return null;
     }
-    public void loadvetsrequests(Vets vet) {
-        db.loadanimalsinvet(vet);
+    public List<Profile> loadvetsrequests(Vets vet) {
+        for(Vets v: vets)
+        {
+            if(v.getVetID().equals(vet.getVetID())){
+              List<Profile> p= db.loadanimalsinvet(vet);
+              // v.getCurrentlybeingchecked();
+                return p;
+            }
+        }
+        return null;
 
     }
     public void loadAdoptionRequests(RescueCenter rescueCenter)
@@ -574,11 +600,22 @@ public class PawCare {
 
     public void sendAnimalToVet(Profile animal, String vet)
     {
+        String id=animal.getRescueCenterId();
+        for(RescueCenter r: rescueCenters)
+        {
+            if(r.getRescueCenterID().equals(id))
+            {
+                List<Profile> p=r.getAnimalProfiles();
+                for(Profile pp:p)
+                    pp.getAnimal().setWithVet(true);
+            }
+        }
         for(Vets v: vets)
         {
             if(v.getUserName().equals(vet))
             {
                 v.setCurrentlybeingchecked(animal);
+                animal.getAnimal().setWithVet(true);
                 System.out.println(v.getVetID());
                 db.addvet_animal(v.getVetID(),animal.getAnimal().getAnimalID());
                 db.updateanimalwenttovet(animal.getAnimal().getAnimalID());

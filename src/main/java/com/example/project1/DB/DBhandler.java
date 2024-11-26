@@ -659,7 +659,7 @@ public  class DBhandler {
         }
     }
 
-    public void loadanimalsinvet(Vets vet) {
+    public List<Profile> loadanimalsinvet(Vets vet) {
         String fetchAnimalsQuery = "SELECT a.animal_id, a.name, a.type, a.breed, a.color, " +
                 "a.health_id, a.health_status, a.visited_vet, a.with_vet, " +
                 "a.up_for_adoption, a.adopted, a.image, a.rescue_center_id " +  // Fetch image as bytea
@@ -710,12 +710,14 @@ public  class DBhandler {
                 vet.setProfiles(animalList);
                 // Assuming this method exists to set the animal list for the vet
                 System.out.println("Loaded " + animalList.size() + " animals for vet " + vet.getVetID());
+                return  animalList;
             }
 
         } catch (SQLException e) {
             System.err.println("Error loading animals for vet: " + e.getMessage());
             e.printStackTrace();
         }
+        return null;
     }
 
 

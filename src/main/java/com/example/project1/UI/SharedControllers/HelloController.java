@@ -29,6 +29,7 @@ public class HelloController implements RequiresSharedData{
 
     @FXML
     private void initialize() {
+
         signUpButton.setOnAction(event -> openSignUpPage());
         logInButton.setOnAction(event -> openLogInPage());
         signUpButton1.setOnAction(event -> openSignUpPage());

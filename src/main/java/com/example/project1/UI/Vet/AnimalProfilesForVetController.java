@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.util.List;
@@ -46,16 +47,20 @@ public class AnimalProfilesForVetController extends VetMenu implements RequiresS
     // Method to display the list of animals for the vet
     public void displayAnimals() {
         List<Profile> animals = getAnimalsForVet();
+        for(Profile animal : animals) {
+            System.out.println(animal.getAnimal());
+        }
 
         // Clear any existing UI components in the pane
         pane1.getChildren().clear();
 
-        // Iterate through animals to display their details
-        for (int i = 0; i < animals.size(); i++) {
-            Profile animalProfile = animals.get(i);
-            Animal animal = animalProfile.getAnimal();
+        // Use a VBox to arrange the profile panes vertically
+        VBox profilesContainer = new VBox(10); // 10 is the spacing between items
+        profilesContainer.setPrefWidth(700); // Adjust as needed
+        profilesContainer.setStyle("-fx-padding: 10;"); // Add padding if needed
 
-            // Create a new Pane for the animal profile
+        for (Profile animal : animals) {
+            Animal a = animal.getAnimal();
             Pane profilePane = new Pane();
             profilePane.setPrefSize(674, 287);
             profilePane.setStyle("-fx-background-color: #ffffff; -fx-border-color: #D08122; -fx-border-width: 1; -fx-border-radius: 10;");
@@ -66,32 +71,32 @@ public class AnimalProfilesForVetController extends VetMenu implements RequiresS
             img.setFitWidth(150);  // Adjust width as needed
             img.setLayoutX(20);    // Set X position
             img.setLayoutY(40);    // Set Y position
-            img.setImage(animal.getImage());
+            img.setImage(a.getImage());
             img.setPreserveRatio(true); // Maintain the aspect ratio of the image
 
             // Labels
-            Label nameLabel = new Label(animal.getName());
+            Label nameLabel = new Label(a.getName());
             nameLabel.setLayoutX(200); // Adjust layout X position as needed
             nameLabel.setLayoutY(40);
             nameLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
-            Label typeLabel = new Label("Type: " + animal.getType());
+            Label typeLabel = new Label("Type: " + a.getType());
             typeLabel.setLayoutX(200);
             typeLabel.setLayoutY(70);
 
-            Label breedLabel = new Label("Breed: " + animal.getBreed());
+            Label breedLabel = new Label("Breed: " + a.getBreed());
             breedLabel.setLayoutX(200);
             breedLabel.setLayoutY(100);
 
-            Label colorLabel = new Label("Color: " + animal.getColor());
+            Label colorLabel = new Label("Color: " + a.getColor());
             colorLabel.setLayoutX(200);
             colorLabel.setLayoutY(130);
 
-            Label visitedVetLabel = new Label("Visited Vet: " + (animal.isVisitedVet() ? "Yes" : "No"));
+            Label visitedVetLabel = new Label("Visited Vet: " + (a.isVisitedVet() ? "Yes" : "No"));
             visitedVetLabel.setLayoutX(200);
             visitedVetLabel.setLayoutY(160);
 
-            Label withVetLabel = new Label("With Vet: " + (animal.isWithVet() ? "Yes" : "No"));
+            Label withVetLabel = new Label("With Vet: " + (a.isWithVet() ? "Yes" : "No"));
             withVetLabel.setLayoutX(200);
             withVetLabel.setLayoutY(190);
 
@@ -102,12 +107,12 @@ public class AnimalProfilesForVetController extends VetMenu implements RequiresS
             displayHealthButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 12px; -fx-padding: 5 10;");
 
             // Action for the "Display Health" button
-            if(animalProfile!=null) {
+            if(animal!=null) {
                 displayHealthButton.setOnAction(event -> {
                     try {
-                        SharedProfile.getInstance().setSelectedAnimalProfile(animalProfile);
-                        System.out.println("Selected Animal Profile: " + animalProfile);
-                        System.out.println(animalProfile.getRescueCenterId());
+                        SharedProfile.getInstance().setSelectedAnimalProfile(animal);
+                        System.out.println("Selected Animal Profile: " + animal);
+                        System.out.println(animal.getRescueCenterId());
                         HelloApplication.getInstance().changeScene("GenerateInjurtReport.fxml");
                     } catch (IOException e) {
                         throw new RuntimeException(e);
