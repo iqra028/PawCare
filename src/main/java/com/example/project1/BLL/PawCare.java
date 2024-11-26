@@ -70,22 +70,12 @@ public class PawCare {
         }
 
         for (injuryReport report : InjuryReport) {
-          //  System.out.println(report.hell());
-            //System.out.println("Checking report for Animal ID: " + report.getAnimal_id());
-
-            // Check if the report's animal ID matches
-            if (report.getAnimal_id().equals(animal.getAnimal().getAnimalID())) {
-                // Uncomment and complete the rescue center check if needed
+            if (report.getAnimal_id().equals(animal.getAnimal().getAnimalID())&& animal.getAnimal().isVisitedVet()) {
 
             if (animal.getRescueCenterId().equals(getRescueCenterByUsername(username).getRescueCenterID())) {
                 System.out.println("Matching report found.");
                 return report;
             }
-
-
-                // If rescue center check isn't required, return the matching report
-            //    System.out.println("Matching report found.");
-              //  return report;
             }
         }
 
