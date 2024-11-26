@@ -7,26 +7,53 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <ScrollPane fx:id="pane1" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" prefHeight="1100.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.DisplayInjuryReportforRescueCentercontroller">
     <content>
         <AnchorPane prefHeight="1108.0" prefWidth="1374.0" style="-fx-background-color: #E4C7A2;">
             <children>
-                <!-- Header Section -->
                 <AnchorPane prefHeight="206.0" prefWidth="1374.0" style="-fx-background-color: #8B0000;">
                     <children>
+                        <Circle fill="#efefef" layoutX="1301.0" layoutY="59.0" radius="30.0" stroke="BLACK" strokeType="INSIDE" />
                         <Label fx:id="PawCare" layoutX="101.0" layoutY="26.0" prefHeight="64.0" prefWidth="158.0" text="PawCare" textFill="WHITE">
                             <font>
                                 <Font name="Brush Script MT Italic" size="48.0" />
                             </font>
                         </Label>
-                        <Button fx:id="AlertsReceived" layoutX="302.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Alerts Received" textFill="WHITE" />
-                        <Button fx:id="AnimalProfiles" layoutX="501.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Animal Profiles" textFill="WHITE" />
-                        <Button fx:id="AdoptionRequests" layoutX="687.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Adoption Requests" textFill="WHITE" />
-                        <Button fx:id="ContactVet" layoutX="902.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Contact Vet" textFill="WHITE" />
-                        <Button fx:id="DonationsMade" layoutX="1055.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Donations Made" textFill="WHITE" />
+                        <ImageView fitHeight="46.0" fitWidth="87.0" layoutX="14.0" layoutY="12.0">
+                            <image>
+                                <Image url="@images/Frame.png" />
+                            </image>
+                        </ImageView>
+                        <Button fx:id="AlertsReceived" layoutX="302.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Alerts Received" textFill="WHITE">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="AnimalProfiles" layoutX="501.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Animal Profiles" textFill="#ececec">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="AdoptionRequests" layoutX="687.0" layoutY="76.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="177.0" style="-fx-background-color: #8B0000;" text="Adoption Requests" textFill="WHITE">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="ContactVet" layoutX="902.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Contact Vet" textFill="WHITE">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="DonationsMade" layoutX="1055.0" layoutY="76.0" mnemonicParsing="false" style="-fx-background-color: #8B0000;" text="Donations made" textFill="WHITE">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Button>
                     </children>
                 </AnchorPane>
-                <!-- Main Content Section -->
                 <!-- Main Content Section -->
                 <AnchorPane layoutX="265.0" layoutY="168.0" prefHeight="866.0" prefWidth="808.0" style="-fx-background-color: #ffffff;">
                     <children>
@@ -34,10 +61,8 @@
 
                         <!-- Injury Report Details Section -->
                         <VBox layoutX="100.0" layoutY="120.0" prefHeight="700.0" prefWidth="682.0" spacing="20" alignment="TOP_LEFT">
-                            <Label fx:id="reportId" style="-fx-font-size: 18px;"/>
                             <Label fx:id="vetId" style="-fx-font-size: 18px;"/>
                             <Label fx:id="rescueCenterId" style="-fx-font-size: 18px;"/>
-                            <Label fx:id="animalId" style="-fx-font-size: 18px;"/>
                             <Label fx:id="description" style="-fx-font-size: 18px;"/>
                             <Label fx:id="temperature" style="-fx-font-size: 18px;"/>
                             <Label fx:id="heartRate" style="-fx-font-size: 18px;"/>

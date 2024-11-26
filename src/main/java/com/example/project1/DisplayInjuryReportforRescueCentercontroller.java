@@ -62,13 +62,10 @@ public class DisplayInjuryReportforRescueCentercontroller extends RescueCenterMe
 
     public void start() {
         injuryReport injuryReport=pawCare.retreivereport(SharedProfile.getInstance().getSelectedAnimalProfile(), loginCredentials.getUsername());
-
+        goBackButton.setOnAction(event -> {goBack();});
         if (injuryReport != null) {
-            // Set the attributes to the FXML labels
-           // reportId.setText("Report ID: " + injuryReport.getReportid());
             vetId.setText("Vet Name: " + pawCare.getVetname(injuryReport.getVetid()));
             rescueCenterId.setText("Rescue Center Name: " + pawCare.getRescuecentername(injuryReport.getRescuecenterid()));
-            //animalId.setText("Animal ID: " + injuryReport.getAnimal_id());
             description.setText("Description: " + injuryReport.getDescription());
             temperature.setText("Temperature: " + injuryReport.getTemperature() + " °C");
             heartRate.setText("Heart Rate: " + injuryReport.getHeartRate() + " bpm");

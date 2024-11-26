@@ -180,9 +180,10 @@ public class AnimalProfilesControllerAvA  extends RescueCenterMenuController imp
         reportButton.setLayoutY(204);
         reportButton.setPrefSize(155, 34);
         reportButton.setStyle("-fx-background-color: #D08122;");
-        SharedProfile.getInstance().setSelectedAnimalProfile(animalProf);
        reportButton.setOnAction( e->{
            try {
+               SharedProfile.getInstance().setSelectedAnimalProfile(animalProf);
+               System.out.println("Animal name is "+animalProf.getAnimal().getName());
                HelloApplication.getInstance().changeScene("displayInjuryReportforRescueCenter.fxml");
            } catch (IOException ex) {
                throw new RuntimeException(ex);

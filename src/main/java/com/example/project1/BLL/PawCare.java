@@ -55,12 +55,14 @@ public class PawCare {
         db.saveReport(report);
         db.updateVetAnimalHandled(report.getVetid(),report.getAnimal_id(),true);
 
+
     }
     public void visitedvet(injuryReport report)
     {
         db.visitedvet(report.getAnimal_id());
     }
     public injuryReport retreivereport(Profile animal, String username) {
+        System.out.println(animal.getAnimal().getName());
         InjuryReport=db.loadReports();
         System.out.println("Number of reports loaded: " + InjuryReport.size());
         for(injuryReport i:InjuryReport) {

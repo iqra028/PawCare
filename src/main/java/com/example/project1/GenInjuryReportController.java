@@ -97,7 +97,6 @@ public class GenInjuryReportController extends VetMenu implements RequiresShared
                 throw new IllegalArgumentException("Vet ID cannot be null or empty.");
             }
             else{
-                System.out.println("noooitisnotnull");
                 report.setVetid(vetId);
             }
 
@@ -110,7 +109,6 @@ public class GenInjuryReportController extends VetMenu implements RequiresShared
                 throw new IllegalArgumentException("Rescue Center ID cannot be null or empty.");
             }
             else {
-                System.out.println("noooitisnotnull");
                 report.setRescuecenterid(SharedProfile.getInstance().getSelectedAnimalProfile().getRescueCenterId());
             }
 
