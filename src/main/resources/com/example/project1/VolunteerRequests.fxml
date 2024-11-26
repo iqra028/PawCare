@@ -3,11 +3,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
@@ -68,28 +66,8 @@
                                 <Font size="36.0" />
                             </font>
                         </Text>
-                        <VBox fx:id="container" layoutX="62.0" layoutY="175.0" prefHeight="572.0" prefWidth="686.0">
-                            <children>
-                                <Pane fx:id="pane1" prefHeight="130.0" prefWidth="686.0" style="-fx-background-color: #EEB673;">
-                                    <children>
-                                        <Label fx:id="InjuredAnimalLabel" layoutX="25.0" layoutY="18.0" text="Injured Animal Found at">
-                                            <font>
-                                                <Font size="24.0" />
-                                            </font>
-                                        </Label>
-                                        <Label fx:id="locationLabel" layoutX="25.0" layoutY="57.0" text="Location">
-                                            <font>
-                                                <Font size="18.0" />
-                                            </font>
-                                        </Label>
-                                        <Button fx:id="completed" layoutX="409.0" layoutY="87.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="265.0" style="-fx-background-color: #D08122;" text="COMPLETED" />
-                                    </children>
-                                    <effect>
-                                        <DropShadow blurType="ONE_PASS_BOX" />
-                                    </effect>
-                                </Pane>
-                            </children>
-                        </VBox>
+                        <VBox fx:id="container" layoutX="62.0" layoutY="175.0" prefHeight="572.0" prefWidth="686.0" />
+                        <Button fx:id="btnSetAvailability" layoutX="650.0" layoutY="14.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="143.0" style="-fx-background-color: #D08122;" text="SET AVAILABILITY" />
                     </children>
                 </AnchorPane>
             </children>

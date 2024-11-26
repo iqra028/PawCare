@@ -1,6 +1,7 @@
 package com.example.project1.UI.User;
 
 import com.example.project1.BLL.*;
+import com.example.project1.HelloApplication;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,6 +26,8 @@ public class VolunteerRequestsController extends UserMenuController implements R
 
     PawCare pawCare;
     private LoginClassCredentials loginCredentials;
+    @FXML
+    private Button btnSetAvailability;
 
     @FXML
     public void initialize() {
@@ -33,6 +36,7 @@ public class VolunteerRequestsController extends UserMenuController implements R
     }
     public void start(){
         loadAllertsRequests();
+        btnSetAvailability.setOnAction(event -> handleSetAvailability());
     }
     public void setSharedData(PawCare pawCare, LoginClassCredentials loginCredentials) {
         if (pawCare == null || loginCredentials == null) {
@@ -124,6 +128,19 @@ public class VolunteerRequestsController extends UserMenuController implements R
         errorAlert.setHeaderText(null);
         errorAlert.setContentText(message);
         errorAlert.showAndWait();
+    }
+    private void handleSetAvailability() {
+        try {
+            // Call the pawCare function to set availability
+            pawCare.setVolunteerAvailability(false,pawCare.getUserIDByUsername(loginCredentials.getUsername()));
+
+            // Switch to the VolunteerAvailability.fxml scene
+            HelloApplication.getInstance().changeScene("VolunteerAvailability.fxml");
+        } catch (Exception e) {
+            // Show an error dialog if something goes wrong
+            showErrorDialog("Failed to set availability. Please try again.");
+            e.printStackTrace();
+        }
     }
 
 }
