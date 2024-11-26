@@ -41,7 +41,7 @@ public class AnimalProfilesForVetController extends VetMenu implements RequiresS
     // Method to fetch the animals associated with the vet (replace with actual logic)
     private List<Profile> getAnimalsForVet() {
         Vets vet = pawCare.getVetfromUsername(loginCredentials.getUsername());
-        List<Profile> v= vet.getCurrentlybeingchecked();
+        List<Profile> v=pawCare.loadvetsrequests(pawCare.getVetFromUsername(loginCredentials.getUsername()));
         System.out.println("All available");
         for(Profile p:v)
         {

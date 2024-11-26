@@ -89,29 +89,4 @@ public class User {
         this.password = password;
     }
 
-    //methods
-    public void adopt() {
-      //call function of the system of getAdoptionProfiles and gets a list
-      //call fucntion of system selectanimal and get an Adoption form in return
-      //will call enter details and submit form function
-        //sytem has to forward req to rescue center
-
-
-    }
-    public boolean confirmation()
-    {
-        if(true) //if yes selected on interface
-            return true;
-        else
-            return false;
-
-    }
-
-    public void findMissingAnimals() {
-
-    }
-
-    public void volunteer() {
-
-    }
 }

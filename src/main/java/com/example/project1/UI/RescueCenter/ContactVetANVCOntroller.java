@@ -142,7 +142,7 @@ public class ContactVetANVCOntroller extends RescueCenterMenuController implemen
        List<Profile> profile= getAnimalsFromRescueCenter();
        List<Profile> p =new ArrayList<>();
        for(Profile animalProfile : profile){
-           if(!animalProfile.getAnimal().isVisitedVet())
+           if(!animalProfile.getAnimal().isVisitedVet()||!animalProfile.getAnimal().isWithVet() )
            {
                p.add(animalProfile);
 

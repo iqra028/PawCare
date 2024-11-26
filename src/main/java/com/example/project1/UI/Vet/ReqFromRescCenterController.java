@@ -41,7 +41,8 @@ public class ReqFromRescCenterController extends VetMenu implements RequiresShar
     // Method to fetch the animals associated with the vet (replace with actual logic)
     private List<Profile> getAnimalsForVet() {
         Vets vet = pawCare.getVetfromUsername(loginCredentials.getUsername());
-        List<Profile> v= vet.getCurrentlybeingchecked();
+        List<Profile> v=pawCare.loadvetsrequests(pawCare.getVetFromUsername(loginCredentials.getUsername()));
+        //List<Profile> v= vet.getCurrentlybeingchecked();
         System.out.println("All available");
         for(Profile p:v)
         {

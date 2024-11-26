@@ -28,6 +28,10 @@ public class Vets {
         this.phoneNumber = phoneNumber;
         currentlybeingchecked=new ArrayList<Profile>();
     }
+    public void removeanimal (Profile animal)
+    {
+        currentlybeingchecked.remove(animal);
+    }
     public void setCurrentlybeingchecked(Profile animal) {
         currentlybeingchecked.add(animal);
         for(Profile a:currentlybeingchecked)

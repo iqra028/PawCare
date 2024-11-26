@@ -55,6 +55,14 @@ public class PawCare {
         String response =firstAid.getResponse(userMessage);
         return  response;
     }
+    public Vets getVetFromUsername(String username){
+        for(Vets v:vets){
+            if(v.getUserName().equals(username)){
+                return v;
+            }
+        }
+        return null;
+    }
     public void saveInjuryReport(injuryReport report) {
 
         this.InjuryReport.add(report);
@@ -63,29 +71,52 @@ public class PawCare {
 
 
     }
+    public Vets findvetinlist(String vetid) {
+        for(Vets v:vets) {
+            if(v.getVetID().equals(vetid)) {
+                return v;
+            }
+        }
+        return null;
+    }
     public void visitedvet(injuryReport report)
-    {
-       /* System.out.println("imtrueeeeeeeeeeeeeeeeeeeeeeeee");
+    {   System.out.println(report.getVetid()+" "+report.getAnimal_id()+" "+ report.getRescuecenterid());
         String rcid=report.getRescuecenterid();
-        System.out.println("imtrueeeeeeeeeeeeeeeeeeeeeeeee");
-        for(RescueCenter rc:this.rescueCenters)
-        {System.out.println("imtrueeeeeeeeeeeeeeeeeeeeeeeee");
-            if(rc.getRescueCenterID().equals(rcid))
-            {   System.out.println("imtrueeeeeeeeeeeeeeeeeeeeeeeee");
+        Vets vet=findvetinlist(report.getVetid());
+        Profile ppp;
+
+        for(RescueCenter rc: rescueCenters)
+        {   System.out.println(report.getVetid()+" "+report.getAnimal_id()+" "+ report.getRescuecenterid());
+
+            if(rc.getRescueCenterID().equals(report.getRescuecenterid()))
+            {   System.out.println(report.getVetid()+" "+report.getAnimal_id()+" "+ report.getRescuecenterid());
+
                 List<Profile> p= rc.getAnimalProfiles();
-                System.out.println("imtrueeeeeeeeeeeeeeeeeeeeeeeee");
+                   System.out.println(report.getVetid()+" "+report.getAnimal_id()+" "+ report.getRescuecenterid());
+
                 for(Profile pp:p)
-                {
-                    System.out.println("imtrueeeeeeeeeeeeeeeeeeeeeeeee");
+                {   System.out.println(report.getVetid()+" "+report.getAnimal_id()+" "+ report.getRescuecenterid());
+
                     if(pp.getAnimal().getAnimalID().equals(report.getAnimal_id()))
-                    {
-                        System.out.println("imtrueeeeeeeeeeeeeeeeeeeeeeeee");
+                    {   System.out.println(report.getVetid()+" "+report.getAnimal_id()+" "+ report.getRescuecenterid());
+
                         pp.getAnimal().setVisitedVet(true);
                         pp.getAnimal().setWithVet(false);
+                        System.out.println("Removing "+pp.getAnimal().getAnimalID());
+                        ppp=pp;
+                        vet.removeanimal(pp);
+
                     }
                 }
             }
-        }*/
+        }
+        for(Vets v: vets)
+        {
+            if(v.getVetID().equals(report.getVetid()))
+            {
+                //List<Profi>
+            }
+        }
         db.visitedvet(report.getAnimal_id());
     }
     public injuryReport retreivereport(Profile animal, String username) {
