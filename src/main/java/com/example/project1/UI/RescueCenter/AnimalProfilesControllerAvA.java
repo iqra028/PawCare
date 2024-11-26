@@ -1,5 +1,6 @@
 package com.example.project1.UI.RescueCenter;
 import com.example.project1.BLL.*;
+import com.example.project1.BLL.Profiles.Profile;
 import com.example.project1.HelloApplication;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

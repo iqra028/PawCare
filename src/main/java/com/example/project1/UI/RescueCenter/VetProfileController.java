@@ -1,6 +1,7 @@
 package com.example.project1.UI.RescueCenter;
 
 import com.example.project1.BLL.*;
+import com.example.project1.BLL.Location.SharedData;
 import com.example.project1.HelloApplication;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

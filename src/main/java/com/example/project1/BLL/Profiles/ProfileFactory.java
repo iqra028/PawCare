@@ -1,7 +1,9 @@
-package com.example.project1.BLL;
+package com.example.project1.BLL.Profiles;
+
+import com.example.project1.BLL.Animal;
 
 public class ProfileFactory {
-    public Profile createProfile(String type,Animal animal)
+    public Profile createProfile(String type, Animal animal)
     {
         switch (type.toLowerCase()) {
             case "adoption":

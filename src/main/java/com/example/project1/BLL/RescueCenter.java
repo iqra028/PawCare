@@ -1,5 +1,7 @@
 package com.example.project1.BLL;
 
+import com.example.project1.BLL.Profiles.Profile;
+
 import java.util.*;
 
 public class RescueCenter {

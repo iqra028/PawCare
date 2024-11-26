@@ -1,4 +1,4 @@
-package com.example.project1.BLL;
+package com.example.project1.BLL.Donation;
 
 import java.util.*;
 

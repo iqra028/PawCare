@@ -1,4 +1,6 @@
-package com.example.project1.BLL;
+package com.example.project1.BLL.Profiles;
+
+import com.example.project1.BLL.Animal;
 
 public abstract class Profile {
     private String profileType;

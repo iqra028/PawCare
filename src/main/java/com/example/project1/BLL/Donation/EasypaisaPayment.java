@@ -1,4 +1,5 @@
-package com.example.project1.BLL;
+package com.example.project1.BLL.Donation;
+
 public class EasypaisaPayment implements PaymentStrategy {
     private String phoneNumber;
     private String firstName;

@@ -3,7 +3,7 @@ package com.example.project1.UI.User;
 import com.example.project1.BLL.LoginClassCredentials;
 import com.example.project1.BLL.PawCare;
 import com.example.project1.BLL.RequiresSharedData;
-import com.example.project1.BLL.SharedData;
+import com.example.project1.BLL.Location.SharedData;
 import com.example.project1.HelloApplication;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

@@ -1,5 +1,15 @@
 package com.example.project1.BLL;
 
+import com.example.project1.BLL.Donation.Donation;
+import com.example.project1.BLL.Donation.DonationContext;
+import com.example.project1.BLL.Donation.EasypaisaPayment;
+import com.example.project1.BLL.Donation.PaymentStrategy;
+import com.example.project1.BLL.Location.GeoLocation;
+import com.example.project1.BLL.Location.SharedData;
+import com.example.project1.BLL.Profiles.AdoptionProfile;
+import com.example.project1.BLL.Profiles.AnimalProfile;
+import com.example.project1.BLL.Profiles.Profile;
+import com.example.project1.BLL.Profiles.ProfileFactory;
 import com.example.project1.DB.DBhandler;
 import javafx.scene.image.Image;
 import org.json.JSONObject;

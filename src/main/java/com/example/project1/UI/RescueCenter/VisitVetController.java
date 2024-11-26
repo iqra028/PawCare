@@ -1,6 +1,7 @@
 package com.example.project1.UI.RescueCenter;
 
 import com.example.project1.BLL.*;
+import com.example.project1.BLL.Profiles.Profile;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;

@@ -1,5 +1,8 @@
 package com.example.project1.BLL;
 
+import com.example.project1.BLL.Profiles.AnimalProfile;
+import com.example.project1.BLL.Profiles.Profile;
+
 import java.util.ArrayList;
 import java.util.List;
 

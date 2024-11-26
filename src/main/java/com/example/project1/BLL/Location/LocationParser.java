@@ -1,4 +1,4 @@
-package com.example.project1.BLL;
+package com.example.project1.BLL.Location;
 
 import org.json.JSONObject;
 

@@ -1,6 +1,7 @@
 package com.example.project1.UI.Vet;
 
 import com.example.project1.BLL.*;
+import com.example.project1.BLL.Profiles.Profile;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;

@@ -1,6 +1,7 @@
 package com.example.project1.UI.User;
 
 import com.example.project1.BLL.*;
+import com.example.project1.BLL.Location.SharedData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

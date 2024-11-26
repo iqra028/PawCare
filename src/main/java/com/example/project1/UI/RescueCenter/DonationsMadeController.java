@@ -1,5 +1,5 @@
 package com.example.project1.UI.RescueCenter;
-import com.example.project1.BLL.Donation;
+import com.example.project1.BLL.Donation.Donation;
 import com.example.project1.BLL.LoginClassCredentials;
 import com.example.project1.BLL.PawCare;
 import com.example.project1.BLL.RequiresSharedData;

@@ -1,6 +1,9 @@
 package com.example.project1.DB;
 
 import com.example.project1.BLL.*;
+import com.example.project1.BLL.Donation.Donation;
+import com.example.project1.BLL.Profiles.AnimalProfile;
+import com.example.project1.BLL.Profiles.Profile;
 import javafx.scene.image.Image;
 
 import java.io.*;

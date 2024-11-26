@@ -1,6 +1,8 @@
-package com.example.project1.BLL;
+package com.example.project1.BLL.Profiles;
 
-public class AnimalProfile extends Profile{
+import com.example.project1.BLL.Animal;
+
+public class AnimalProfile extends Profile {
 
     public AnimalProfile(Animal animal) {
         super("Animal", animal);

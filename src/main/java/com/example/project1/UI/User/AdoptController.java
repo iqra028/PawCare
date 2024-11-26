@@ -1,6 +1,7 @@
 package com.example.project1.UI.User;
 
 import com.example.project1.BLL.*;
+import com.example.project1.BLL.Profiles.Profile;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
