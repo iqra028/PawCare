@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1"  fx:controller="com.example.project1.NearbyRescueCenterController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1"  fx:controller="com.example.project1.UI.User.NearbyRescueCenterController">
    <content>
       <AnchorPane prefHeight="1142.0" prefWidth="1374.0" style="-fx-background-color: #E4C7A2;">
          <children>

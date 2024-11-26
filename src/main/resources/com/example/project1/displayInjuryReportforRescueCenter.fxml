@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<ScrollPane fx:id="pane1" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" prefHeight="1100.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.DisplayInjuryReportforRescueCentercontroller">
+<ScrollPane fx:id="pane1" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" prefHeight="1100.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project1.UI.RescueCenter.DisplayInjuryReportforRescueCentercontroller">
     <content>
         <AnchorPane prefHeight="1108.0" prefWidth="1374.0" style="-fx-background-color: #E4C7A2;">
             <children>
